@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit
+package com.hrules.cryptoprofit.presentation.extensions
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.junit.runner.RunWith
+import android.view.View
 
-@RunWith(AndroidJUnit4::class)
-class DummyInstrumentedTest {
-  @Test
-  fun shouldReturnDefaultPackageName() {
-    val appContext = InstrumentationRegistry.getTargetContext()
-    assertEquals("com.hrules.cryptoprofit", appContext.packageName)
-  }
+fun String.isNumeric(): Boolean = try {
+  this.toDouble()
+  true
+} catch (e: Exception) {
+  false
+}
+
+fun Boolean.toVisibility(invisibleIsGone: Boolean = false): Int = when (this) {
+  false -> if (invisibleIsGone) View.GONE else View.INVISIBLE
+  true -> View.VISIBLE
 }

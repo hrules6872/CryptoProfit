@@ -16,4 +16,22 @@
 
 <resources>
   <string name="app_name">CryptoProfit</string>
+
+  <string name="hint_coinPrice">Crypto price (fiat)</string>
+  <string name="hint_buyPrice">Price</string>
+  <string name="hint_buyAmount">Amount</string>
+  <string name="hint_buyTotalCrypto">Total</string>
+  <string name="hint_buyTotalFiat"><![CDATA[->]]></string>
+  <string name="hint_sellPrice">Price</string>
+  <string name="hint_profitCrypto">Profit</string>
+  <string name="hint_profitFiat"><![CDATA[->]]></string>
+  <string name="hint_buySellFiat"><![CDATA[->]]></string>
+
+  <string name="title_buy">Buy</string>
+  <string name="title_sell">Sell</string>
+
+  <string name="action_currencyConverter">Currency\nconverter</string>
+  <string name="action_example">Example</string>
+  <string name="action_donate">Donate</string>
+  <string name="action_visitWebSite">Visit website</string>
 </resources>

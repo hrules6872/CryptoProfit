@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit
+package com.hrules.cryptoprofit.commons
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.junit.runner.RunWith
+import android.content.SharedPreferences
 
-@RunWith(AndroidJUnit4::class)
-class DummyInstrumentedTest {
-  @Test
-  fun shouldReturnDefaultPackageName() {
-    val appContext = InstrumentationRegistry.getTargetContext()
-    assertEquals("com.hrules.cryptoprofit", appContext.packageName)
-  }
+class Preferences(private val preferences: SharedPreferences) : BasePreferences() {
+  override var currencyConverter: Boolean
+    get() = preferences.getBoolean(PREFS_CURRENCY_CONVERTER, PREFS_DEFAULT_CURRENCY_CONVERTER)
+    set(value) = preferences.edit().putBoolean(PREFS_CURRENCY_CONVERTER, value).apply()
 }

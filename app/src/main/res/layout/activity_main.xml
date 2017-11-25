@@ -15,10 +15,248 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
+  <android.support.v7.widget.Toolbar
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/colorPrimary"
+      android:minHeight="?actionBarSize"
+      app:title="@string/app_name"
+      >
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/default_padding"
+        android:paddingStart="@dimen/default_padding"
+        >
+
+      <TextView
+          android:id="@+id/text_profitCrypto"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="end"
+          android:text="@string/hint_profitCrypto"
+          android:textAppearance="@style/TextAppearance.AppCompat.Button"
+          />
+
+      <TextView
+          android:id="@+id/text_profitFiat"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="end"
+          android:text="@string/hint_profitFiat"
+          android:textAppearance="@style/TextAppearance.AppCompat.Button"
+          />
+    </LinearLayout>
+
+  </android.support.v7.widget.Toolbar>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/default_paddingTriple"
+        android:paddingLeft="@dimen/default_paddingDouble"
+        android:paddingRight="@dimen/default_paddingDouble"
+        android:paddingTop="@dimen/default_paddingTriple"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <Switch
+            android:id="@+id/action_currencyConverter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/action_currencyConverter"
+            />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+          <android.support.design.widget.TextInputEditText
+              android:id="@+id/edit_coinPrice"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="end"
+              android:hint="@string/hint_coinPrice"
+              android:imeOptions="actionNext"
+              android:inputType="numberDecimal"
+              android:maxLength="24"
+              android:nextFocusDown="@id/edit_buyPrice"
+              />
+        </android.support.design.widget.TextInputLayout>
+      </LinearLayout>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_marginTriple"
+          android:gravity="center_horizontal"
+          android:text="@string/title_buy"
+          android:textAppearance="@style/TextAppearance.AppCompat.Button"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:baselineAligned="false"
+          android:orientation="horizontal"
+          android:weightSum="2"
+          >
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+
+          <android.support.design.widget.TextInputEditText
+              android:id="@+id/edit_buyPrice"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="end"
+              android:hint="@string/hint_buyPrice"
+              android:imeOptions="actionNext"
+              android:inputType="numberDecimal"
+              android:maxLength="24"
+              android:nextFocusDown="@id/edit_buyAmount"
+              />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+
+          <android.support.design.widget.TextInputEditText
+              android:id="@+id/edit_buyAmount"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="end"
+              android:hint="@string/hint_buyAmount"
+              android:imeOptions="actionNext"
+              android:inputType="numberDecimal"
+              android:maxLength="24"
+              android:nextFocusDown="@id/edit_sellPrice"
+              />
+        </android.support.design.widget.TextInputLayout>
+
+      </LinearLayout>
+
+      <TextView
+          android:id="@+id/text_buyTotalCrypto"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_margin"
+          android:gravity="end"
+          android:text="@string/hint_buyTotalCrypto"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          />
+
+      <TextView
+          android:id="@+id/text_buyTotalFiat"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="end"
+          android:text="@string/hint_buyTotalFiat"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_marginTriple"
+          android:gravity="center_horizontal"
+          android:text="@string/title_sell"
+          android:textAppearance="@style/TextAppearance.AppCompat.Button"
+          />
+
+      <android.support.design.widget.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edit_sellPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:hint="@string/hint_sellPrice"
+            android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
+            android:maxLength="24"
+            android:nextFocusDown="@id/edit_coinPrice"
+            />
+      </android.support.design.widget.TextInputLayout>
+
+      <TextView
+          android:id="@+id/text_sellFiat"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_margin"
+          android:gravity="end"
+          android:text="@string/hint_buySellFiat"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          />
+    </LinearLayout>
+  </ScrollView>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/default_margin"
+      android:orientation="vertical"
+      >
+
+    <com.hrules.cryptoprofit.presentation.components.UnderlineTextView
+        android:id="@+id/action_example"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/action_example"
+        android:textColorHighlight="@color/colorAccent"
+        />
+
+    <com.hrules.cryptoprofit.presentation.components.UnderlineTextView
+        android:id="@+id/action_donate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/action_donate"
+        android:textColorHighlight="@color/colorAccent"
+        />
+
+    <com.hrules.cryptoprofit.presentation.components.UnderlineTextView
+        android:id="@+id/action_visitWebSite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/action_visitWebSite"
+        android:textColorHighlight="@color/colorAccent"
+        />
+
+  </LinearLayout>
 </LinearLayout>

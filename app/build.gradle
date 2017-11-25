@@ -19,55 +19,57 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion androidBuildCompileSDKVersion
-    buildToolsVersion androidBuildToolsVersion
+  compileSdkVersion androidBuildCompileSDKVersion
+  buildToolsVersion androidBuildToolsVersion
 
-    defaultConfig {
-        applicationId "com.hrules.cryptoprofit"
-        minSdkVersion androidBuildMinSDKVersion
-        targetSdkVersion androidBuildTargetSDKVersion
-        versionCode appVersionCode
-        versionName appVersionName
-    }
+  defaultConfig {
+    applicationId "com.hrules.cryptoprofit"
+    minSdkVersion androidBuildMinSDKVersion
+    targetSdkVersion androidBuildTargetSDKVersion
+    versionCode appVersionCode
+    versionName appVersionName
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
 
-    testOptions.unitTests.all {
-        testLogging {
-            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
-        }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+  }
+
+  testOptions.unitTests.all {
+    testLogging {
+      events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+    }
+  }
 }
 
 kotlin {
-    experimental {
-        coroutines "enable"
-    }
+  experimental {
+    coroutines "enable"
+  }
 }
 
 dependencies {
-    testDependencies.each {
-        add("testImplementation", it.value)
-    }
+  testDependencies.each {
+    add("testImplementation", it.value)
+  }
 
-    androidTestDependencies.each {
-        add("androidTestImplementation", it.value)
-    }
+  androidTestDependencies.each {
+    add("androidTestImplementation", it.value)
+  }
 
-    supportDependencies.each {
-        add("implementation", it.value)
-    }
+  supportDependencies.each {
+    add("implementation", it.value)
+  }
 
-    projectDependencies.each {
-        add("implementation", it.value)
-    }
+  projectDependencies.each {
+    add("implementation", it.value)
+  }
 
-    annotationDependencies.each {
-        add("kapt", it.value)
-    }
+  annotationDependencies.each {
+    add("kapt", it.value)
+  }
 }

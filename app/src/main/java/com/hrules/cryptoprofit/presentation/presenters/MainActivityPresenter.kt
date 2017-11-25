@@ -16,18 +16,33 @@
 
 package com.hrules.cryptoprofit.presentation.presenters
 
+import com.hrules.cryptoprofit.commons.BasePreferences
 import com.hrules.cryptoprofit.presentation.base.mvp.BasePresenter
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseView
+import com.hrules.cryptoprofit.presentation.extensions.isNumeric
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
 
-class MainActivityPresenter : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
-
+class MainActivityPresenter(private val preferences: BasePreferences) : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
   override fun viewReady(first: Boolean) {
+    view?.let { view?.setCurrencyConverterState(preferences.currencyConverter) }
   }
 
-  fun resume() {
+  fun currencyConverter(state: Boolean) {
+    preferences.currencyConverter = state
+    view?.let { view?.setCurrencyConverterState(state) }
   }
 
-  interface Contract : BaseView
+  fun calculate(coinPrice: String, buyPrice: String, buyAmount: String, sellAmount: String) {
+    if (coinPrice.isNumeric() && buyPrice.isNumeric() && buyAmount.isNumeric() && sellAmount.isNumeric()) {
+    }
+  }
+
+  fun makeExample() {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  interface Contract : BaseView {
+    fun setCurrencyConverterState(state: Boolean)
+  }
 }
 
