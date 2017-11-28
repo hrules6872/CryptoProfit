@@ -17,10 +17,21 @@
 package com.hrules.cryptoprofit.presentation.presenters.models
 
 import android.os.Bundle
+import com.evernote.android.state.State
 import com.evernote.android.state.StateSaver
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseModel
+import java.math.BigDecimal
 
 class MainActivityModel : BaseModel<Bundle>() {
+  @State
+  var coinPrice: BigDecimal = BigDecimal.ZERO
+  @State
+  var buyPrice: BigDecimal = BigDecimal.ZERO
+  @State
+  var buyAmount: BigDecimal = BigDecimal.ZERO
+  @State
+  var sellPrice: BigDecimal = BigDecimal.ZERO
+
   override fun load(from: Bundle?) {
     from?.let {
       StateSaver.restoreInstanceState(this, from)

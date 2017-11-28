@@ -19,7 +19,6 @@ package com.hrules.cryptoprofit
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-
 class DummyUnitTest {
   @Test
   fun addition_isCorrect() {

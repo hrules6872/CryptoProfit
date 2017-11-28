@@ -20,18 +20,21 @@
   <string name="hint_coinPrice">Crypto price (fiat)</string>
   <string name="hint_buyPrice">Price</string>
   <string name="hint_buyAmount">Amount</string>
-  <string name="hint_buyTotalCrypto">Total</string>
-  <string name="hint_buyTotalFiat"><![CDATA[->]]></string>
   <string name="hint_sellPrice">Price</string>
-  <string name="hint_profitCrypto">Profit</string>
-  <string name="hint_profitFiat"><![CDATA[->]]></string>
-  <string name="hint_buySellFiat"><![CDATA[->]]></string>
+  <string name="hint_fiat"><![CDATA[->]]></string>
+  <string name="hint_singleFiat"><![CDATA[x1 ->]]></string>
 
   <string name="title_buy">Buy</string>
   <string name="title_sell">Sell</string>
 
+  <string name="action_clear">Clear</string>
+  <string name="action_memoryRecall">MR</string>
+  <string name="action_memoryStore">MS</string>
   <string name="action_currencyConverter">Currency\nconverter</string>
   <string name="action_example">Example</string>
   <string name="action_donate">Donate</string>
   <string name="action_visitWebSite">Visit website</string>
+  <string name="action_buyX1">x1.2</string>
+  <string name="action_buyX2">x1.5</string>
+
 </resources>

@@ -16,16 +16,16 @@
 
 package com.hrules.cryptoprofit.presentation.extensions
 
-import android.view.View
+import android.text.Editable
+import java.math.BigDecimal
+import java.math.RoundingMode
 
-fun String.isNumeric(): Boolean = try {
-  this.toDouble()
-  true
-} catch (e: Exception) {
-  false
-}
+const val DECIMAL_PLACES_FIAT = 2
+const val DECIMAL_PLACES_CRYPTO = 8
 
-fun Boolean.toVisibility(invisibleIsGone: Boolean = false): Int = when (this) {
-  false -> if (invisibleIsGone) View.GONE else View.INVISIBLE
-  true -> View.VISIBLE
-}
+fun String.toBigDecimalOrZero(): BigDecimal = this.toBigDecimalOrNull() ?: BigDecimal.ZERO
+
+fun String.toBigDecimalOrOne(): BigDecimal = this.toBigDecimalOrNull() ?: BigDecimal.ONE
+
+fun BigDecimal.toEditable(decimals: Int = DECIMAL_PLACES_CRYPTO): Editable =
+    Editable.Factory.getInstance().newEditable(this.setScale(decimals, RoundingMode.UNNECESSARY).toPlainString())

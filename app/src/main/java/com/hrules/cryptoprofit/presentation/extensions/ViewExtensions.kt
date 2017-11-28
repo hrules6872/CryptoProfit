@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.resources
+package com.hrules.cryptoprofit.presentation.extensions
 
-object ResString
+import android.view.View
+
+fun Boolean.toVisibility(invisibleIsGone: Boolean = false): Int = when (this) {
+  false -> if (invisibleIsGone) View.GONE else View.INVISIBLE
+  true -> View.VISIBLE
+}
