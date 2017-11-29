@@ -64,10 +64,10 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
 
   fun makeExample() {
     model.apply {
-      coinPrice = BigDecimal("8223.14")
-      buyPrice = BigDecimal("0.001586")
+      coinPrice = BigDecimal("8201.35")
+      buyPrice = BigDecimal("0.001516")
       buyAmount = BigDecimal("1")
-      sellPrice = BigDecimal("0.002012")
+      sellPrice = BigDecimal("0.002024")
     }
     refresh()
   }
@@ -99,6 +99,26 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
       buyAmount = BigDecimal.ZERO
       sellPrice = BigDecimal.ZERO
     }
+    refresh()
+  }
+
+  fun operation1() {
+    model.sellPrice = model.buyPrice
+    refresh()
+  }
+
+  fun operation2() {
+    model.sellPrice = BigDecimal.ZERO
+    refresh()
+  }
+
+  fun operation3() {
+    model.sellPrice = model.sellPrice.multiply(BigDecimal(1.10))
+    refresh()
+  }
+
+  fun operation4() {
+    model.sellPrice = model.sellPrice.multiply(BigDecimal(0.90))
     refresh()
   }
 

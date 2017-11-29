@@ -52,6 +52,11 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     action_memoryStore.setOnClickListener { view -> notifyClick(view) }
     action_memoryRecall.setOnClickListener { view -> notifyClick(view) }
     action_clear.setOnClickListener { view -> notifyClick(view) }
+
+    action_operation1.setOnClickListener { view -> notifyClick(view) }
+    action_operation2.setOnClickListener { view -> notifyClick(view) }
+    action_operation3.setOnClickListener { view -> notifyClick(view) }
+    action_operation4.setOnClickListener { view -> notifyClick(view) }
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -82,6 +87,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
         action_memoryStore -> presenter.memoryStore()
         action_memoryRecall -> presenter.memoryRecall()
         action_clear -> presenter.clear()
+        action_operation1 -> presenter.operation1()
+        action_operation2 -> presenter.operation2()
+        action_operation3 -> presenter.operation3()
+        action_operation4 -> presenter.operation4()
       }
     }
   }

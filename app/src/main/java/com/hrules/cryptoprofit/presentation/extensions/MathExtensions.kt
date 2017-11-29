@@ -28,4 +28,4 @@ fun String.toBigDecimalOrZero(): BigDecimal = this.toBigDecimalOrNull() ?: BigDe
 fun String.toBigDecimalOrOne(): BigDecimal = this.toBigDecimalOrNull() ?: BigDecimal.ONE
 
 fun BigDecimal.toEditable(decimals: Int = DECIMAL_PLACES_CRYPTO): Editable =
-    Editable.Factory.getInstance().newEditable(this.setScale(decimals, RoundingMode.UNNECESSARY).toPlainString())
+    Editable.Factory.getInstance().newEditable(this.setScale(decimals, RoundingMode.HALF_EVEN).toPlainString())

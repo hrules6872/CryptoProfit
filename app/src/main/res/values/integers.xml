@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2017. Héctor de Isidro - hrules6872
   ~
@@ -13,15 +14,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
 <resources>
-  <dimen name="default_margin">8dp</dimen>
-  <dimen name="default_marginDouble">16dp</dimen>
-  <dimen name="default_marginTriple">24dp</dimen>
-
-  <dimen name="default_padding">8dp</dimen>
-  <dimen name="default_paddingTriple">24dp</dimen>
-  <dimen name="default_paddingDouble">16dp</dimen>
-
-  <dimen name="default_buttonMinWidth">64dp</dimen>
+  <integer name="edit_maxLength">16</integer>
 </resources>
