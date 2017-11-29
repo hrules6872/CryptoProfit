@@ -47,12 +47,6 @@ android {
   }
 }
 
-kotlin {
-  experimental {
-    coroutines "enable"
-  }
-}
-
 dependencies {
   testDependencies.each {
     add("testImplementation", it.value)

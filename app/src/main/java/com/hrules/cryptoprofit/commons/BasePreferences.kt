@@ -17,9 +17,12 @@
 package com.hrules.cryptoprofit.commons
 
 const val PREFS_CURRENCY_CONVERTER = "PREFS_CURRENCY_CONVERTER"
+const val PREFS_MEMORY = "PREFS_MEMORY"
 
 const val PREFS_DEFAULT_CURRENCY_CONVERTER = false
+const val PREFS_DEFAULT_MEMORY = ""
 
 abstract class BasePreferences {
   abstract var currencyConverter: Boolean
+  abstract var memory: String
 }

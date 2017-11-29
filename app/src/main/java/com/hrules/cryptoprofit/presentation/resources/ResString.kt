@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.commons
+package com.hrules.cryptoprofit.presentation.resources
 
-import android.content.SharedPreferences
+import com.hrules.cryptoprofit.R
+import com.hrules.cryptoprofit.presentation.resources.base.ResWrapper
 
-class Preferences(private val preferences: SharedPreferences) : BasePreferences() {
-  override var currencyConverter: Boolean
-    get() = preferences.getBoolean(PREFS_CURRENCY_CONVERTER, PREFS_DEFAULT_CURRENCY_CONVERTER)
-    set(value) = preferences.edit().putBoolean(PREFS_CURRENCY_CONVERTER, value).apply()
+object ResString {
+  val memoryStore: String
+    get() = ResWrapper.getString(R.string.text_memoryStore)
 
-  override var memory: String
-    get() = preferences.getString(PREFS_MEMORY, PREFS_DEFAULT_MEMORY)
-    set(value) = preferences.edit().putString(PREFS_MEMORY, value).apply()
+  val memoryRecall: String
+    get() = ResWrapper.getString(R.string.text_memoryRecall)
 }

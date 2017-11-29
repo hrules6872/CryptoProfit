@@ -20,17 +20,25 @@ import android.os.Bundle
 import com.evernote.android.state.State
 import com.evernote.android.state.StateSaver
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseModel
+import com.hrules.cryptoprofit.presentation.presenters.models.serializers.BigDecimalSerializer
+import kotlinx.serialization.SerialContext
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JSON
 import java.math.BigDecimal
 
-class MainActivityModel : BaseModel<Bundle>() {
-  @State
-  var coinPrice: BigDecimal = BigDecimal.ZERO
-  @State
-  var buyPrice: BigDecimal = BigDecimal.ZERO
-  @State
-  var buyAmount: BigDecimal = BigDecimal.ZERO
-  @State
-  var sellPrice: BigDecimal = BigDecimal.ZERO
+@Serializable
+data class MainActivityModel(
+    @State @Serializable(with = BigDecimalSerializer::class) var coinPrice: BigDecimal = BigDecimal.ZERO,
+    @State @Serializable(with = BigDecimalSerializer::class) var buyPrice: BigDecimal = BigDecimal.ZERO,
+    @State @Serializable(with = BigDecimalSerializer::class) var buyAmount: BigDecimal = BigDecimal.ZERO,
+    @State @Serializable(with = BigDecimalSerializer::class) var sellPrice: BigDecimal = BigDecimal.ZERO
+) : BaseModel<Bundle>() {
+
+  companion object {
+    val JSONParser: JSON = JSON(unquoted = true,
+        context = SerialContext().apply { registerSerializer(BigDecimal::class, BigDecimalSerializer) }
+    )
+  }
 
   override fun load(from: Bundle?) {
     from?.let {

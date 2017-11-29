@@ -37,4 +37,6 @@
   <string name="action_buyX1">x1.2</string>
   <string name="action_buyX2">x1.5</string>
 
+  <string name="text_memoryStore">Memory store</string>
+  <string name="text_memoryRecall">Memory recall</string>
 </resources>

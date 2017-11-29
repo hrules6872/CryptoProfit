@@ -26,10 +26,7 @@ import com.hrules.cryptoprofit.R
 import com.hrules.cryptoprofit.R.id.*
 import com.hrules.cryptoprofit.commons.Preferences
 import com.hrules.cryptoprofit.presentation.base.BaseActivity
-import com.hrules.cryptoprofit.presentation.extensions.DECIMAL_PLACES_FIAT
-import com.hrules.cryptoprofit.presentation.extensions.textWatcher
-import com.hrules.cryptoprofit.presentation.extensions.toEditable
-import com.hrules.cryptoprofit.presentation.extensions.toVisibility
+import com.hrules.cryptoprofit.presentation.extensions.*
 import com.hrules.cryptoprofit.presentation.presenters.MainActivityPresenter
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -56,7 +53,6 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     action_memoryRecall.setOnClickListener { view -> notifyClick(view) }
     action_clear.setOnClickListener { view -> notifyClick(view) }
   }
-
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
@@ -96,7 +92,6 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
   private fun visitWebsiteClick() {
   }
 
-
   override fun setCurrencyConverterState(state: Boolean) {
     action_currencyConverter.isChecked = state
 
@@ -122,5 +117,9 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     edit_buyPrice.text = buyPrice.toEditable()
     edit_buyAmount.text = buyAmount.toEditable()
     edit_sellPrice.text = sellPrice.toEditable()
+  }
+
+  override fun showToast(message: String) {
+    toast(message)
   }
 }

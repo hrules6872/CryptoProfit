@@ -22,6 +22,7 @@ import com.hrules.cryptoprofit.presentation.base.mvp.BaseView
 import com.hrules.cryptoprofit.presentation.extensions.toBigDecimalOrOne
 import com.hrules.cryptoprofit.presentation.extensions.toBigDecimalOrZero
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
+import com.hrules.cryptoprofit.presentation.resources.ResString
 import java.math.BigDecimal
 
 class MainActivityPresenter(private val preferences: BasePreferences) : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
@@ -72,11 +73,24 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
   }
 
   fun memoryStore() {
-
-
+    preferences.memory = MainActivityModel.JSONParser.stringify(model)
+    view?.showToast(ResString.memoryStore)
   }
 
-  fun memoryRecall() {}
+  fun memoryRecall() {
+    try {
+      val modelRecall: MainActivityModel = MainActivityModel.JSONParser.parse(preferences.memory)
+      model.apply {
+        coinPrice = modelRecall.coinPrice
+        buyPrice = modelRecall.buyPrice
+        buyAmount = modelRecall.buyAmount
+        sellPrice = modelRecall.sellPrice
+      }
+      view?.showToast(ResString.memoryRecall)
+    } catch (e: Exception) {
+    }
+    refresh()
+  }
 
   fun clear() {
     model.apply {
@@ -99,6 +113,7 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
         sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal)
 
     fun setSources(coinPrice: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal, sellPrice: BigDecimal)
+    fun showToast(message: String)
   }
 }
 
