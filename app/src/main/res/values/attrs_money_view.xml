@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2017. Héctor de Isidro - hrules6872
   ~
@@ -15,15 +16,11 @@
   -->
 
 <resources>
-  <dimen name="default_margin">8dp</dimen>
-  <dimen name="default_marginDouble">16dp</dimen>
-  <dimen name="default_marginTriple">24dp</dimen>
-  <dimen name="default_marginQuad">32dp</dimen>
-
-  <dimen name="default_padding">8dp</dimen>
-  <dimen name="default_paddingTriple">24dp</dimen>
-  <dimen name="default_paddingDouble">16dp</dimen>
-
-  <dimen name="default_buttonMinWidth">64dp</dimen>
-  <dimen name="default_marginHalf">4dp</dimen>
+  <declare-styleable name="moneyView">
+    <attr format="string" name="currencySymbol"/>
+    <attr format="boolean" name="currencySymbolLeftSide"/>
+    <attr format="integer" name="decimalPlacesMin"/>
+    <attr format="integer" name="decimalPlacesMax"/>
+    <attr format="boolean" name="signed"/>
+  </declare-styleable>
 </resources>

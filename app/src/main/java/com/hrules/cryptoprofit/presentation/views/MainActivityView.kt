@@ -16,6 +16,8 @@
 
 package com.hrules.cryptoprofit.presentation.views
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.Menu
@@ -26,11 +28,14 @@ import com.hrules.cryptoprofit.R
 import com.hrules.cryptoprofit.R.id.*
 import com.hrules.cryptoprofit.commons.Preferences
 import com.hrules.cryptoprofit.presentation.base.BaseActivity
-import com.hrules.cryptoprofit.presentation.extensions.*
+import com.hrules.cryptoprofit.presentation.extensions.textWatcher
+import com.hrules.cryptoprofit.presentation.extensions.toVisibility
+import com.hrules.cryptoprofit.presentation.extensions.toast
 import com.hrules.cryptoprofit.presentation.presenters.MainActivityPresenter
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigDecimal
+
 
 class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.Contract, MainActivityPresenter>(), MainActivityPresenter.Contract {
   override var presenter: MainActivityPresenter = MainActivityPresenter(
@@ -75,10 +80,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
 
   private fun notifyChange() {
     presenter.calculate(
-        coinPriceString = edit_coinPrice.text.toString(),
-        buyPriceString = edit_buyPrice.text.toString(),
-        buyAmountString = edit_buyAmount.text.toString(),
-        sellPriceString = edit_sellPrice.text.toString())
+        coinPriceInput = edit_coinPrice.money,
+        buyPriceInput = edit_buyPrice.money,
+        buyAmountInput = edit_buyAmount.money,
+        sellPriceInput = edit_sellPrice.money)
   }
 
   private fun notifyClick(view: View?) {
@@ -99,6 +104,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
   }
 
   private fun visitWebsiteClick() {
+    try {
+      startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_webSite))))
+    } catch (e: Exception) {
+    }
   }
 
   override fun setCurrencyConverterState(state: Boolean) {
@@ -109,23 +118,30 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     text_buySingleFiat.visibility = state.toVisibility(invisibleIsGone = true)
     text_sellTotalFiat.visibility = state.toVisibility(invisibleIsGone = true)
     text_sellSingleFiat.visibility = state.toVisibility(invisibleIsGone = true)
+    text_profitFiat.visibility = state.toVisibility(invisibleIsGone = true)
+    text_profitSingleFiat.visibility = state.toVisibility(invisibleIsGone = true)
   }
 
   override fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal, sellTotal: BigDecimal,
-      sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal) {
+      sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal, profitFiat: BigDecimal, profitSingleFiat: BigDecimal) {
     text_buyTotal.money = buyTotal
     text_buyTotalFiat.money = buyTotalFiat
     text_buySingleFiat.money = buySingleFiat
+
     text_sellTotal.money = sellTotal
     text_sellTotalFiat.money = sellTotalFiat
     text_sellSingleFiat.money = sellSingleFiat
+
+    text_profit.money = profit
+    text_profitFiat.money = profitFiat
+    text_profitSingleFiat.money = profitSingleFiat
   }
 
   override fun setSources(coinPrice: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal, sellPrice: BigDecimal) {
-    edit_coinPrice.text = coinPrice.toEditable(DECIMAL_PLACES_FIAT)
-    edit_buyPrice.text = buyPrice.toEditable()
-    edit_buyAmount.text = buyAmount.toEditable()
-    edit_sellPrice.text = sellPrice.toEditable()
+    edit_coinPrice.money = coinPrice
+    edit_buyPrice.money = buyPrice
+    edit_buyAmount.money = buyAmount
+    edit_sellPrice.money = sellPrice
   }
 
   override fun showToast(message: String) {

@@ -28,9 +28,9 @@ import java.math.BigDecimal
 
 @Serializable
 data class MainActivityModel(
-    @State @Serializable(with = BigDecimalSerializer::class) var coinPrice: BigDecimal = BigDecimal.ZERO,
+    @State @Serializable(with = BigDecimalSerializer::class) var coinPrice: BigDecimal = BigDecimal.ONE,
     @State @Serializable(with = BigDecimalSerializer::class) var buyPrice: BigDecimal = BigDecimal.ZERO,
-    @State @Serializable(with = BigDecimalSerializer::class) var buyAmount: BigDecimal = BigDecimal.ZERO,
+    @State @Serializable(with = BigDecimalSerializer::class) var buyAmount: BigDecimal = BigDecimal.ONE,
     @State @Serializable(with = BigDecimalSerializer::class) var sellPrice: BigDecimal = BigDecimal.ZERO
 ) : BaseModel<Bundle>() {
 

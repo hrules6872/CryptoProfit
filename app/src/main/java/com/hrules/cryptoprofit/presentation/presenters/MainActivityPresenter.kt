@@ -19,8 +19,7 @@ package com.hrules.cryptoprofit.presentation.presenters
 import com.hrules.cryptoprofit.commons.BasePreferences
 import com.hrules.cryptoprofit.presentation.base.mvp.BasePresenter
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseView
-import com.hrules.cryptoprofit.presentation.extensions.toBigDecimalOrOne
-import com.hrules.cryptoprofit.presentation.extensions.toBigDecimalOrZero
+import com.hrules.cryptoprofit.presentation.extensions.toOneIfZero
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
 import com.hrules.cryptoprofit.presentation.resources.ResString
 import java.math.BigDecimal
@@ -33,12 +32,12 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
     }
   }
 
-  fun calculate(coinPriceString: String, buyPriceString: String, buyAmountString: String, sellPriceString: String) {
-    model.apply {
-      coinPrice = coinPriceString.toBigDecimalOrOne()
-      buyPrice = buyPriceString.toBigDecimalOrZero()
-      buyAmount = buyAmountString.toBigDecimalOrZero()
-      sellPrice = sellPriceString.toBigDecimalOrZero()
+  fun calculate(coinPriceInput: BigDecimal, buyPriceInput: BigDecimal, buyAmountInput: BigDecimal, sellPriceInput: BigDecimal) {
+    with(model) {
+      coinPrice = coinPriceInput.toOneIfZero()
+      buyPrice = buyPriceInput
+      buyAmount = buyAmountInput.toOneIfZero()
+      sellPrice = sellPriceInput
     }
     calculate()
   }
@@ -47,11 +46,16 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
     val buyTotal = model.buyAmount * model.buyPrice
     val buyTotalFiat = buyTotal * model.coinPrice
     val buySingleFiat = model.buyPrice * model.coinPrice
+
     val sellTotal = model.buyAmount * model.sellPrice
     val sellTotalFiat = sellTotal * model.coinPrice
     val sellSingleFiat = model.sellPrice * model.coinPrice
 
-    view?.setResults(buyTotal, buyTotalFiat, buySingleFiat, sellTotal, sellTotalFiat, sellSingleFiat)
+    val profit = sellTotal - buyTotal
+    val profitFiat = sellTotalFiat - buyTotalFiat
+    val profitSingleFiat = sellSingleFiat - buySingleFiat
+
+    view?.setResults(buyTotal, buyTotalFiat, buySingleFiat, sellTotal, sellTotalFiat, sellSingleFiat, profit, profitFiat, profitSingleFiat)
   }
 
   fun currencyConverter(state: Boolean) {
@@ -63,13 +67,13 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
   }
 
   fun makeExample() {
-    model.apply {
-      coinPrice = BigDecimal("8201.35")
-      buyPrice = BigDecimal("0.001516")
-      buyAmount = BigDecimal("1")
-      sellPrice = BigDecimal("0.002024")
+    with(model) {
+      coinPrice = BigDecimal(8201.36)
+      buyPrice = BigDecimal(0.001516)
+      buyAmount = BigDecimal(5)
+      sellPrice = BigDecimal(0.002024)
     }
-    refresh()
+    setSourcesAndCalculate()
   }
 
   fun memoryStore() {
@@ -80,7 +84,7 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
   fun memoryRecall() {
     try {
       val modelRecall: MainActivityModel = MainActivityModel.JSONParser.parse(preferences.memory)
-      model.apply {
+      with(model) {
         coinPrice = modelRecall.coinPrice
         buyPrice = modelRecall.buyPrice
         buyAmount = modelRecall.buyAmount
@@ -89,40 +93,40 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
       view?.showToast(ResString.memoryRecall)
     } catch (e: Exception) {
     }
-    refresh()
+    setSourcesAndCalculate()
   }
 
   fun clear() {
-    model.apply {
+    with(model) {
       coinPrice = BigDecimal.ONE
       buyPrice = BigDecimal.ZERO
       buyAmount = BigDecimal.ZERO
       sellPrice = BigDecimal.ZERO
     }
-    refresh()
+    setSourcesAndCalculate()
   }
 
   fun operation1() {
     model.sellPrice = model.buyPrice
-    refresh()
+    setSourcesAndCalculate()
   }
 
   fun operation2() {
     model.sellPrice = BigDecimal.ZERO
-    refresh()
+    setSourcesAndCalculate()
   }
 
   fun operation3() {
     model.sellPrice = model.sellPrice.multiply(BigDecimal(1.10))
-    refresh()
+    setSourcesAndCalculate()
   }
 
   fun operation4() {
     model.sellPrice = model.sellPrice.multiply(BigDecimal(0.90))
-    refresh()
+    setSourcesAndCalculate()
   }
 
-  private fun refresh() {
+  private fun setSourcesAndCalculate() {
     view?.setSources(model.coinPrice, model.buyPrice, model.buyAmount, model.sellPrice)
     calculate()
   }
@@ -130,7 +134,7 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
   interface Contract : BaseView {
     fun setCurrencyConverterState(state: Boolean)
     fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal, sellTotal: BigDecimal,
-        sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal)
+        sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal, profitFiat: BigDecimal, profitSingleFiat: BigDecimal)
 
     fun setSources(coinPrice: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal, sellPrice: BigDecimal)
     fun showToast(message: String)

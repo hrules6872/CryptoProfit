@@ -16,16 +16,30 @@
 
 package com.hrules.cryptoprofit.presentation.extensions
 
-import android.text.Editable
 import java.math.BigDecimal
-import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.text.ParseException
+import java.util.*
 
-const val DECIMAL_PLACES_FIAT = 2
-const val DECIMAL_PLACES_CRYPTO = 8
+fun String.toBigDecimalOrZero(): BigDecimal {
+  return try {
+    val decimalFormat = NumberFormat.getInstance(Locale.getDefault()) as DecimalFormat
+    decimalFormat.isParseBigDecimal = true
+    decimalFormat.parseObject(this) as BigDecimal
+  } catch (e: ParseException) {
+    BigDecimal.ZERO
+  }
+}
 
-fun String.toBigDecimalOrZero(): BigDecimal = this.toBigDecimalOrNull() ?: BigDecimal.ZERO
+fun BigDecimal.toOneIfZero(): BigDecimal = if (this == BigDecimal.ZERO) BigDecimal.ONE else this
 
-fun String.toBigDecimalOrOne(): BigDecimal = this.toBigDecimalOrNull() ?: BigDecimal.ONE
-
-fun BigDecimal.toEditable(decimals: Int = DECIMAL_PLACES_CRYPTO): Editable =
-    Editable.Factory.getInstance().newEditable(this.setScale(decimals, RoundingMode.HALF_EVEN).toPlainString())
+fun BigDecimal.toMoneyText(decimalPlacesMin: Int = 0, decimalPlacesMax: Int = 0, group: Boolean = false): String {
+  val decimalFormat = DecimalFormat()
+  with(decimalFormat) {
+    minimumFractionDigits = decimalPlacesMin
+    maximumFractionDigits = decimalPlacesMax
+    isGroupingUsed = group
+  }
+  return decimalFormat.format(this.stripTrailingZeros())
+}

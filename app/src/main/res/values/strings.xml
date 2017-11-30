@@ -16,16 +16,16 @@
 
 <resources>
   <string name="app_name">CryptoProfit</string>
+  <string name="app_webSite">https://github.com/hrules6872/CryptoProfit</string>
 
-  <string name="hint_coinPrice">Crypto price (fiat)</string>
+  <string name="hint_coinPrice">Crypto price</string>
   <string name="hint_buyPrice">Price</string>
   <string name="hint_buyAmount">Amount</string>
   <string name="hint_sellPrice">Price</string>
-  <string name="hint_fiat"><![CDATA[->]]></string>
-  <string name="hint_singleFiat"><![CDATA[x1 ->]]></string>
 
   <string name="title_buy">Buy</string>
   <string name="title_sell">Sell</string>
+  <string name="title_profit">Profit</string>
 
   <string name="action_clear">Clear</string>
   <string name="action_memoryRecall">MR</string>
@@ -42,4 +42,6 @@
   <string name="text_memoryStore">Memory store</string>
   <string name="text_memoryRecall">Memory recall</string>
 
+  <string name="currency_fiat"><![CDATA[💵]]></string>
+  <string name="currency_singleFiat"><![CDATA[1x 💵]]></string>
 </resources>

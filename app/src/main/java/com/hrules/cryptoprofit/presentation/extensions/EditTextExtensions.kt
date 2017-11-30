@@ -20,8 +20,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.TextView
 
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+
 inline fun TextView.textWatcher(init: CustomTextWatcher.() -> Unit) = addTextChangedListener(CustomTextWatcher().apply(init))
 
+@Suppress("unused")
 class CustomTextWatcher : TextWatcher {
   private var _beforeTextChanged: ((CharSequence?, Int, Int, Int) -> Unit)? = null
   private var _onTextChanged: ((CharSequence?, Int, Int, Int) -> Unit)? = null

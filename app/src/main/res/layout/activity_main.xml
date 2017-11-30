@@ -16,6 +16,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -96,16 +97,14 @@
             android:layout_height="wrap_content"
             >
 
-          <android.support.design.widget.TextInputEditText
+          <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
               android:id="@+id/edit_coinPrice"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:gravity="end"
               android:hint="@string/hint_coinPrice"
               android:imeOptions="actionNext"
-              android:inputType="numberDecimal"
-              android:maxLength="@integer/edit_maxLength"
               android:nextFocusDown="@id/edit_buyPrice"
+              app:decimalPlacesMax="2"
               />
         </android.support.design.widget.TextInputLayout>
       </LinearLayout>
@@ -131,17 +130,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            app:hintAnimationEnabled="false"
             >
 
-          <android.support.design.widget.TextInputEditText
+          <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
               android:id="@+id/edit_buyPrice"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:gravity="end"
               android:hint="@string/hint_buyPrice"
               android:imeOptions="actionNext"
-              android:inputType="numberDecimal"
-              android:maxLength="@integer/edit_maxLength"
               android:nextFocusDown="@id/edit_buyAmount"
               />
         </android.support.design.widget.TextInputLayout>
@@ -152,15 +149,12 @@
             android:layout_weight="1"
             >
 
-          <android.support.design.widget.TextInputEditText
+          <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
               android:id="@+id/edit_buyAmount"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:gravity="end"
               android:hint="@string/hint_buyAmount"
               android:imeOptions="actionNext"
-              android:inputType="numberDecimal"
-              android:maxLength="@integer/edit_maxLength"
               android:nextFocusDown="@id/edit_sellPrice"
               />
         </android.support.design.widget.TextInputLayout>
@@ -181,8 +175,9 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="end"
-          android:text="@string/hint_fiat"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          app:currencySymbol="@string/currency_fiat"
+          app:decimalPlacesMax="2"
           />
 
       <com.hrules.cryptoprofit.presentation.components.MoneyTextView
@@ -190,8 +185,9 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="end"
-          android:text="@string/hint_singleFiat"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          app:currencySymbol="@string/currency_singleFiat"
+          app:decimalPlacesMax="2"
           />
 
       <TextView
@@ -208,15 +204,12 @@
           android:layout_height="wrap_content"
           >
 
-        <android.support.design.widget.TextInputEditText
+        <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
             android:id="@+id/edit_sellPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
             android:hint="@string/hint_sellPrice"
             android:imeOptions="actionNext"
-            android:inputType="numberDecimal"
-            android:maxLength="@integer/edit_maxLength"
             android:nextFocusDown="@id/edit_coinPrice"
             />
       </android.support.design.widget.TextInputLayout>
@@ -289,8 +282,9 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="end"
-              android:text="@string/hint_fiat"
               android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+              app:currencySymbol="@string/currency_fiat"
+              app:decimalPlacesMax="2"
               />
 
           <com.hrules.cryptoprofit.presentation.components.MoneyTextView
@@ -298,11 +292,61 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="end"
-              android:text="@string/hint_singleFiat"
               android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+              app:currencySymbol="@string/currency_singleFiat"
+              app:decimalPlacesMax="2"
               />
         </LinearLayout>
       </LinearLayout>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_marginQuad"
+          android:gravity="start"
+          android:text="@string/title_profit"
+          android:textAppearance="@style/TextAppearance.AppCompat.Button"
+          />
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="@dimen/default_marginHalf"
+          android:background="@android:color/background_light"
+          />
+
+      <com.hrules.cryptoprofit.presentation.components.MoneyTextView
+          android:id="@+id/text_profit"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/default_margin"
+          android:gravity="end"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          app:signed="true"
+          />
+
+      <com.hrules.cryptoprofit.presentation.components.MoneyTextView
+          android:id="@+id/text_profitFiat"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="end"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          app:currencySymbol="@string/currency_fiat"
+          app:decimalPlacesMax="2"
+          app:signed="true"
+          />
+
+      <com.hrules.cryptoprofit.presentation.components.MoneyTextView
+          android:id="@+id/text_profitSingleFiat"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="end"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          app:currencySymbol="@string/currency_singleFiat"
+          app:decimalPlacesMax="2"
+          app:signed="true"
+          />
+
     </LinearLayout>
   </ScrollView>
 </LinearLayout>
