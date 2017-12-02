@@ -16,18 +16,40 @@
 
 package com.hrules.cryptoprofit.presentation.presenters
 
-import com.hrules.cryptoprofit.commons.BasePreferences
+import com.hrules.cryptoprofit.data.cache.BaseCache
+import com.hrules.cryptoprofit.data.preferences.BasePreferences
 import com.hrules.cryptoprofit.presentation.base.mvp.BasePresenter
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseView
+import com.hrules.cryptoprofit.presentation.entitites.Crypto
+import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
+import com.hrules.cryptoprofit.presentation.entitites.serializers.CryptoSerializer
+import com.hrules.cryptoprofit.presentation.entitites.serializers.MainActivityModelSerializer
+import com.hrules.cryptoprofit.presentation.extensions.elementFromJSONArray
 import com.hrules.cryptoprofit.presentation.extensions.toOneIfZero
+import com.hrules.cryptoprofit.presentation.extensions.withParams
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
 import com.hrules.cryptoprofit.presentation.resources.ResString
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.io.IOException
 import java.math.BigDecimal
 
-class MainActivityPresenter(private val preferences: BasePreferences) : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
+private const val API_ENDPOINT = "https://api.coinmarketcap.com/v1/ticker/{{cryptoCurrency}}/?convert={{currencyToConvert}}"
+
+class MainActivityPresenter(private val preferences: BasePreferences,
+    private val cache: BaseCache<CryptoCurrency, Crypto>) : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
   override fun viewReady(first: Boolean) {
     view?.let {
       it.setCurrencyConverterState(preferences.currencyConverter)
+      it.setCurrencyToConvert(preferences.currencyToConvert)
+    }
+
+    if (first) {
+      getCryptoPrice(CryptoCurrency.valueOf(preferences.cryptoCurrency), preferences.currencyToConvert)
+    } else {
       calculate()
     }
   }
@@ -77,13 +99,13 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
   }
 
   fun memoryStore() {
-    preferences.memory = MainActivityModel.JSONParser.stringify(model)
+    preferences.memory = MainActivityModelSerializer.stringify(model)
     view?.showToast(ResString.memoryStore)
   }
 
   fun memoryRecall() {
     try {
-      val modelRecall: MainActivityModel = MainActivityModel.JSONParser.parse(preferences.memory)
+      val modelRecall: MainActivityModel = MainActivityModelSerializer.parse(preferences.memory)
       with(model) {
         coinPrice = modelRecall.coinPrice
         buyPrice = modelRecall.buyPrice
@@ -104,6 +126,21 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
       sellPrice = BigDecimal.ZERO
     }
     setSourcesAndCalculate()
+  }
+
+  fun priceBitcoin() {
+    preferences.cryptoCurrency = CryptoCurrency.BITCOIN.name
+    getCryptoPrice(CryptoCurrency.BITCOIN, preferences.currencyToConvert)
+  }
+
+  fun priceEthereum() {
+    preferences.cryptoCurrency = CryptoCurrency.ETHEREUM.name
+    getCryptoPrice(CryptoCurrency.ETHEREUM, preferences.currencyToConvert)
+  }
+
+  fun currencyToConvert(currencyToConvert: String) {
+    preferences.currencyToConvert = currencyToConvert
+    view?.setCurrencyToConvert(currencyToConvert)
   }
 
   fun operation1() {
@@ -131,12 +168,48 @@ class MainActivityPresenter(private val preferences: BasePreferences) : BasePres
     calculate()
   }
 
+  private fun getCryptoPrice(cryptoCurrency: CryptoCurrency, currencyToConvert: String) {
+    launch(UI) {
+      try {
+        val crypto = async { getCryptoPriceAsync(cryptoCurrency, currencyToConvert) }.await()
+        model.coinPrice = crypto.price(currencyToConvert)
+        view?.let {
+          it.setCurrencyPrice(model.coinPrice)
+          calculate()
+        }
+      } catch (e: Exception) {
+        view?.showToast(
+            when (e) {
+              is IOException -> ResString.errorNoConnection
+              else -> ResString.errorUnknown
+            })
+      }
+    }
+  }
+
+  private suspend fun getCryptoPriceAsync(cryptoCurrency: CryptoCurrency, currencyToConvert: String): Crypto {
+    var crypto = cache.get(cryptoCurrency)
+    if (!crypto.validate() or crypto.cacheDirty or (crypto.price(currencyToConvert) == BigDecimal.ZERO)) {
+      val request = Request.Builder().url(API_ENDPOINT.withParams(cryptoCurrency.name, currencyToConvert)).build()
+      val response = OkHttpClient().newCall(request).execute()
+      response.body()?.let {
+        val responseString = it.string()
+        crypto = CryptoSerializer.parse(responseString.elementFromJSONArray())
+        cache.put(cryptoCurrency, crypto)
+      }
+    }
+    return crypto
+  }
+
   interface Contract : BaseView {
+    fun setCurrencyPrice(price: BigDecimal)
     fun setCurrencyConverterState(state: Boolean)
+    fun setCurrencyToConvert(currencyToConvert: String)
+
+    fun setSources(coinPrice: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal, sellPrice: BigDecimal)
     fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal, sellTotal: BigDecimal,
         sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal, profitFiat: BigDecimal, profitSingleFiat: BigDecimal)
 
-    fun setSources(coinPrice: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal, sellPrice: BigDecimal)
     fun showToast(message: String)
   }
 }

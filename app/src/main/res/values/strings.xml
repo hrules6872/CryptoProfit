@@ -38,10 +38,16 @@
   <string name="action_operation2">C</string>
   <string name="action_operation3">+10%</string>
   <string name="action_operation4">-10%</string>
+  <string name="action_priceBitcoin">BTC</string>
+  <string name="action_priceEthereum">ETH</string>
 
   <string name="text_memoryStore">Memory store</string>
   <string name="text_memoryRecall">Memory recall</string>
+  <string name="text_selectCurrency">Select currency</string>
 
-  <string name="currency_fiat"><![CDATA[💵]]></string>
-  <string name="currency_singleFiat"><![CDATA[1x 💵]]></string>
+  <string name="error_unknown">Something went wrong</string>
+  <string name="error_noConnection">No network available</string>
+
+  <string name="currency_fiat">ғɪᴀᴛ</string>
+  <string name="currency_singleFiat">1x ғɪᴀᴛ</string>
 </resources>

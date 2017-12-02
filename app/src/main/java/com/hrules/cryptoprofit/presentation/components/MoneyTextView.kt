@@ -33,7 +33,7 @@ const val DEFAULT_SIGNED = false
 
 class MoneyTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : AppCompatTextView(
     context, attrs, defStyleAttr) {
-  private lateinit var currencySymbol: String
+  private var currencySymbol: String = DEFAULT_SYMBOL
   private var currencySymbolLeftSide: Boolean = DEFAULT_SYMBOL_LEFT_SIDE
   private var decimalPlacesMin: Int = DEFAULT_DECIMALS_PLACES_MIN
   private var decimalPlacesMax: Int = DEFAULT_DECIMALS_PLACES_MAX

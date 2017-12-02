@@ -20,9 +20,11 @@ import com.hrules.cryptoprofit.R
 import com.hrules.cryptoprofit.presentation.resources.base.ResWrapper
 
 object ResString {
-  val memoryStore: String
-    get() = ResWrapper.getString(R.string.text_memoryStore)
+  val memoryStore: String = ResWrapper.getString(R.string.text_memoryStore)
 
-  val memoryRecall: String
-    get() = ResWrapper.getString(R.string.text_memoryRecall)
+  val memoryRecall: String = ResWrapper.getString(R.string.text_memoryRecall)
+
+  val errorUnknown: String = ResWrapper.getString(R.string.error_unknown)
+
+  val errorNoConnection: String = ResWrapper.getString(R.string.error_noConnection)
 }

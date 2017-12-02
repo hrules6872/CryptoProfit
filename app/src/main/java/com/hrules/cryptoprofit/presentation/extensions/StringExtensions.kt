@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.commons
+package com.hrules.cryptoprofit.presentation.extensions
 
-import android.content.SharedPreferences
+import java.net.URLEncoder
 
-class Preferences(private val preferences: SharedPreferences) : BasePreferences() {
-  override var currencyConverter: Boolean
-    get() = preferences.getBoolean(PREFS_CURRENCY_CONVERTER, PREFS_DEFAULT_CURRENCY_CONVERTER)
-    set(value) = preferences.edit().putBoolean(PREFS_CURRENCY_CONVERTER, value).apply()
-
-  override var memory: String
-    get() = preferences.getString(PREFS_MEMORY, PREFS_DEFAULT_MEMORY)
-    set(value) = preferences.edit().putString(PREFS_MEMORY, value).apply()
+internal fun String.withParams(vararg params: Any): String {
+  var result = this
+  for (param in params)
+  // do not remove redundant character escape
+    result = result.replaceFirst("\\{\\{(.*?)\\}\\}".toRegex(), URLEncoder.encode(param.toString(), "UTF-8"))
+  return result
 }

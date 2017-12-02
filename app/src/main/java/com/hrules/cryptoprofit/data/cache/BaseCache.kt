@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit
+package com.hrules.cryptoprofit.data.cache
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
-
-class DummyUnitTest {
-  @Test
-  fun addition_isCorrect() {
-    assertEquals(4, 2 + 2)
-  }
+interface BaseCache<in INPUT, Cacheable> {
+  fun get(input: INPUT): Cacheable
+  fun put(input: INPUT, value: Cacheable)
+  fun evictAll()
 }

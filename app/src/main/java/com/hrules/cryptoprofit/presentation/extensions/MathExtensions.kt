@@ -22,9 +22,9 @@ import java.text.NumberFormat
 import java.text.ParseException
 import java.util.*
 
-fun String.toBigDecimalOrZero(): BigDecimal {
+fun String.toBigDecimalOrZero(locale: Locale = Locale.getDefault()): BigDecimal {
   return try {
-    val decimalFormat = NumberFormat.getInstance(Locale.getDefault()) as DecimalFormat
+    val decimalFormat = NumberFormat.getInstance(locale) as DecimalFormat
     decimalFormat.isParseBigDecimal = true
     decimalFormat.parseObject(this) as BigDecimal
   } catch (e: ParseException) {

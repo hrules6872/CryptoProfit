@@ -14,15 +14,22 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.presenters.models.serializers
+package com.hrules.cryptoprofit.presentation.entitites.serializers.custom
 
 import com.hrules.cryptoprofit.presentation.extensions.toBigDecimalOrZero
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.SerialClassDescImpl
 import java.math.BigDecimal
+import java.util.*
 
 @Serializer(forClass = BigDecimal::class)
-object BigDecimalSerializer : KSerializer<BigDecimal> {
+object BigDecimalCustomSerializer : KSerializer<BigDecimal> {
+  private var locale: Locale = Locale.getDefault()
+
+  fun init(locale: Locale) {
+    this.locale = locale
+  }
+
   override val serialClassDesc: KSerialClassDesc = SerialClassDescImpl("java.math.BigDecimal")
 
   override fun save(output: KOutput, obj: BigDecimal) {
@@ -30,6 +37,6 @@ object BigDecimalSerializer : KSerializer<BigDecimal> {
   }
 
   override fun load(input: KInput): BigDecimal {
-    return input.readStringValue().toBigDecimalOrZero()
+    return input.readStringValue().toBigDecimalOrZero(locale)
   }
 }

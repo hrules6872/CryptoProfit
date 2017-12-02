@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.resources.base
+package com.hrules.cryptoprofit.presentation.entitites.serializers
 
-import android.support.annotation.StringRes
-import com.hrules.cryptoprofit.App
+import com.hrules.cryptoprofit.Utils
+import org.junit.Assert.assertTrue
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
-object ResWrapper {
-  fun getString(@StringRes resId: Int): String = App.instance.resources.getString(resId)
+@RunWith(JUnit4::class)
+class CryptoSerializerTest {
+  @Test
+  fun `given a valid json when deserialize to Crypto entity then ok`() {
+    val validJson = Utils().readFile("json/valid_bitcoin.json")
+    val crypto = CryptoSerializer.parse(validJson)
+    assertTrue(crypto.validate())
+  }
 }

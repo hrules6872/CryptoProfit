@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.resources.base
+package com.hrules.cryptoprofit.presentation.entitites.base
 
-import android.support.annotation.StringRes
-import com.hrules.cryptoprofit.App
-
-object ResWrapper {
-  fun getString(@StringRes resId: Int): String = App.instance.resources.getString(resId)
+interface Cacheable {
+  var cacheCreated: Long
+  var cacheDirty: Boolean
 }

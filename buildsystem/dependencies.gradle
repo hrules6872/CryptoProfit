@@ -42,15 +42,21 @@ ext {
           appCompat         : "com.android.support:appcompat-v7:${supportLibraryVersion}",
           supportAnnotations: "com.android.support:support-annotations:${supportLibraryVersion}",
           design            : "com.android.support:design:${supportLibraryVersion}",
+          support           : "com.android.support:support-v4:${supportLibraryVersion}"
 
       ],
 
+      kotlinCoroutinesVersion = '0.20',
       androidStateVersion = '1.1.+',
+      okhttpVersion = '3.9.+',
       projectDependencies = [
 
-          kotlinStdJre       : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlin_version}",
-          kotlinSerialization: "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version",
-          androidState       : "com.evernote:android-state:${androidStateVersion}",
+          kotlinStdJre           : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlin_version}",
+          kotlinSerialization    : "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version",
+          kotlinCoroutinesCore   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinCoroutinesVersion}",
+          kotlinCoroutinesAndroid: "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinCoroutinesVersion}",
+          androidState           : "com.evernote:android-state:${androidStateVersion}",
+          okhttp                 : "com.squareup.okhttp3:okhttp:${okhttpVersion}",
 
       ],
 
@@ -63,11 +69,13 @@ ext {
       junitVersion = '4.12',
       hamcrestVersion = '1.3',
       mockitoVersion = '2.12.+',
+      jsonVersion = '20160212',
       testDependencies = [
 
           junit      : "junit:junit:${junitVersion}",
           hamcrest   : "org.hamcrest:hamcrest-all:${hamcrestVersion}",
           mockitoCore: "org.mockito:mockito-core:${mockitoVersion}",
+          json       : "org.json:json:${jsonVersion}"
 
       ],
 

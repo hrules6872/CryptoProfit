@@ -20,14 +20,17 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.hrules.cryptoprofit.App
 import com.hrules.cryptoprofit.R
 import com.hrules.cryptoprofit.R.id.*
-import com.hrules.cryptoprofit.commons.Preferences
+import com.hrules.cryptoprofit.data.cache.CryptoCache
+import com.hrules.cryptoprofit.data.preferences.Preferences
 import com.hrules.cryptoprofit.presentation.base.BaseActivity
+import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.extensions.textWatcher
 import com.hrules.cryptoprofit.presentation.extensions.toVisibility
 import com.hrules.cryptoprofit.presentation.extensions.toast
@@ -39,7 +42,8 @@ import java.math.BigDecimal
 
 class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.Contract, MainActivityPresenter>(), MainActivityPresenter.Contract {
   override var presenter: MainActivityPresenter = MainActivityPresenter(
-      Preferences(PreferenceManager.getDefaultSharedPreferences(App.instance)))
+      Preferences(PreferenceManager.getDefaultSharedPreferences(App.instance)),
+      CryptoCache(Preferences(PreferenceManager.getDefaultSharedPreferences(App.instance))))
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -57,6 +61,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     action_memoryStore.setOnClickListener { view -> notifyClick(view) }
     action_memoryRecall.setOnClickListener { view -> notifyClick(view) }
     action_clear.setOnClickListener { view -> notifyClick(view) }
+
+    action_priceBitcoin.setOnClickListener { view -> notifyClick(view) }
+    action_priceEthereum.setOnClickListener { view -> notifyClick(view) }
+    action_currencyToConvert.setOnClickListener { view -> notifyClick(view) }
 
     action_operation1.setOnClickListener { view -> notifyClick(view) }
     action_operation2.setOnClickListener { view -> notifyClick(view) }
@@ -92,12 +100,26 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
         action_memoryStore -> presenter.memoryStore()
         action_memoryRecall -> presenter.memoryRecall()
         action_clear -> presenter.clear()
+        action_priceBitcoin -> presenter.priceBitcoin()
+        action_priceEthereum -> presenter.priceEthereum()
+        action_currencyToConvert -> showCurrencyToConvertList()
         action_operation1 -> presenter.operation1()
         action_operation2 -> presenter.operation2()
         action_operation3 -> presenter.operation3()
         action_operation4 -> presenter.operation4()
       }
     }
+  }
+
+  private fun showCurrencyToConvertList() {
+    val items: Array<String> = Crypto.listOfCurrencies.sortedArray()
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle(getString(R.string.text_selectCurrency))
+    builder.setItems(items, { _, item ->
+      presenter.currencyToConvert(items[item])
+    })
+    val alert = builder.create()
+    alert.show()
   }
 
   private fun donateClick() {
@@ -110,6 +132,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     }
   }
 
+  override fun setCurrencyPrice(price: BigDecimal) {
+    edit_coinPrice.money = price
+  }
+
   override fun setCurrencyConverterState(state: Boolean) {
     action_currencyConverter.isChecked = state
 
@@ -120,6 +146,17 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     text_sellSingleFiat.visibility = state.toVisibility(invisibleIsGone = true)
     text_profitFiat.visibility = state.toVisibility(invisibleIsGone = true)
     text_profitSingleFiat.visibility = state.toVisibility(invisibleIsGone = true)
+  }
+
+  override fun setCurrencyToConvert(currencyToConvert: String) {
+    action_currencyToConvert.text = currencyToConvert
+  }
+
+  override fun setSources(coinPrice: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal, sellPrice: BigDecimal) {
+    edit_coinPrice.money = coinPrice
+    edit_buyPrice.money = buyPrice
+    edit_buyAmount.money = buyAmount
+    edit_sellPrice.money = sellPrice
   }
 
   override fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal, sellTotal: BigDecimal,
@@ -135,13 +172,6 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     text_profit.money = profit
     text_profitFiat.money = profitFiat
     text_profitSingleFiat.money = profitSingleFiat
-  }
-
-  override fun setSources(coinPrice: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal, sellPrice: BigDecimal) {
-    edit_coinPrice.money = coinPrice
-    edit_buyPrice.money = buyPrice
-    edit_buyAmount.money = buyAmount
-    edit_sellPrice.money = sellPrice
   }
 
   override fun showToast(message: String) {

@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.resources.base
+package com.hrules.cryptoprofit.presentation.extensions
 
-import android.support.annotation.StringRes
-import com.hrules.cryptoprofit.App
+import org.json.JSONArray
 
-object ResWrapper {
-  fun getString(@StringRes resId: Int): String = App.instance.resources.getString(resId)
-}
+fun String.elementFromJSONArray(index: Int = 0): String = JSONArray(this)[index].toString()

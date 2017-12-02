@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.resources.base
+package com.hrules.cryptoprofit.presentation.entitites.serializers.base
 
-import android.support.annotation.StringRes
-import com.hrules.cryptoprofit.App
 
-object ResWrapper {
-  fun getString(@StringRes resId: Int): String = App.instance.resources.getString(resId)
+interface Serializer<TYPE> {
+  fun stringify(input: TYPE): String
+
+  fun parse(input: String): TYPE
 }
