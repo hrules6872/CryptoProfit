@@ -28,22 +28,26 @@ class CryptoCache(private val preferences: Preferences) : BaseCache<CryptoCurren
     val DEFAULT_CACHE_MAX_AGE: Long = TimeUnit.SECONDS.toMillis(30)
   }
 
-  override fun get(input: CryptoCurrency): Crypto {
-    try {
-      val crypto: Crypto = CryptoSerializer.parse(
-          if (input == CryptoCurrency.BITCOIN) preferences.cacheBitcoin else preferences.cacheEthereum)
-      crypto.cacheDirty = (System.currentTimeMillis() - crypto.cacheCreated) > DEFAULT_CACHE_MAX_AGE
-      return crypto
-    } catch (e: Exception) {
-    }
-    return Crypto()
-  }
+  override fun get(input: CryptoCurrency): Crypto =
+      try {
+        val crypto: Crypto = CryptoSerializer.parse(
+            if (input == CryptoCurrency.BITCOIN) preferences.cacheBitcoin else preferences.cacheEthereum)
+        crypto.cacheDirty = (System.currentTimeMillis() - crypto.cacheCreated) > DEFAULT_CACHE_MAX_AGE
+        crypto
+      } catch (e: Exception) {
+        Crypto()
+      }
 
-  override fun put(input: CryptoCurrency, value: Crypto) {
-    value.cacheCreated = System.currentTimeMillis()
-    val cryptoSerialized: String = CryptoSerializer.stringify(value)
-    if (input == CryptoCurrency.BITCOIN) preferences.cacheBitcoin = cryptoSerialized else preferences.cacheEthereum = cryptoSerialized
-  }
+  override fun put(input: CryptoCurrency, value: Crypto): Boolean =
+      try {
+        value.cacheCreated = System.currentTimeMillis()
+        val cryptoSerialized: String = CryptoSerializer.stringify(value)
+        if (input == CryptoCurrency.BITCOIN) preferences.cacheBitcoin = cryptoSerialized else preferences.cacheEthereum = cryptoSerialized
+        true
+      } catch (e: Exception) {
+        false
+      }
+
 
   override fun evictAll() {
     preferences.cacheBitcoin = PREFS_DEFAULT_CACHE

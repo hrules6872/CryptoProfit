@@ -18,7 +18,7 @@ ext {
 
   configuration = [
 
-      androidBuildToolsVersion = '27.0.1',
+      androidBuildToolsVersion = '27.0.2',
       androidBuildMinSDKVersion = '21',
       androidBuildTargetSDKVersion = '26',
       androidBuildCompileSDKVersion = 'android-26',

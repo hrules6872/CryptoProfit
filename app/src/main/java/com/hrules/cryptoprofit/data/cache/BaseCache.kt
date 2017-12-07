@@ -18,6 +18,6 @@ package com.hrules.cryptoprofit.data.cache
 
 interface BaseCache<in INPUT, Cacheable> {
   fun get(input: INPUT): Cacheable
-  fun put(input: INPUT, value: Cacheable)
+  fun put(input: INPUT, value: Cacheable): Boolean
   fun evictAll()
 }
