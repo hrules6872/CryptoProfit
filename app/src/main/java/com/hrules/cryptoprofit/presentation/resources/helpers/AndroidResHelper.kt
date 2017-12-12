@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.entitites.base
+package com.hrules.cryptoprofit.presentation.resources.helpers
 
-internal interface Validatable {
-  fun validate(): Boolean
+import android.support.annotation.StringRes
+import com.hrules.cryptoprofit.App
+
+object AndroidResHelper {
+  fun getString(@StringRes resId: Int): String = App.instance.resources.getString(resId)
 }

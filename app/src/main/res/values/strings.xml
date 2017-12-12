@@ -18,7 +18,8 @@
   <string name="app_name">CryptoProfit</string>
   <string name="app_webSite">https://github.com/hrules6872/CryptoProfit</string>
 
-  <string name="hint_coinPrice">Crypto price</string>
+  <string name="hint_coinPriceCurrent">Current crypto price</string>
+  <string name="hint_coinPriceAtBuyTime">Crypto price at buy time</string>
   <string name="hint_buyPrice">Price</string>
   <string name="hint_buyAmount">Amount</string>
   <string name="hint_sellPrice">Price</string>
@@ -36,8 +37,8 @@
   <string name="action_visitWebSite">Visit website</string>
   <string name="action_operation1">=</string>
   <string name="action_operation2">C</string>
-  <string name="action_operation3">+10%</string>
-  <string name="action_operation4">-10%</string>
+  <string name="action_operation3">+5%</string>
+  <string name="action_operation4">-5%</string>
   <string name="action_priceBitcoin">BTC</string>
   <string name="action_priceEthereum">ETH</string>
 
@@ -50,4 +51,5 @@
 
   <string name="currency_fiat">ғɪᴀᴛ</string>
   <string name="currency_singleFiat">1x ғɪᴀᴛ</string>
+  <string name="action_priceToday">Today</string>
 </resources>

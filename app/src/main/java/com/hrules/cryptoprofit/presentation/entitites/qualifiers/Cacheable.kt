@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.data.cache
+package com.hrules.cryptoprofit.presentation.entitites.qualifiers
 
-interface BaseCache<in INPUT, Cacheable> {
-  fun get(input: INPUT): Cacheable
-  fun put(input: INPUT, value: Cacheable): Boolean
-  fun evictAll()
+interface Cacheable {
+  var cacheCreated: Long
+  var cacheDirty: Boolean
 }

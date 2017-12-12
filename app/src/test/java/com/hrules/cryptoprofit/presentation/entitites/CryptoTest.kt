@@ -39,14 +39,14 @@ class CryptoTest {
 
   @Test
   fun `given valid Crypto entity when validate then ok`() {
-    crypto = Crypto(name = "BITCOIN")
+    crypto = Crypto(priceUsd = BigDecimal.ONE)
     assertTrue(crypto.validate())
   }
 
   @Test
   fun `given empty Crypto entity when get prices then return default`() {
     val expected: BigDecimal = BigDecimal.ZERO
-    Currency.values().forEach { assertEquals(crypto.price(it.name), expected) }
+    Currency.values().forEach { assertEquals(expected, crypto.price(it.name)) }
   }
 
   @Test
@@ -54,7 +54,7 @@ class CryptoTest {
     var value: BigDecimal = BigDecimal.ZERO
     var expected: BigDecimal = BigDecimal.ZERO
     Currency.values().forEach { crypto = crypto.price(it, BigDecimal.ONE + value++) }
-    Currency.values().forEach { assertEquals(crypto.price(it.name), BigDecimal.ONE + expected++) }
+    Currency.values().forEach { assertEquals(BigDecimal.ONE + expected++, crypto.price(it.name)) }
   }
 
   @Test
@@ -62,7 +62,7 @@ class CryptoTest {
     val value: BigDecimal = BigDecimal.ONE
     val expected: BigDecimal = BigDecimal.ZERO
     Currency.values().forEach { crypto = crypto.price(it, value) }
-    assertEquals(crypto.price("INVALID"), expected)
+    assertEquals(expected, crypto.price("INVALID"))
   }
 }
 

@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.entitites.serializers
+package com.hrules.cryptoprofit.commons
 
-import com.hrules.cryptoprofit.Utils
-import org.junit.Assert.assertTrue
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import java.text.DateFormat
+import java.util.*
 
-@RunWith(JUnit4::class)
-class CryptoSerializerTest {
-  @Test
-  fun `given a valid json when deserialize to Crypto entity then ok`() {
-    val validJson = Utils().readFile("json/valid_response.json")
-    val crypto = CryptoSerializer.parse(validJson)
-    assertTrue(crypto.validate())
-  }
+fun sameDay(timeStamp1: Long, timeStamp2: Long): Boolean {
+  val calendar1 = Calendar.getInstance()
+  val calendar2 = Calendar.getInstance()
+  calendar1.time = Date(timeStamp1)
+  calendar2.time = Date(timeStamp2)
+  return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) && calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(
+      Calendar.DAY_OF_YEAR)
+}
+
+fun formatDate(timeStamp: Long, locale: Locale = Locale.getDefault()): String {
+  return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(timeStamp)
 }

@@ -16,6 +16,7 @@
 
 package com.hrules.cryptoprofit.presentation.views
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -24,11 +25,12 @@ import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import com.hrules.cryptoprofit.App
 import com.hrules.cryptoprofit.R
 import com.hrules.cryptoprofit.R.id.*
-import com.hrules.cryptoprofit.data.cache.CryptoCache
-import com.hrules.cryptoprofit.data.preferences.Preferences
+import com.hrules.cryptoprofit.data.cache.AndroidCryptoCache
+import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
 import com.hrules.cryptoprofit.presentation.base.BaseActivity
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.extensions.textWatcher
@@ -36,14 +38,20 @@ import com.hrules.cryptoprofit.presentation.extensions.toVisibility
 import com.hrules.cryptoprofit.presentation.extensions.toast
 import com.hrules.cryptoprofit.presentation.presenters.MainActivityPresenter
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
+import com.hrules.cryptoprofit.presentation.resources.AndroidResId
+import com.hrules.cryptoprofit.presentation.resources.AndroidResString
 import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigDecimal
-
+import java.util.*
 
 class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.Contract, MainActivityPresenter>(), MainActivityPresenter.Contract {
   override var presenter: MainActivityPresenter = MainActivityPresenter(
-      Preferences(PreferenceManager.getDefaultSharedPreferences(App.instance)),
-      CryptoCache(Preferences(PreferenceManager.getDefaultSharedPreferences(App.instance))))
+      AndroidResId,
+      AndroidResString,
+      AndroidPreferences(PreferenceManager.getDefaultSharedPreferences(App.instance)),
+      AndroidCryptoCache(AndroidPreferences(PreferenceManager.getDefaultSharedPreferences(App.instance))))
+
+  private var textWatcherSkip = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -53,7 +61,28 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
 
     action_currencyConverter.setOnCheckedChangeListener { _, state -> presenter.currencyConverter(state) }
 
-    edit_coinPrice.textWatcher { onTextChangedShout { notifyChange() } }
+    edit_coinPriceAtBuyTime.textWatcher {
+      onTextChangedShout {
+        if (!textWatcherSkip) {
+          presenter.notifyChangeCoinPriceAtBuyTime(coinPriceInput = edit_coinPrice.money,
+              coinPriceAtBuyTimeInput = edit_coinPriceAtBuyTime.money,
+              buyPriceInput = edit_buyPrice.money,
+              buyAmountInput = edit_buyAmount.money,
+              sellPriceInput = edit_sellPrice.money)
+        }
+      }
+    }
+    edit_coinPrice.textWatcher {
+      onTextChangedShout {
+        if (!textWatcherSkip) {
+          presenter.notifyChangeCoinPrice(coinPriceInput = edit_coinPrice.money,
+              coinPriceAtBuyTimeInput = edit_coinPriceAtBuyTime.money,
+              buyPriceInput = edit_buyPrice.money,
+              buyAmountInput = edit_buyAmount.money,
+              sellPriceInput = edit_sellPrice.money)
+        }
+      }
+    }
     edit_buyPrice.textWatcher { onTextChangedShout { notifyChange() } }
     edit_buyAmount.textWatcher { onTextChangedShout { notifyChange() } }
     edit_sellPrice.textWatcher { onTextChangedShout { notifyChange() } }
@@ -62,6 +91,8 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     action_memoryRecall.setOnClickListener { view -> notifyClick(view) }
     action_clear.setOnClickListener { view -> notifyClick(view) }
 
+    action_priceToday.setOnClickListener { view -> notifyClick(view) }
+    action_priceDate.setOnClickListener { view -> notifyClick(view) }
     action_priceBitcoin.setOnClickListener { view -> notifyClick(view) }
     action_priceEthereum.setOnClickListener { view -> notifyClick(view) }
     action_currencyToConvert.setOnClickListener { view -> notifyClick(view) }
@@ -87,11 +118,14 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
   }
 
   private fun notifyChange() {
-    presenter.calculate(
-        coinPriceInput = edit_coinPrice.money,
-        buyPriceInput = edit_buyPrice.money,
-        buyAmountInput = edit_buyAmount.money,
-        sellPriceInput = edit_sellPrice.money)
+    if (!textWatcherSkip) {
+      presenter.calculate(
+          coinPriceInput = edit_coinPrice.money,
+          coinPriceAtBuyTimeInput = edit_coinPriceAtBuyTime.money,
+          buyPriceInput = edit_buyPrice.money,
+          buyAmountInput = edit_buyAmount.money,
+          sellPriceInput = edit_sellPrice.money)
+    }
   }
 
   private fun notifyClick(view: View?) {
@@ -100,6 +134,8 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
         action_memoryStore -> presenter.memoryStore()
         action_memoryRecall -> presenter.memoryRecall()
         action_clear -> presenter.clear()
+        action_priceToday -> presenter.selectDate(System.currentTimeMillis())
+        action_priceDate -> selectDate()
         action_priceBitcoin -> presenter.priceBitcoin()
         action_priceEthereum -> presenter.priceEthereum()
         action_currencyToConvert -> showCurrencyToConvertList()
@@ -122,6 +158,17 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     alert.show()
   }
 
+  private fun selectDate() {
+    val calendar = Calendar.getInstance()
+    action_priceDate.tag?.let { calendar.timeInMillis = action_priceDate.tag as Long }
+    val datePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+      calendar.set(year, monthOfYear, dayOfMonth)
+      presenter.selectDate(calendar.timeInMillis)
+
+    }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+    datePickerDialog.show()
+  }
+
   private fun donateClick() {
   }
 
@@ -132,14 +179,21 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     }
   }
 
-  override fun setCurrencyPrice(price: BigDecimal) {
-    edit_coinPrice.money = price
+  override fun setCryptoPriceDate(cryptoPriceDate: String, cryptoPriceDateMillis: Long) {
+    action_priceDate.text = cryptoPriceDate
+    action_priceDate.tag = cryptoPriceDateMillis
+  }
+
+  override fun setCryptoPrice(coinPrice: BigDecimal, coinPriceAtBuyTime: BigDecimal) {
+    edit_coinPrice.money = coinPrice
+    edit_coinPriceAtBuyTime.money = coinPriceAtBuyTime
   }
 
   override fun setCurrencyConverterState(state: Boolean) {
     action_currencyConverter.isChecked = state
 
     edit_coinPrice.isEnabled = state
+    edit_coinPriceAtBuyTime.isEnabled = state
     text_buyTotalFiat.visibility = state.toVisibility(invisibleIsGone = true)
     text_buySingleFiat.visibility = state.toVisibility(invisibleIsGone = true)
     text_sellTotalFiat.visibility = state.toVisibility(invisibleIsGone = true)
@@ -152,11 +206,21 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     action_currencyToConvert.text = currencyToConvert
   }
 
-  override fun setSources(coinPrice: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal, sellPrice: BigDecimal) {
+  override fun setSources(coinPriceAtBuyTime: BigDecimal) {
+    textWatcherSkip = true
+    edit_coinPriceAtBuyTime.money = coinPriceAtBuyTime
+    textWatcherSkip = false
+  }
+
+  override fun setSources(coinPrice: BigDecimal, coinPriceAtBuyTime: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal,
+      sellPrice: BigDecimal) {
+    textWatcherSkip = true
     edit_coinPrice.money = coinPrice
+    edit_coinPriceAtBuyTime.money = coinPriceAtBuyTime
     edit_buyPrice.money = buyPrice
     edit_buyAmount.money = buyAmount
     edit_sellPrice.money = sellPrice
+    textWatcherSkip = false
   }
 
   override fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal, sellTotal: BigDecimal,
@@ -172,6 +236,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     text_profit.money = profit
     text_profitFiat.money = profitFiat
     text_profitSingleFiat.money = profitSingleFiat
+  }
+
+  override fun setFocus(id: Int) {
+    findViewById<EditText>(id).requestFocus()
   }
 
   override fun showToast(message: String) {

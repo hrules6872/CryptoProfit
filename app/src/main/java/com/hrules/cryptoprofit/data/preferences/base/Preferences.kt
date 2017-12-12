@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.data.preferences
+package com.hrules.cryptoprofit.data.preferences.base
 
 import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
 
+const val PREFS_CRYPTO_PRICE_DATE = "PREFS_CRYPTO_PRICE_DATE"
+const val PREFS_CRYPTO_PRICE_DATE_USE_TODAY = "PREFS_CRYPTO_PRICE_DATE_USE_TODAY"
 const val PREFS_CURRENCY_CONVERTER = "PREFS_CURRENCY_CONVERTER"
 const val PREFS_CRYPTO_CURRENCY = "PREFS_CRYPTO_CURRENCY"
 const val PREFS_CURRENCY_TO_CONVERT = "PREFS_CURRENCY_TO_CONVERT"
@@ -26,8 +28,10 @@ const val PREFS_MEMORY = "PREFS_MEMORY"
 const val PREFS_CACHE_BITCOIN = "PREFS_CACHE_BITCOIN"
 const val PREFS_CACHE_ETHEREUM = "PREFS_CACHE_ETHEREUM"
 
-interface BasePreferences {
+interface Preferences {
   companion object {
+    val PREFS_DEFAULT_CRYPTO_PRICE_DATE = System.currentTimeMillis()
+    val PREFS_DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY = true
     val PREFS_DEFAULT_CURRENCY_CONVERTER = false
     val PREFS_DEFAULT_PREFS_CRYPTO_CURRENCY = CryptoCurrency.BITCOIN.name
     val PREFS_DEFAULT_CURRENCY_TO_CONVERT = "EUR"
@@ -36,6 +40,8 @@ interface BasePreferences {
     val PREFS_DEFAULT_CACHE = ""
   }
 
+  var cryptoPriceDate: Long
+  var cryptoPriceDateUseToday: Boolean
   var currencyConverter: Boolean
   var cryptoCurrency: String
   var currencyToConvert: String

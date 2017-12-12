@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.entitites.base
+package com.hrules.cryptoprofit.data.cache.params.base
 
-interface Cacheable {
-  var cacheCreated: Long
-  var cacheDirty: Boolean
-}
+interface CacheParams

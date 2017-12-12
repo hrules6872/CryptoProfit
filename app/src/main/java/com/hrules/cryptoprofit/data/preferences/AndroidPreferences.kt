@@ -17,13 +17,26 @@
 package com.hrules.cryptoprofit.data.preferences
 
 import android.content.SharedPreferences
-import com.hrules.cryptoprofit.data.preferences.BasePreferences.Companion.PREFS_DEFAULT_CACHE
-import com.hrules.cryptoprofit.data.preferences.BasePreferences.Companion.PREFS_DEFAULT_CURRENCY_CONVERTER
-import com.hrules.cryptoprofit.data.preferences.BasePreferences.Companion.PREFS_DEFAULT_CURRENCY_TO_CONVERT
-import com.hrules.cryptoprofit.data.preferences.BasePreferences.Companion.PREFS_DEFAULT_MEMORY
-import com.hrules.cryptoprofit.data.preferences.BasePreferences.Companion.PREFS_DEFAULT_PREFS_CRYPTO_CURRENCY
+import com.hrules.cryptoprofit.data.preferences.base.*
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CACHE
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CRYPTO_PRICE_DATE
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CURRENCY_CONVERTER
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CURRENCY_TO_CONVERT
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_MEMORY
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_PREFS_CRYPTO_CURRENCY
 
-class Preferences(private val preferences: SharedPreferences) : BasePreferences {
+class AndroidPreferences(private val preferences: SharedPreferences) : Preferences {
+  override var cryptoPriceDate: Long
+    get() = preferences.getLong(PREFS_CRYPTO_PRICE_DATE,
+        PREFS_DEFAULT_CRYPTO_PRICE_DATE)
+    set(value) = preferences.edit().putLong(PREFS_CRYPTO_PRICE_DATE, value).apply()
+
+  override var cryptoPriceDateUseToday: Boolean
+    get() = preferences.getBoolean(PREFS_CRYPTO_PRICE_DATE_USE_TODAY,
+        PREFS_DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY)
+    set(value) = preferences.edit().putBoolean(PREFS_CRYPTO_PRICE_DATE_USE_TODAY, value).apply()
+
   override var currencyConverter: Boolean
     get() = preferences.getBoolean(PREFS_CURRENCY_CONVERTER,
         PREFS_DEFAULT_CURRENCY_CONVERTER)

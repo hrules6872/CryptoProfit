@@ -14,20 +14,9 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.entitites.serializers
+package com.hrules.cryptoprofit.data.cache.params
 
-import com.hrules.cryptoprofit.Utils
-import org.junit.Assert.assertTrue
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import com.hrules.cryptoprofit.data.cache.params.base.CacheParams
+import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
 
-@RunWith(JUnit4::class)
-class CryptoSerializerTest {
-  @Test
-  fun `given a valid json when deserialize to Crypto entity then ok`() {
-    val validJson = Utils().readFile("json/valid_response.json")
-    val crypto = CryptoSerializer.parse(validJson)
-    assertTrue(crypto.validate())
-  }
-}
+data class CryptoCacheParams(val cryptoCurrency: CryptoCurrency, val timeStamp: Long = System.currentTimeMillis()) : CacheParams

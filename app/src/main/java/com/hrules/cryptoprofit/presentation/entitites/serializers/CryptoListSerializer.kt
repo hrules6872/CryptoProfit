@@ -21,11 +21,13 @@ import com.hrules.cryptoprofit.presentation.entitites.serializers.base.Serialize
 import com.hrules.cryptoprofit.presentation.entitites.serializers.custom.BigDecimalCustomSerializer
 import kotlinx.serialization.SerialContext
 import kotlinx.serialization.json.JSON
+import kotlinx.serialization.serializerByTypeToken
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 import java.math.BigDecimal
 import java.util.*
 
-
-object CryptoSerializer : Serializer<Crypto> {
+object CryptoListSerializer : Serializer<List<Crypto>> {
   private val bigDecimalCustomSerializer = BigDecimalCustomSerializer
   private val JSONParser: JSON = JSON(nonstrict = true,
       context = SerialContext().apply { registerSerializer(BigDecimal::class, bigDecimalCustomSerializer) }
@@ -35,7 +37,23 @@ object CryptoSerializer : Serializer<Crypto> {
     bigDecimalCustomSerializer.init(Locale.US)
   }
 
-  override fun stringify(input: Crypto): String = JSONParser.stringify(input)
+  override fun stringify(input: List<Crypto>): String {
+    val token = object : ParameterizedType {
+      override fun getRawType(): Type = List::class.java
+      override fun getOwnerType(): Type? = null
+      override fun getActualTypeArguments(): Array<Type> = arrayOf(Crypto::class.java)
+    }
+    val serial = serializerByTypeToken(token)
+    return JSONParser.stringify(serial, input)
+  }
 
-  override fun parse(input: String): Crypto = JSONParser.parse(input)
+  override fun parse(input: String): List<Crypto> {
+    val token = object : ParameterizedType {
+      override fun getRawType(): Type = List::class.java
+      override fun getOwnerType(): Type? = null
+      override fun getActualTypeArguments(): Array<Type> = arrayOf(Crypto::class.java)
+    }
+    val serial = serializerByTypeToken(token)
+    return JSONParser.parse(serial, input) as List<Crypto>
+  }
 }

@@ -14,20 +14,6 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.extensions
+package com.hrules.cryptoprofit.presentation.entitites.base
 
-import com.hrules.cryptoprofit.Utils
-import org.junit.Assert.assertTrue
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
-
-@RunWith(JUnit4::class)
-class JsonExtensionsTest {
-  @Test
-  fun `given a valid json array when get first element then ok`() {
-    val validJson = Utils().readFile("json/valid_bitcoin_response.json")
-    val jsonElement = validJson.elementFromJSONArray()
-    assertTrue(jsonElement.isNotEmpty())
-  }
-}
+interface Model

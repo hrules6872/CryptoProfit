@@ -17,14 +17,17 @@
 package com.hrules.cryptoprofit.presentation.presenters
 
 import android.content.SharedPreferences
-import com.hrules.cryptoprofit.data.cache.BaseCache
-import com.hrules.cryptoprofit.data.cache.CryptoCache
-import com.hrules.cryptoprofit.data.preferences.BasePreferences
-import com.hrules.cryptoprofit.data.preferences.Preferences
+import com.hrules.cryptoprofit.data.cache.AndroidCryptoCache
+import com.hrules.cryptoprofit.data.cache.base.Cache
+import com.hrules.cryptoprofit.data.cache.params.CryptoCacheParams
+import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
+import com.hrules.cryptoprofit.data.preferences.base.Preferences
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
-import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
+import com.hrules.cryptoprofit.presentation.resources.AndroidResId
+import com.hrules.cryptoprofit.presentation.resources.AndroidResString
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mock
@@ -32,8 +35,8 @@ import org.mockito.MockitoAnnotations
 
 @RunWith(JUnit4::class)
 class MainActivityPresenterTest {
-  private lateinit var cache: BaseCache<CryptoCurrency, Crypto>
-  private lateinit var preferences: BasePreferences
+  private lateinit var cache: Cache<CryptoCacheParams, Crypto>
+  private lateinit var preferences: Preferences
   private lateinit var presenter: MainActivityPresenter
 
   @Mock
@@ -45,9 +48,13 @@ class MainActivityPresenterTest {
   fun `set up`() {
     MockitoAnnotations.initMocks(this)
 
-    preferences = Preferences(sharedPreferences)
-    cache = CryptoCache(preferences as Preferences)
-    presenter = MainActivityPresenter(preferences, cache)
+    preferences = AndroidPreferences(sharedPreferences)
+    cache = AndroidCryptoCache(preferences as AndroidPreferences)
+    presenter = MainActivityPresenter(AndroidResId, AndroidResString, preferences, cache)
     presenter.bind(MainActivityModel(), view)
+  }
+
+  @Test
+  fun `dummy`() {
   }
 }

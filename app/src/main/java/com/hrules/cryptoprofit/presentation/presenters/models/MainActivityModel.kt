@@ -26,6 +26,7 @@ import java.math.BigDecimal
 @Serializable
 data class MainActivityModel(
     @State var coinPrice: BigDecimal = BigDecimal.ONE,
+    @State var coinPriceAtBuyTime: BigDecimal = BigDecimal.ONE,
     @State var buyPrice: BigDecimal = BigDecimal.ZERO,
     @State var buyAmount: BigDecimal = BigDecimal.ONE,
     @State var sellPrice: BigDecimal = BigDecimal.ZERO

@@ -17,17 +17,17 @@
 package com.hrules.cryptoprofit.presentation.entitites.serializers
 
 import com.hrules.cryptoprofit.Utils
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertFalse
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class CryptoSerializerTest {
+class CryptoListSerializerTest {
   @Test
-  fun `given a valid json when deserialize to Crypto entity then ok`() {
-    val validJson = Utils().readFile("json/valid_response.json")
-    val crypto = CryptoSerializer.parse(validJson)
-    assertTrue(crypto.validate())
+  fun `given a valid json when deserialize to Crypto list then not empty`() {
+    val validJson = Utils().readFile("json/valid_cryptos.json")
+    val crypto = CryptoListSerializer.parse(validJson)
+    assertFalse(crypto.isEmpty())
   }
 }

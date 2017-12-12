@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit.presentation.extensions
+package com.hrules.cryptoprofit.presentation.resources.base
 
-import org.json.JSONArray
-
-fun String.elementFromJSONArray(index: Int = 0): String = JSONArray(this)[index].toString()
+interface ResString {
+  val memoryStore: String
+  val memoryRecall: String
+  val errorUnknown: String
+  val errorNoConnection: String
+}

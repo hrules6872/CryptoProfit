@@ -16,8 +16,9 @@
 
 package com.hrules.cryptoprofit.presentation.entitites
 
-import com.hrules.cryptoprofit.presentation.entitites.base.Cacheable
-import com.hrules.cryptoprofit.presentation.entitites.base.Validatable
+import com.hrules.cryptoprofit.presentation.entitites.base.Model
+import com.hrules.cryptoprofit.presentation.entitites.qualifiers.Cacheable
+import com.hrules.cryptoprofit.presentation.entitites.qualifiers.Validatable
 import kotlinx.serialization.Optional
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -25,44 +26,43 @@ import java.math.BigDecimal
 
 @Serializable
 data class Crypto(
-    @SerialName("symbol") val name: String = String(),
-    @Optional @SerialName("price_usd") private val priceUsd: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_aud") private val priceAud: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_brl") private val priceBrl: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_cad") private val priceCad: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_chf") private val priceChf: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_clp") private val priceClp: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_cny") private val priceCny: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_czk") private val priceCzk: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_dkk") private val priceDkk: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_eur") private val priceEur: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_gbp") private val priceGbp: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_hkd") private val priceHkd: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_huf") private val priceHuf: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_idr") private val priceIdr: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_ils") private val priceIls: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_inr") private val priceInr: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_jpy") private val priceJpy: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_krw") private val priceKrw: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_mxn") private val priceMxn: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_myr") private val priceMyr: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_nok") private val priceNok: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_nzd") private val priceNzd: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_php") private val pricePhp: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_pkr") private val pricePkr: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_pln") private val pricePln: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_rub") private val priceRub: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_sek") private val priceSek: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_sgd") private val priceSgd: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_thb") private val priceThb: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_try") private val priceTry: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_twd") private val priceTwd: BigDecimal? = BigDecimal.ZERO,
-    @Optional @SerialName("price_zar") private val priceZar: BigDecimal? = BigDecimal.ZERO
-) : Validatable, Cacheable {
+    @Optional @SerialName("USD") private val priceUsd: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("AUD") private val priceAud: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("BRL") private val priceBrl: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("CAD") private val priceCad: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("CHF") private val priceChf: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("CLP") private val priceClp: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("CNY") private val priceCny: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("CZK") private val priceCzk: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("DKK") private val priceDkk: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("EUR") private val priceEur: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("GBP") private val priceGbp: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("HKD") private val priceHkd: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("HUF") private val priceHuf: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("IDR") private val priceIdr: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("ILS") private val priceIls: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("INR") private val priceInr: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("JPY") private val priceJpy: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("KRW") private val priceKrw: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("MXN") private val priceMxn: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("MYR") private val priceMyr: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("NOK") private val priceNok: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("NZD") private val priceNzd: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("PHP") private val pricePhp: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("PKR") private val pricePkr: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("PLN") private val pricePln: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("RUB") private val priceRub: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("SEK") private val priceSek: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("SGD") private val priceSgd: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("THB") private val priceThb: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("TRY") private val priceTry: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("TWD") private val priceTwd: BigDecimal? = BigDecimal.ZERO,
+    @Optional @SerialName("ZAR") private val priceZar: BigDecimal? = BigDecimal.ZERO
+) : Model, Validatable, Cacheable {
   @Optional override var cacheCreated: Long = 0
   @Optional override var cacheDirty: Boolean = true
 
-  override fun validate(): Boolean = name.isNotEmpty()
+  override fun validate(): Boolean = Currency.values().any { this.price(it.toString()) != BigDecimal.ZERO }
 
   companion object {
     val listOfCurrencies: Array<String> = Currency.values().map { it.name }.toTypedArray()

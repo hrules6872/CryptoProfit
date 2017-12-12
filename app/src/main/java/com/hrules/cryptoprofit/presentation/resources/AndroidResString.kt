@@ -17,14 +17,12 @@
 package com.hrules.cryptoprofit.presentation.resources
 
 import com.hrules.cryptoprofit.R
-import com.hrules.cryptoprofit.presentation.resources.base.ResWrapper
+import com.hrules.cryptoprofit.presentation.resources.base.ResString
+import com.hrules.cryptoprofit.presentation.resources.helpers.AndroidResHelper
 
-object ResString {
-  val memoryStore: String = ResWrapper.getString(R.string.text_memoryStore)
-
-  val memoryRecall: String = ResWrapper.getString(R.string.text_memoryRecall)
-
-  val errorUnknown: String = ResWrapper.getString(R.string.error_unknown)
-
-  val errorNoConnection: String = ResWrapper.getString(R.string.error_noConnection)
+object AndroidResString : ResString {
+  override val memoryStore: String = AndroidResHelper.getString(R.string.text_memoryStore)
+  override val memoryRecall: String = AndroidResHelper.getString(R.string.text_memoryRecall)
+  override val errorUnknown: String = AndroidResHelper.getString(R.string.error_unknown)
+  override val errorNoConnection: String = AndroidResHelper.getString(R.string.error_noConnection)
 }

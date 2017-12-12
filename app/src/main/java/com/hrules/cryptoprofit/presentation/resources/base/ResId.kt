@@ -16,9 +16,9 @@
 
 package com.hrules.cryptoprofit.presentation.resources.base
 
-import android.support.annotation.StringRes
-import com.hrules.cryptoprofit.App
-
-object ResWrapper {
-  fun getString(@StringRes resId: Int): String = App.instance.resources.getString(resId)
+interface ResId {
+  val editCoinPrice: Int
+  val editCoinPriceAtBuyTime: Int
+  val editBuyAmount: Int
+  val editSellPrice: Int
 }
