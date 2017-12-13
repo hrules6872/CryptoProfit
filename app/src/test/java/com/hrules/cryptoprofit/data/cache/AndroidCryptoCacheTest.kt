@@ -68,7 +68,7 @@ class AndroidCryptoCacheTest {
     `when`(sharedPreferences.getString(eq(PREFS_CACHE_BITCOIN), anyString()))
         .thenReturn(cryptosMock)
 
-    val crypto = cache.get(CryptoCacheParams(CryptoCurrency.BITCOIN))
+    val crypto = cache.get(CryptoCacheParams(CryptoCurrency.BTC))
     assertEquals(cryptoExpected, crypto)
   }
 
@@ -77,7 +77,7 @@ class AndroidCryptoCacheTest {
     `when`(sharedPreferences.getString(eq(PREFS_CACHE_BITCOIN), anyString()))
         .thenReturn(PREFS_DEFAULT_CACHE)
 
-    val crypto = cache.get(CryptoCacheParams(CryptoCurrency.BITCOIN))
+    val crypto = cache.get(CryptoCacheParams(CryptoCurrency.BTC))
     assertEquals(Crypto(), crypto)
     assertFalse(crypto.validate())
   }
@@ -89,7 +89,7 @@ class AndroidCryptoCacheTest {
     `when`(sharedPreferences.getString(eq(PREFS_CACHE_BITCOIN), anyString()))
         .thenReturn(cryptosMock)
 
-    val crypto = cache.get(CryptoCacheParams(CryptoCurrency.BITCOIN))
+    val crypto = cache.get(CryptoCacheParams(CryptoCurrency.BTC))
     assertTrue(crypto.cacheDirty)
   }
 
@@ -100,7 +100,7 @@ class AndroidCryptoCacheTest {
     `when`(sharedPreferences.getString(eq(PREFS_CACHE_BITCOIN), anyString()))
         .thenReturn(cryptosMock)
 
-    val crypto = cache.get(CryptoCacheParams(CryptoCurrency.BITCOIN))
+    val crypto = cache.get(CryptoCacheParams(CryptoCurrency.BTC))
     assertFalse(crypto.cacheDirty)
   }
 
@@ -113,7 +113,7 @@ class AndroidCryptoCacheTest {
     `when`(sharedPreferencesEditor.putString(anyString(), anyString())).thenReturn(
         sharedPreferencesEditor)
 
-    assertTrue(cache.put(CryptoCacheParams(CryptoCurrency.BITCOIN), cryptoExpected))
+    assertTrue(cache.put(CryptoCacheParams(CryptoCurrency.BTC), cryptoExpected))
 
     verify(sharedPreferencesEditor).putString(PREFS_CACHE_BITCOIN, cryptosMock)
   }

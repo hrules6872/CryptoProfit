@@ -33,7 +33,7 @@ interface Preferences {
     val PREFS_DEFAULT_CRYPTO_PRICE_DATE = System.currentTimeMillis()
     val PREFS_DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY = true
     val PREFS_DEFAULT_CURRENCY_CONVERTER = false
-    val PREFS_DEFAULT_PREFS_CRYPTO_CURRENCY = CryptoCurrency.BITCOIN.name
+    val PREFS_DEFAULT_PREFS_CRYPTO_CURRENCY = CryptoCurrency.BTC.name
     val PREFS_DEFAULT_CURRENCY_TO_CONVERT = "EUR"
     val PREFS_DEFAULT_MEMORY = ""
 

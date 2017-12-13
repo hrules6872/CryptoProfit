@@ -24,8 +24,9 @@ import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
 import com.hrules.cryptoprofit.data.preferences.base.Preferences
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
-import com.hrules.cryptoprofit.presentation.resources.AndroidResId
-import com.hrules.cryptoprofit.presentation.resources.AndroidResString
+import com.hrules.cryptoprofit.presentation.resources.base.ResId
+import com.hrules.cryptoprofit.presentation.resources.base.ResString
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -43,6 +44,10 @@ class MainActivityPresenterTest {
   private lateinit var view: MainActivityPresenter.Contract
   @Mock
   private lateinit var sharedPreferences: SharedPreferences
+  @Mock
+  private lateinit var resId: ResId
+  @Mock
+  private lateinit var resString: ResString
 
   @Before
   fun `set up`() {
@@ -50,11 +55,12 @@ class MainActivityPresenterTest {
 
     preferences = AndroidPreferences(sharedPreferences)
     cache = AndroidCryptoCache(preferences as AndroidPreferences)
-    presenter = MainActivityPresenter(AndroidResId, AndroidResString, preferences, cache)
+    presenter = MainActivityPresenter(resId, resString, preferences, cache)
     presenter.bind(MainActivityModel(), view)
   }
 
   @Test
   fun `dummy`() {
+    assertTrue(true)
   }
 }

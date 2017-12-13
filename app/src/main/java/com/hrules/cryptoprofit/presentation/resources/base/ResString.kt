@@ -21,4 +21,6 @@ interface ResString {
   val memoryRecall: String
   val errorUnknown: String
   val errorNoConnection: String
+  val useTodayPrice: String
+  val useCustomPrice: String
 }

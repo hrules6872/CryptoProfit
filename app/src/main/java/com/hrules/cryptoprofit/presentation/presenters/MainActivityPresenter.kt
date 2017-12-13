@@ -63,6 +63,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
   fun notifyChangeCoinPriceAtBuyTime(coinPriceInput: BigDecimal, coinPriceAtBuyTimeInput: BigDecimal, buyPriceInput: BigDecimal,
       buyAmountInput: BigDecimal, sellPriceInput: BigDecimal) {
     preferences.cryptoPriceDateUseToday = false
+    view?.showToast(resString.useCustomPrice)
     calculate(
         coinPriceInput = coinPriceInput,
         coinPriceAtBuyTimeInput = coinPriceAtBuyTimeInput,
@@ -168,24 +169,27 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     view?.let {
       it.setCryptoPriceDate(formatDate(dateInMillis), dateInMillis)
       it.setFocus(resId.editCoinPriceAtBuyTime)
+      it.showToast(if (preferences.cryptoPriceDateUseToday) resString.useTodayPrice else resString.useCustomPrice)
     }
     getCryptoPrice(CryptoCurrency.valueOf(preferences.cryptoCurrency), preferences.currencyToConvert, System.currentTimeMillis(),
-        preferences.cryptoPriceDate)
+        dateInMillis)
   }
 
   fun priceBitcoin() {
-    preferences.cryptoCurrency = CryptoCurrency.BITCOIN.name
-    getCryptoPrice(CryptoCurrency.BITCOIN, preferences.currencyToConvert, System.currentTimeMillis(), preferences.cryptoPriceDate)
+    preferences.cryptoCurrency = CryptoCurrency.BTC.name
+    getCryptoPrice(CryptoCurrency.BTC, preferences.currencyToConvert, System.currentTimeMillis(), preferences.cryptoPriceDate)
   }
 
   fun priceEthereum() {
-    preferences.cryptoCurrency = CryptoCurrency.ETHEREUM.name
-    getCryptoPrice(CryptoCurrency.ETHEREUM, preferences.currencyToConvert, System.currentTimeMillis(), preferences.cryptoPriceDate)
+    preferences.cryptoCurrency = CryptoCurrency.ETH.name
+    getCryptoPrice(CryptoCurrency.ETH, preferences.currencyToConvert, System.currentTimeMillis(), preferences.cryptoPriceDate)
   }
 
   fun currencyToConvert(currencyToConvert: String) {
     preferences.currencyToConvert = currencyToConvert
     view?.setCurrencyToConvert(currencyToConvert)
+    getCryptoPrice(CryptoCurrency.valueOf(preferences.cryptoCurrency), currencyToConvert, System.currentTimeMillis(),
+        preferences.cryptoPriceDate)
   }
 
   fun operation1() {
@@ -221,12 +225,12 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
       currencyToConvert: String, timeStampToday: Long, timeStampDate: Long) {
     launch(UI) {
       try {
-        val cryptoAtBuyTime = async { getCryptoPriceAsync(cryptoCurrency, currencyToConvert, timeStampToday) }.await()
-        val crypto = async { getCryptoPriceAsync(cryptoCurrency, currencyToConvert, timeStampDate) }.await()
-        model.coinPriceAtBuyTime = cryptoAtBuyTime.price(currencyToConvert)
+        val crypto = async { getCryptoPriceAsync(cryptoCurrency, currencyToConvert, timeStampToday) }.await()
+        val cryptoAtBuyTime = async { getCryptoPriceAsync(cryptoCurrency, currencyToConvert, timeStampDate) }.await()
         model.coinPrice = crypto.price(currencyToConvert)
+        model.coinPriceAtBuyTime = cryptoAtBuyTime.price(currencyToConvert)
         view?.let {
-          it.setCryptoPrice(model.coinPriceAtBuyTime, model.coinPrice)
+          it.setCryptoPrice(model.coinPrice, model.coinPriceAtBuyTime)
           it.setFocus(if (preferences.currencyConverter) resId.editCoinPrice else resId.editBuyAmount)
           calculate()
         }
@@ -246,6 +250,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
       val response = Network().getCryptoPrice(cryptoCurrency, currencyToConvert, timeStamp)
       response?.let {
         crypto = CryptoSerializer.parse(response)
+        if (!crypto.validate()) throw IllegalStateException()
         cache.put(CryptoCacheParams(cryptoCurrency), crypto)
       }
     }
@@ -254,7 +259,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
 
   interface Contract : BaseView {
     fun setCryptoPriceDate(cryptoPriceDate: String, cryptoPriceDateMillis: Long)
-    fun setCryptoPrice(coinPriceAtBuyTime: BigDecimal, coinPrice: BigDecimal)
+    fun setCryptoPrice(coinPrice: BigDecimal, coinPriceAtBuyTime: BigDecimal)
     fun setCurrencyConverterState(state: Boolean)
 
     fun setCurrencyToConvert(currencyToConvert: String)

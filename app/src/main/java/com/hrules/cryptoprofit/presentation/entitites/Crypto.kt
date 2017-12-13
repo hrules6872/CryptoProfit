@@ -110,5 +110,5 @@ enum class Currency {
 }
 
 enum class CryptoCurrency {
-  BITCOIN, ETHEREUM;
+  BTC, ETH;
 }

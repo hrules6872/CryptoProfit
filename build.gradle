@@ -15,7 +15,7 @@
  */
 
 buildscript {
-  ext.kotlin_version = '1.2.0'
+  ext.kotlin_version = '1.2.10'
   ext.serialization_version = '0.3'
 
   repositories {
@@ -24,7 +24,7 @@ buildscript {
     maven { url "https://kotlin.bintray.com/kotlinx" }
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.1.0-alpha04'
+    classpath 'com.android.tools.build:gradle:3.1.0-alpha05'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
@@ -32,7 +32,7 @@ buildscript {
 }
 
 plugins {
-  id "io.gitlab.arturbosch.detekt" version "1.0.0.RC5-5"
+  id "io.gitlab.arturbosch.detekt" version "1.0.0.RC5-6"
 }
 
 allprojects {
