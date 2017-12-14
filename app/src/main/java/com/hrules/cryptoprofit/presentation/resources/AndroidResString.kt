@@ -25,6 +25,4 @@ object AndroidResString : ResString {
   override val memoryRecall: String = AndroidResHelper.getString(R.string.text_memoryRecall)
   override val errorUnknown: String = AndroidResHelper.getString(R.string.error_unknown)
   override val errorNoConnection: String = AndroidResHelper.getString(R.string.error_noConnection)
-  override val useTodayPrice: String = AndroidResHelper.getString(R.string.text_useTodayPrice)
-  override val useCustomPrice: String = AndroidResHelper.getString(R.string.text_useCustomPrice)
 }

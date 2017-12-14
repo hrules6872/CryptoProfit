@@ -63,7 +63,6 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
   fun notifyChangeCoinPriceAtBuyTime(coinPriceInput: BigDecimal, coinPriceAtBuyTimeInput: BigDecimal, buyPriceInput: BigDecimal,
       buyAmountInput: BigDecimal, sellPriceInput: BigDecimal) {
     preferences.cryptoPriceDateUseToday = false
-    view?.showToast(resString.useCustomPrice)
     calculate(
         coinPriceInput = coinPriceInput,
         coinPriceAtBuyTimeInput = coinPriceAtBuyTimeInput,
@@ -169,7 +168,6 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     view?.let {
       it.setCryptoPriceDate(formatDate(dateInMillis), dateInMillis)
       it.setFocus(resId.editCoinPriceAtBuyTime)
-      it.showToast(if (preferences.cryptoPriceDateUseToday) resString.useTodayPrice else resString.useCustomPrice)
     }
     getCryptoPrice(CryptoCurrency.valueOf(preferences.cryptoCurrency), preferences.currencyToConvert, System.currentTimeMillis(),
         dateInMillis)

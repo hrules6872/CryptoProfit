@@ -45,8 +45,6 @@
   <string name="text_memoryStore">Memory store</string>
   <string name="text_memoryRecall">Memory recall</string>
   <string name="text_selectCurrency">Select currency</string>
-  <string name="text_useTodayPrice">Use current price</string>
-  <string name="text_useCustomPrice">Use custom price</string>
 
   <string name="error_unknown">Something went wrong</string>
   <string name="error_noConnection">No network available</string>
