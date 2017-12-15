@@ -23,6 +23,7 @@ import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
 import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CACHE
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
+import com.hrules.cryptoprofit.presentation.entitites.DEFAULT_CACHE_CREATED
 import com.hrules.cryptoprofit.presentation.entitites.serializers.CryptoListSerializer
 import java.util.concurrent.TimeUnit
 
@@ -37,25 +38,26 @@ class AndroidCryptoCache(private val preferences: AndroidPreferences) : Cache<Cr
     val cryptos: List<Crypto> = CryptoListSerializer.parse(
         if (params.cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin else preferences.cacheEthereum)
     val crypto = cryptos.first { sameDay(it.cacheCreated, params.timeStamp) }
-    crypto.cacheDirty = (System.currentTimeMillis() - crypto.cacheCreated) > DEFAULT_CACHE_MAX_AGE
+    crypto.cacheDirty = System.currentTimeMillis() - crypto.cacheCreated > DEFAULT_CACHE_MAX_AGE
     crypto
   } catch (e: Exception) {
     Crypto()
   }
 
   override fun put(params: CryptoCacheParams, model: Crypto): Boolean {
-    purge()
     return try {
-      var cryptos: MutableList<Crypto>
+      var cryptos: MutableList<Crypto> = mutableListOf()
       try {
+        if (model.cacheCreated == DEFAULT_CACHE_CREATED) {
+          model.cacheCreated = params.timeStamp
+        }
         cryptos = CryptoListSerializer.parse(
             if (params.cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin else preferences.cacheEthereum).toMutableList()
-        cryptos.removeAll { sameDay(it.cacheCreated, params.timeStamp) }
+        cryptos.removeAll { sameDay(it.cacheCreated, model.cacheCreated) }
       } catch (e: Exception) {
-        cryptos = mutableListOf()
       }
-      model.cacheCreated = System.currentTimeMillis()
       cryptos.add(0, model)
+      cryptos.dropLast(CACHE_MAX_ITEMS_SIZE) // purge
       val cryptosSerialized: String = CryptoListSerializer.stringify(cryptos)
       if (params.cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin = cryptosSerialized else preferences.cacheEthereum = cryptosSerialized
       true
@@ -64,20 +66,8 @@ class AndroidCryptoCache(private val preferences: AndroidPreferences) : Cache<Cr
     }
   }
 
-  override fun purge() {
-    try {
-      purge(CryptoCurrency.BTC)
-      purge(CryptoCurrency.ETH)
-    } catch (e: Exception) {
-    }
-  }
-
-  private fun purge(cryptoCurrency: CryptoCurrency) {
-    val cryptos: MutableList<Crypto> = CryptoListSerializer.parse(
-        if (cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin else preferences.cacheEthereum).toMutableList()
-    cryptos.dropLast(CACHE_MAX_ITEMS_SIZE)
-    val cryptosSerialized: String = CryptoListSerializer.stringify(cryptos)
-    if (cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin = cryptosSerialized else preferences.cacheEthereum = cryptosSerialized
+  override fun purge(params: CryptoCacheParams) {
+    // not implemented
   }
 
   override fun evictAll() {

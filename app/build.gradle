@@ -18,6 +18,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlinx-serialization'
+apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion androidBuildCompileSDKVersion
@@ -39,6 +40,8 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+
+  productFlavors {}
 
   testOptions.unitTests.all {
     testLogging {
@@ -68,9 +71,5 @@ dependencies {
 
   projectDependencies.each {
     add("implementation", it.value)
-  }
-
-  annotationDependencies.each {
-    add("kapt", it.value)
   }
 }

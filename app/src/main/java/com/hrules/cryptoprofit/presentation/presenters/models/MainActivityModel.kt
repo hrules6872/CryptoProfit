@@ -16,31 +16,25 @@
 
 package com.hrules.cryptoprofit.presentation.presenters.models
 
-import android.os.Bundle
-import com.evernote.android.state.State
-import com.evernote.android.state.StateSaver
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseModel
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
 @Serializable
 data class MainActivityModel(
-    @State var coinPrice: BigDecimal = BigDecimal.ONE,
-    @State var coinPriceAtBuyTime: BigDecimal = BigDecimal.ONE,
-    @State var buyPrice: BigDecimal = BigDecimal.ZERO,
-    @State var buyAmount: BigDecimal = BigDecimal.ONE,
-    @State var sellPrice: BigDecimal = BigDecimal.ZERO
-) : BaseModel<Bundle>() {
+    var coinPrice: BigDecimal = BigDecimal.ONE,
+    var coinPriceAtBuyTime: BigDecimal = BigDecimal.ONE,
+    var buyPrice: BigDecimal = BigDecimal.ZERO,
+    var buyAmount: BigDecimal = BigDecimal.ONE,
+    var sellPrice: BigDecimal = BigDecimal.ZERO
+) : BaseModel<String>() {
 
-  override fun load(from: Bundle?) {
+  override fun load(from: String?) {
     from?.let {
-      StateSaver.restoreInstanceState(this, from)
     }
   }
 
-  override fun save(to: Bundle?) {
-    to?.let {
-      StateSaver.saveInstanceState(this, to)
-    }
+  override fun save(): String? {
+    return null
   }
 }

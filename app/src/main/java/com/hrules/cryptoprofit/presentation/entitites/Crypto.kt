@@ -24,6 +24,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
+const val DEFAULT_CACHE_CREATED = 0L
+const val DEFAULT_CACHE_DIRTY = true
+
 @Serializable
 data class Crypto(
     @Optional @SerialName("USD") private val priceUsd: BigDecimal? = BigDecimal.ZERO,
@@ -59,8 +62,8 @@ data class Crypto(
     @Optional @SerialName("TWD") private val priceTwd: BigDecimal? = BigDecimal.ZERO,
     @Optional @SerialName("ZAR") private val priceZar: BigDecimal? = BigDecimal.ZERO
 ) : Model, Validatable, Cacheable {
-  @Optional override var cacheCreated: Long = 0
-  @Optional override var cacheDirty: Boolean = true
+  @Optional override var cacheCreated: Long = DEFAULT_CACHE_CREATED
+  @Optional override var cacheDirty: Boolean = DEFAULT_CACHE_DIRTY
 
   override fun validate(): Boolean = Currency.values().any { this.price(it.toString()) != BigDecimal.ZERO }
 

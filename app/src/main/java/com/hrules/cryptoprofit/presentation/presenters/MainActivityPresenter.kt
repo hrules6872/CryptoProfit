@@ -244,11 +244,12 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
 
   private suspend fun getCryptoPriceAsync(cryptoCurrency: CryptoCurrency, currencyToConvert: String, timeStamp: Long): Crypto {
     var crypto = cache.get(CryptoCacheParams(cryptoCurrency, timeStamp))
-    if (!crypto.validate() or crypto.cacheDirty or (crypto.price(currencyToConvert) == BigDecimal.ZERO)) {
+    if (!crypto.validate() or crypto.cacheDirty) {
       val response = Network().getCryptoPrice(cryptoCurrency, currencyToConvert, timeStamp)
       response?.let {
         crypto = CryptoSerializer.parse(response)
         if (!crypto.validate()) throw IllegalStateException()
+        crypto.cacheCreated = timeStamp
         cache.put(CryptoCacheParams(cryptoCurrency), crypto)
       }
     }

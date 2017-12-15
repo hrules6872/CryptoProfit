@@ -23,8 +23,10 @@ import com.hrules.cryptoprofit.presentation.base.mvp.BasePresenter
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseView
 import java.lang.reflect.ParameterizedType
 
+private const val DEFAULT_STATE_KEY = "DEFAULT_STATE_KEY"
+
 @Suppress("UNCHECKED_CAST")
-abstract class BaseActivity<MODEL : BaseModel<Bundle>, VIEW : BaseView, out PRESENTER : BasePresenter<MODEL, VIEW>> : AppCompatActivity() {
+abstract class BaseActivity<MODEL : BaseModel<String>, VIEW : BaseView, out PRESENTER : BasePresenter<MODEL, VIEW>> : AppCompatActivity() {
   protected abstract val presenter: PRESENTER
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +34,7 @@ abstract class BaseActivity<MODEL : BaseModel<Bundle>, VIEW : BaseView, out PRES
     val arguments = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
     val model = Class.forName(arguments.first().toString().split(" ").last()).newInstance()
     presenter.bind(model as MODEL, this as VIEW)
-    presenter.model.load(savedInstanceState)
+    presenter.model.load(savedInstanceState?.getString(DEFAULT_STATE_KEY))
   }
 
   override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -41,8 +43,8 @@ abstract class BaseActivity<MODEL : BaseModel<Bundle>, VIEW : BaseView, out PRES
   }
 
   override fun onSaveInstanceState(outState: Bundle?) {
+    outState?.putString(DEFAULT_STATE_KEY, presenter.model.save())
     super.onSaveInstanceState(outState)
-    presenter.model.save(outState)
   }
 
   override fun onDestroy() {
