@@ -271,6 +271,6 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal, profitFiat: BigDecimal, profitSingleFiat: BigDecimal)
 
     fun setFocus(id: Int)
-    fun showToast(message: String)
+    fun showToast(message: String, duration: Int = 0)
   }
 }

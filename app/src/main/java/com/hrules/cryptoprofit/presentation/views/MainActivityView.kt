@@ -28,7 +28,8 @@ import android.view.View
 import android.widget.EditText
 import com.hrules.cryptoprofit.App
 import com.hrules.cryptoprofit.R
-import com.hrules.cryptoprofit.R.id.*
+import com.hrules.cryptoprofit.R.id.action_example
+import com.hrules.cryptoprofit.R.id.action_visitWebSite
 import com.hrules.cryptoprofit.data.cache.AndroidCryptoCache
 import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
 import com.hrules.cryptoprofit.presentation.base.BaseActivity
@@ -43,6 +44,7 @@ import com.hrules.cryptoprofit.presentation.resources.AndroidResString
 import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigDecimal
 import java.util.*
+
 
 class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.Contract, MainActivityPresenter>(), MainActivityPresenter.Contract {
   override var presenter: MainActivityPresenter = MainActivityPresenter(
@@ -110,7 +112,6 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      action_donate -> donateClick()
       action_example -> presenter.makeExample()
       action_visitWebSite -> visitWebsiteClick()
     }
@@ -167,9 +168,6 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
 
     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
     datePickerDialog.show()
-  }
-
-  private fun donateClick() {
   }
 
   private fun visitWebsiteClick() {
@@ -242,7 +240,7 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     findViewById<EditText>(id).requestFocus()
   }
 
-  override fun showToast(message: String) {
-    toast(message)
+  override fun showToast(message: String, duration: Int) {
+    toast(message = message, duration = duration)
   }
 }

@@ -33,7 +33,6 @@
   <string name="action_memoryStore">MS</string>
   <string name="action_currencyConverter">Currency\nconverter</string>
   <string name="action_example">Example</string>
-  <string name="action_donate">Donate</string>
   <string name="action_visitWebSite">Visit website</string>
   <string name="action_operation1">=</string>
   <string name="action_operation2">C</string>
@@ -52,4 +51,5 @@
   <string name="currency_fiat">ғɪᴀᴛ</string>
   <string name="currency_singleFiat">1x ғɪᴀᴛ</string>
   <string name="action_priceToday">Today</string>
+
 </resources>
