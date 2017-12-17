@@ -17,6 +17,7 @@
 package com.hrules.cryptoprofit.presentation.presenters.models
 
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseModel
+import com.hrules.cryptoprofit.presentation.presenters.models.serializers.MainActivityModelSerializer
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
@@ -31,10 +32,19 @@ data class MainActivityModel(
 
   override fun load(from: String?) {
     from?.let {
+      try {
+        val model = MainActivityModelSerializer.parse(from)
+        coinPrice = model.coinPrice
+        coinPriceAtBuyTime = model.coinPriceAtBuyTime
+        buyPrice = model.buyPrice
+        buyAmount = model.buyAmount
+        sellPrice = model.sellPrice
+      } catch (e: Exception) {
+      }
     }
   }
 
   override fun save(): String? {
-    return null
+    return MainActivityModelSerializer.stringify(this)
   }
 }
