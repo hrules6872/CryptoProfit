@@ -221,8 +221,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     textWatcherSkip = false
   }
 
-  override fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal, sellTotal: BigDecimal,
-      sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal, profitFiat: BigDecimal, profitSingleFiat: BigDecimal) {
+  override fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal,
+      sellTotal: BigDecimal,
+      sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal,
+      profitFiat: BigDecimal, profitSingleFiat: BigDecimal, sellMultiplier: BigDecimal) {
     text_buyTotal.money = buyTotal
     text_buyTotalFiat.money = buyTotalFiat
     text_buySingleFiat.money = buySingleFiat
@@ -230,6 +232,7 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     text_sellTotal.money = sellTotal
     text_sellTotalFiat.money = sellTotalFiat
     text_sellSingleFiat.money = sellSingleFiat
+    text_sellMultiplier.money = sellMultiplier
 
     text_profit.money = profit
     text_profitFiat.money = profitFiat

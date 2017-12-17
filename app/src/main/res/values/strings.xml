@@ -40,6 +40,7 @@
   <string name="action_operation4">-5%</string>
   <string name="action_priceBitcoin">BTC</string>
   <string name="action_priceEthereum">ETH</string>
+  <string name="action_priceToday">Today</string>
 
   <string name="text_memoryStore">Memory store</string>
   <string name="text_memoryRecall">Memory recall</string>
@@ -50,6 +51,6 @@
 
   <string name="currency_fiat">ғɪᴀᴛ</string>
   <string name="currency_singleFiat">1x ғɪᴀᴛ</string>
-  <string name="action_priceToday">Today</string>
 
+  <string name="currency_sellMultiplier">x</string>
 </resources>

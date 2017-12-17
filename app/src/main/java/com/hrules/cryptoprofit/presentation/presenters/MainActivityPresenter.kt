@@ -103,12 +103,14 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     val sellTotal = model.buyAmount * model.sellPrice
     val sellTotalFiat = sellTotal * model.coinPrice
     val sellSingleFiat = model.sellPrice * model.coinPrice
+    val sellMultiplier = if (sellTotal > BigDecimal.ZERO) sellTotal / buyTotal else BigDecimal.ZERO
 
     val profit = sellTotal - buyTotal
     val profitFiat = sellTotalFiat - buyTotalFiat
     val profitSingleFiat = sellSingleFiat - buySingleFiat
 
-    view?.setResults(buyTotal, buyTotalFiat, buySingleFiat, sellTotal, sellTotalFiat, sellSingleFiat, profit, profitFiat, profitSingleFiat)
+    view?.setResults(buyTotal, buyTotalFiat, buySingleFiat, sellTotal, sellTotalFiat, sellSingleFiat, profit, profitFiat, profitSingleFiat,
+        sellMultiplier)
   }
 
   fun currencyConverter(state: Boolean) {
@@ -267,8 +269,10 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     fun setSources(coinPrice: BigDecimal, coinPriceAtBuyTime: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal,
         sellPrice: BigDecimal)
 
-    fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal, sellTotal: BigDecimal,
-        sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal, profitFiat: BigDecimal, profitSingleFiat: BigDecimal)
+    fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal,
+        sellTotal: BigDecimal,
+        sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal,
+        profitFiat: BigDecimal, profitSingleFiat: BigDecimal, sellMultiplier: BigDecimal)
 
     fun setFocus(id: Int)
     fun showToast(message: String, duration: Int = 0)
