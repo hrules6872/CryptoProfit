@@ -16,7 +16,6 @@
 
 package com.hrules.cryptoprofit.presentation.entitites
 
-import com.hrules.cryptoprofit.presentation.entitites.base.Model
 import com.hrules.cryptoprofit.presentation.entitites.qualifiers.Cacheable
 import com.hrules.cryptoprofit.presentation.entitites.qualifiers.Validatable
 import kotlinx.serialization.Optional
@@ -61,7 +60,7 @@ data class Crypto(
     @Optional @SerialName("TRY") private val priceTry: BigDecimal? = BigDecimal.ZERO,
     @Optional @SerialName("TWD") private val priceTwd: BigDecimal? = BigDecimal.ZERO,
     @Optional @SerialName("ZAR") private val priceZar: BigDecimal? = BigDecimal.ZERO
-) : Model, Validatable, Cacheable {
+) : Validatable, Cacheable {
   @Optional override var cacheCreated: Long = DEFAULT_CACHE_CREATED
   @Optional override var cacheDirty: Boolean = DEFAULT_CACHE_DIRTY
 
