@@ -26,13 +26,17 @@ import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
 import com.hrules.cryptoprofit.presentation.resources.base.ResId
 import com.hrules.cryptoprofit.presentation.resources.base.ResString
-import org.junit.Assert.assertTrue
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import java.math.BigDecimal
+
 
 @RunWith(JUnit4::class)
 class MainActivityPresenterTest {
@@ -60,7 +64,55 @@ class MainActivityPresenterTest {
   }
 
   @Test
-  fun `dummy`() {
-    assertTrue(true)
+  fun `given some values when calculate then result ok`() {
+    `when`(preferences.cryptoPriceDateUseToday).thenReturn(false)
+
+    presenter.calculate(
+        coinPriceInput = BigDecimal("50"),
+        coinPriceAtBuyTimeInput = BigDecimal("75"),
+        buyPriceInput = BigDecimal.TEN,
+        buyAmountInput = BigDecimal.TEN,
+        sellPriceInput = BigDecimal("100"))
+
+    verify(view).setResults(
+        buyTotal = BigDecimal("100"),
+        buyTotalFiat = BigDecimal("7500"),
+        buySingleFiat = BigDecimal("750"),
+        sellTotal = BigDecimal("1000"),
+        sellTotalFiat = BigDecimal("50000"),
+        sellSingleFiat = BigDecimal("5000"),
+        profit = BigDecimal("900"),
+        profitFiat = BigDecimal("42500"),
+        profitSingleFiat = BigDecimal("4250"),
+        sellMultiplier = BigDecimal.TEN)
+  }
+
+  @Test
+  fun `given zero values when calculate then result ok`() {
+    `when`(preferences.cryptoPriceDateUseToday).thenReturn(false)
+
+    presenter.calculate(
+        coinPriceInput = BigDecimal.ZERO,
+        coinPriceAtBuyTimeInput = BigDecimal.ZERO,
+        buyPriceInput = BigDecimal.ZERO,
+        buyAmountInput = BigDecimal.ZERO,
+        sellPriceInput = BigDecimal.ZERO)
+
+    verify(view).setResults(
+        buyTotal = BigDecimal.ZERO,
+        buyTotalFiat = BigDecimal.ZERO,
+        buySingleFiat = BigDecimal.ZERO,
+        sellTotal = BigDecimal.ZERO,
+        sellTotalFiat = BigDecimal.ZERO,
+        sellSingleFiat = BigDecimal.ZERO,
+        profit = BigDecimal.ZERO,
+        profitFiat = BigDecimal.ZERO,
+        profitSingleFiat = BigDecimal.ZERO,
+        sellMultiplier = BigDecimal.ZERO)
+  }
+
+  @After
+  fun `after`() {
+    presenter.unbind()
   }
 }

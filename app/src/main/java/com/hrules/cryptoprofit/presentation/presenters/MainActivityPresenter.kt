@@ -103,7 +103,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     val sellTotal = model.buyAmount * model.sellPrice
     val sellTotalFiat = sellTotal * model.coinPrice
     val sellSingleFiat = model.sellPrice * model.coinPrice
-    val sellMultiplier = if ((buyTotal > BigDecimal.ZERO) or (sellTotal > BigDecimal.ZERO)) sellTotal / buyTotal else BigDecimal.ZERO
+    val sellMultiplier = if ((buyTotal > BigDecimal.ZERO) and (sellTotal > BigDecimal.ZERO)) sellTotal / buyTotal else BigDecimal.ZERO
 
     val profit = sellTotal - buyTotal
     val profitFiat = sellTotalFiat - buyTotalFiat
