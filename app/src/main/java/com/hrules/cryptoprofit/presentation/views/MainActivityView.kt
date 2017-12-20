@@ -99,10 +99,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     action_priceEthereum.setOnClickListener { view -> notifyClick(view) }
     action_currencyToConvert.setOnClickListener { view -> notifyClick(view) }
 
-    action_operation1.setOnClickListener { view -> notifyClick(view) }
-    action_operation2.setOnClickListener { view -> notifyClick(view) }
-    action_operation3.setOnClickListener { view -> notifyClick(view) }
-    action_operation4.setOnClickListener { view -> notifyClick(view) }
+    action_operationSellEquals.setOnClickListener { view -> notifyClick(view) }
+    action_operationSellClear.setOnClickListener { view -> notifyClick(view) }
+    action_operationSellPercentagePlus.setOnClickListener { view -> notifyClick(view) }
+    action_operationSellPercentageMinus.setOnClickListener { view -> notifyClick(view) }
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -140,10 +140,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
         action_priceBitcoin -> presenter.priceBitcoin()
         action_priceEthereum -> presenter.priceEthereum()
         action_currencyToConvert -> showCurrencyToConvertList()
-        action_operation1 -> presenter.operation1()
-        action_operation2 -> presenter.operation2()
-        action_operation3 -> presenter.operation3()
-        action_operation4 -> presenter.operation4()
+        action_operationSellEquals -> presenter.operationSellEquals()
+        action_operationSellClear -> presenter.operationSellCLear()
+        action_operationSellPercentagePlus -> presenter.operationSellPercentagePlus()
+        action_operationSellPercentageMinus -> presenter.operationSellPercentageMinus()
       }
     }
   }

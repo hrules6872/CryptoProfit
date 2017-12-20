@@ -34,10 +34,10 @@
   <string name="action_currencyConverter">Currency\nconverter</string>
   <string name="action_example">Example</string>
   <string name="action_visitWebSite">Visit website</string>
-  <string name="action_operation1">=</string>
-  <string name="action_operation2">C</string>
-  <string name="action_operation3">+5%</string>
-  <string name="action_operation4">-5%</string>
+  <string name="action_operationSellEquals">=</string>
+  <string name="action_operationSellClear">C</string>
+  <string name="action_operationSellPercentagePlus">+5%</string>
+  <string name="action_operationSellPercentageMinus">-5%</string>
   <string name="action_priceBitcoin">BTC</string>
   <string name="action_priceEthereum">ETH</string>
   <string name="action_priceToday">Today</string>

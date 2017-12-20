@@ -192,25 +192,25 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         preferences.cryptoPriceDate)
   }
 
-  fun operation1() {
+  fun operationSellEquals() {
     model.sellPrice = model.buyPrice
     view?.setFocus(resId.editSellPrice)
     setSourcesAndCalculate()
   }
 
-  fun operation2() {
+  fun operationSellCLear() {
     model.sellPrice = BigDecimal.ZERO
     view?.setFocus(resId.editSellPrice)
     setSourcesAndCalculate()
   }
 
-  fun operation3() {
+  fun operationSellPercentagePlus() {
     model.sellPrice = model.sellPrice.multiply(BigDecimal(PERCENTAGE_PLUS))
     view?.setFocus(resId.editSellPrice)
     setSourcesAndCalculate()
   }
 
-  fun operation4() {
+  fun operationSellPercentageMinus() {
     model.sellPrice = model.sellPrice.multiply(BigDecimal(PERCENTAGE_MINUS))
     view?.setFocus(resId.editSellPrice)
     setSourcesAndCalculate()
