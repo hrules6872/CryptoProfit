@@ -26,4 +26,6 @@
 
   <dimen name="default_buttonMinWidth">64dp</dimen>
   <dimen name="default_marginHalf">4dp</dimen>
+
+  <dimen name="default_progressSize">32dp</dimen>
 </resources>

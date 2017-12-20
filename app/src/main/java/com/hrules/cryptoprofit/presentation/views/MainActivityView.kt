@@ -245,6 +245,10 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     findViewById<EditText>(id).requestFocus()
   }
 
+  override fun setProgressVisibility(state: Boolean) {
+    if (state) progress.show() else progress.hide()
+  }
+
   override fun showToast(message: String, duration: Int) {
     toast(message = message, duration = duration)
   }

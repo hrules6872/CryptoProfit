@@ -30,37 +30,54 @@
       android:minHeight="?attr/actionBarSize"
       />
 
-  <LinearLayout
-      android:layout_width="wrap_content"
+  <FrameLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="@dimen/default_margin"
-      android:orientation="horizontal"
       >
 
-    <Button
-        android:id="@+id/action_memoryStore"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="@dimen/default_buttonMinWidth"
-        android:text="@string/action_memoryStore"
-        />
+        android:layout_margin="@dimen/default_margin"
+        android:orientation="horizontal"
+        >
 
-    <Button
-        android:id="@+id/action_memoryRecall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="@dimen/default_buttonMinWidth"
-        android:text="@string/action_memoryRecall"
-        />
+      <Button
+          android:id="@+id/action_memoryStore"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:minWidth="@dimen/default_buttonMinWidth"
+          android:text="@string/action_memoryStore"
+          />
 
-    <Button
-        android:id="@+id/action_clear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="@dimen/default_buttonMinWidth"
-        android:text="@string/action_clear"
+      <Button
+          android:id="@+id/action_memoryRecall"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:minWidth="@dimen/default_buttonMinWidth"
+          android:text="@string/action_memoryRecall"
+          />
+
+      <Button
+          android:id="@+id/action_clear"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:minWidth="@dimen/default_buttonMinWidth"
+          android:text="@string/action_clear"
+          />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progress"
+        android:layout_width="@dimen/default_progressSize"
+        android:layout_height="@dimen/default_progressSize"
+        android:layout_gravity="end|center_vertical"
+        android:layout_margin="@dimen/default_margin"
+        android:visibility="invisible"
+        style="@style/Widget.AppCompat.ProgressBar"
         />
-  </LinearLayout>
+  </FrameLayout>
 
   <ScrollView
       android:layout_width="match_parent"

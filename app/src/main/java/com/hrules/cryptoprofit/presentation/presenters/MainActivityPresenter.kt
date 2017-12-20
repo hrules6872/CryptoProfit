@@ -225,6 +225,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
   private fun getCryptoPrice(cryptoCurrency: CryptoCurrency,
       currencyToConvert: String, timeStampToday: Long, timeStampDate: Long) {
     launch(UI) {
+      view?.setProgressVisibility(true)
       try {
         val crypto = async { getCryptoPriceAsync(cryptoCurrency, currencyToConvert, timeStampToday) }.await()
         val cryptoAtBuyTime = async { getCryptoPriceAsync(cryptoCurrency, currencyToConvert, timeStampDate) }.await()
@@ -242,6 +243,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
               else -> resString.errorUnknown
             })
       }
+      view?.setProgressVisibility(false)
     }
   }
 
@@ -276,6 +278,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         profitFiat: BigDecimal, profitSingleFiat: BigDecimal, sellMultiplier: BigDecimal)
 
     fun setFocus(id: Int)
+    fun setProgressVisibility(state: Boolean)
     fun showToast(message: String, duration: Int = 0)
   }
 }
