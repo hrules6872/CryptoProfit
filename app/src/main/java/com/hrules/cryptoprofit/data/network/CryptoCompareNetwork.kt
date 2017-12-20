@@ -16,6 +16,7 @@
 
 package com.hrules.cryptoprofit.data.network
 
+import com.hrules.cryptoprofit.data.network.base.Network
 import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
 import com.hrules.cryptoprofit.presentation.extensions.withParams
 import okhttp3.OkHttpClient
@@ -24,9 +25,8 @@ import java.util.concurrent.TimeUnit
 
 private const val API_ENDPOINT = "https://min-api.cryptocompare.com/data/dayAvg?fsym={{cryptoCurrency}}&tsym={{currencyToConvert}}&toTs={{timeStamp}}&tryConversion=false"
 
-class Network {
-  fun getCryptoPrice(cryptoCurrency: CryptoCurrency, currencyToConvert: String,
-      timeStamp: Long): String? {
+class CryptoCompareNetwork : Network {
+  override fun getCryptoPrice(cryptoCurrency: CryptoCurrency, currencyToConvert: String, timeStamp: Long): String? {
     val request = Request.Builder().url(
         API_ENDPOINT.withParams(cryptoCurrency.name, currencyToConvert, timeStamp / TimeUnit.SECONDS.toMillis(1))).build()
     val response = OkHttpClient().newCall(request).execute()

@@ -16,11 +16,9 @@
 
 package com.hrules.cryptoprofit.presentation.presenters
 
-import android.content.SharedPreferences
-import com.hrules.cryptoprofit.data.cache.AndroidCryptoCache
 import com.hrules.cryptoprofit.data.cache.base.Cache
-import com.hrules.cryptoprofit.data.cache.params.CryptoCacheParams
-import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
+import com.hrules.cryptoprofit.data.cache.params.base.CacheParams
+import com.hrules.cryptoprofit.data.network.base.Network
 import com.hrules.cryptoprofit.data.preferences.base.Preferences
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
@@ -40,26 +38,25 @@ import java.math.BigDecimal
 
 @RunWith(JUnit4::class)
 class MainActivityPresenterTest {
-  private lateinit var cache: Cache<CryptoCacheParams, Crypto>
-  private lateinit var preferences: Preferences
-  private lateinit var presenter: MainActivityPresenter
-
-  @Mock
-  private lateinit var view: MainActivityPresenter.Contract
-  @Mock
-  private lateinit var sharedPreferences: SharedPreferences
   @Mock
   private lateinit var resId: ResId
   @Mock
   private lateinit var resString: ResString
+  @Mock
+  private lateinit var cache: Cache<CacheParams, Crypto>
+  @Mock
+  private lateinit var preferences: Preferences
+  @Mock
+  private lateinit var network: Network
+  @Mock
+  private lateinit var view: MainActivityPresenter.Contract
+
+  private lateinit var presenter: MainActivityPresenter
 
   @Before
   fun `set up`() {
     MockitoAnnotations.initMocks(this)
-
-    preferences = AndroidPreferences(sharedPreferences)
-    cache = AndroidCryptoCache(preferences as AndroidPreferences)
-    presenter = MainActivityPresenter(resId, resString, preferences, cache)
+    presenter = MainActivityPresenter(resId, resString, preferences, cache, network)
     presenter.bind(MainActivityModel(), view)
   }
 

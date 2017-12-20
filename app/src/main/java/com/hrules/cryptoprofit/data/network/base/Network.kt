@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-package com.hrules.cryptoprofit
+package com.hrules.cryptoprofit.data.network.base
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.junit.runner.RunWith
+import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
 
-@RunWith(AndroidJUnit4::class)
-class DummyInstrumentedTest {
-  @Test
-  fun shouldReturnDefaultPackageName() {
-    val appContext = InstrumentationRegistry.getTargetContext()
-    assertEquals("com.hrules.cryptoprofit", appContext.packageName)
-  }
+interface Network {
+  fun getCryptoPrice(cryptoCurrency: CryptoCurrency, currencyToConvert: String, timeStamp: Long): String?
 }

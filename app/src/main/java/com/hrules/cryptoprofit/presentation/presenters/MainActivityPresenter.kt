@@ -20,7 +20,7 @@ import com.hrules.cryptoprofit.commons.formatDate
 import com.hrules.cryptoprofit.commons.sameDay
 import com.hrules.cryptoprofit.data.cache.base.Cache
 import com.hrules.cryptoprofit.data.cache.params.CryptoCacheParams
-import com.hrules.cryptoprofit.data.network.Network
+import com.hrules.cryptoprofit.data.network.base.Network
 import com.hrules.cryptoprofit.data.preferences.base.Preferences
 import com.hrules.cryptoprofit.presentation.base.mvp.BasePresenter
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseView
@@ -42,7 +42,8 @@ private const val PERCENTAGE_PLUS = 1.05
 private const val PERCENTAGE_MINUS = 0.95
 
 class MainActivityPresenter(private val resId: ResId, private val resString: ResString, private val preferences: Preferences,
-    private val cache: Cache<CryptoCacheParams, Crypto>) : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
+    private val cache: Cache<CryptoCacheParams, Crypto>, private val network: Network)
+  : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
   override fun viewReady(first: Boolean) {
     view?.let {
       val cryptoPriceDateMillis = if (preferences.cryptoPriceDateUseToday) System.currentTimeMillis() else preferences.cryptoPriceDate
@@ -247,7 +248,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
   private suspend fun getCryptoPriceAsync(cryptoCurrency: CryptoCurrency, currencyToConvert: String, timeStamp: Long): Crypto {
     var crypto = cache.get(CryptoCacheParams(cryptoCurrency, timeStamp))
     if (!crypto.validate() or crypto.cacheDirty) {
-      val response = Network().getCryptoPrice(cryptoCurrency, currencyToConvert, timeStamp)
+      val response = network.getCryptoPrice(cryptoCurrency, currencyToConvert, timeStamp)
       response?.let {
         crypto = CryptoSerializer.parse(response)
         if (!crypto.validate()) throw IllegalStateException()

@@ -31,6 +31,7 @@ import com.hrules.cryptoprofit.R
 import com.hrules.cryptoprofit.R.id.action_example
 import com.hrules.cryptoprofit.R.id.action_visitWebSite
 import com.hrules.cryptoprofit.data.cache.AndroidCryptoCache
+import com.hrules.cryptoprofit.data.network.CryptoCompareNetwork
 import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
 import com.hrules.cryptoprofit.presentation.base.BaseActivity
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
@@ -51,7 +52,8 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
       AndroidResId,
       AndroidResString,
       AndroidPreferences(PreferenceManager.getDefaultSharedPreferences(App.instance)),
-      AndroidCryptoCache(AndroidPreferences(PreferenceManager.getDefaultSharedPreferences(App.instance))))
+      AndroidCryptoCache(AndroidPreferences(PreferenceManager.getDefaultSharedPreferences(App.instance))),
+      CryptoCompareNetwork())
 
   private var textWatcherSkip = false
 
