@@ -26,6 +26,7 @@ import com.hrules.cryptoprofit.presentation.base.mvp.BasePresenter
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseView
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
+import com.hrules.cryptoprofit.presentation.entitites.Currency
 import com.hrules.cryptoprofit.presentation.entitites.serializers.CryptoSerializer
 import com.hrules.cryptoprofit.presentation.entitites.serializers.MainActivityModelSerializer
 import com.hrules.cryptoprofit.presentation.extensions.toOneIfZero
@@ -248,7 +249,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
   }
 
   private suspend fun getCryptoPriceAsync(cryptoCurrency: CryptoCurrency, currencyToConvert: String, timeStamp: Long): Crypto {
-    var crypto = cache.get(CryptoCacheParams(cryptoCurrency, timeStamp))
+    var crypto = cache.get(CryptoCacheParams(cryptoCurrency, Currency.valueOf(currencyToConvert), timeStamp))
     if (!crypto.validate() or crypto.cacheDirty) {
       val response = network.getCryptoPrice(cryptoCurrency, currencyToConvert, timeStamp)
       response?.let {

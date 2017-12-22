@@ -18,5 +18,7 @@ package com.hrules.cryptoprofit.data.cache.params
 
 import com.hrules.cryptoprofit.data.cache.params.base.CacheParams
 import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
+import com.hrules.cryptoprofit.presentation.entitites.Currency
 
-data class CryptoCacheParams(val cryptoCurrency: CryptoCurrency, val timeStamp: Long = System.currentTimeMillis()) : CacheParams
+data class CryptoCacheParams(val cryptoCurrency: CryptoCurrency, val currencyToConvert: Currency = Currency.USD,
+    val timeStamp: Long = System.currentTimeMillis()) : CacheParams

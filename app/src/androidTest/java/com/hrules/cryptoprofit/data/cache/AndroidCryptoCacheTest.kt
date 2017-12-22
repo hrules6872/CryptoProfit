@@ -27,6 +27,7 @@ import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
 import com.hrules.cryptoprofit.data.preferences.base.Preferences
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
+import com.hrules.cryptoprofit.presentation.entitites.Currency
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -53,7 +54,7 @@ class AndroidCryptoCacheTest {
     preferences = AndroidPreferences(sharedPreferences)
     cache = AndroidCryptoCache(preferences as AndroidPreferences)
 
-    cryptoExpected = Crypto(priceUsd = BigDecimal.ONE)
+    cryptoExpected = Crypto(priceEur = BigDecimal.ONE)
   }
 
   @Test
@@ -67,8 +68,8 @@ class AndroidCryptoCacheTest {
     cache.put(CryptoCacheParams(CryptoCurrency.BTC), cryptoExpected)
     cache.put(CryptoCacheParams(CryptoCurrency.ETH), cryptoExpected)
 
-    assertEquals(cryptoExpected, cache.get(CryptoCacheParams(CryptoCurrency.BTC)))
-    assertEquals(cryptoExpected, cache.get(CryptoCacheParams(CryptoCurrency.ETH)))
+    assertEquals(cryptoExpected, cache.get(CryptoCacheParams(cryptoCurrency = CryptoCurrency.BTC, currencyToConvert = Currency.EUR)))
+    assertEquals(cryptoExpected, cache.get(CryptoCacheParams(cryptoCurrency = CryptoCurrency.ETH, currencyToConvert = Currency.EUR)))
 
     val cryptoExpectedYesterday = cryptoExpected.copy()
     val yesterdayMillis = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1)
@@ -77,8 +78,10 @@ class AndroidCryptoCacheTest {
     cache.put(CryptoCacheParams(CryptoCurrency.BTC), cryptoExpectedYesterday)
     cache.put(CryptoCacheParams(CryptoCurrency.ETH), cryptoExpectedYesterday)
 
-    assertEquals(cryptoExpectedYesterday, cache.get(CryptoCacheParams(CryptoCurrency.BTC, yesterdayMillis)))
-    assertEquals(cryptoExpectedYesterday, cache.get(CryptoCacheParams(CryptoCurrency.ETH, yesterdayMillis)))
+    assertEquals(cryptoExpectedYesterday,
+        cache.get(CryptoCacheParams(cryptoCurrency = CryptoCurrency.BTC, currencyToConvert = Currency.EUR, timeStamp = yesterdayMillis)))
+    assertEquals(cryptoExpectedYesterday,
+        cache.get(CryptoCacheParams(cryptoCurrency = CryptoCurrency.ETH, currencyToConvert = Currency.EUR, timeStamp = yesterdayMillis)))
   }
 
   @Test

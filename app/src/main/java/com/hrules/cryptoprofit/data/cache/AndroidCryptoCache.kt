@@ -37,7 +37,9 @@ class AndroidCryptoCache(private val preferences: AndroidPreferences) : Cache<Cr
   override fun get(params: CryptoCacheParams): Crypto = try {
     val cryptos: List<Crypto> = CryptoListSerializer.parse(
         if (params.cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin else preferences.cacheEthereum)
-    val crypto = cryptos.first { sameDay(it.cacheCreated, params.timeStamp) }
+    val crypto = cryptos.first {
+      (sameDay(it.cacheCreated, params.timeStamp)) and (it.price(params.currencyToConvert.toString()) != Crypto.defaultPrice)
+    }
     crypto.cacheDirty = System.currentTimeMillis() - crypto.cacheCreated > DEFAULT_CACHE_MAX_AGE
     crypto
   } catch (e: Exception) {

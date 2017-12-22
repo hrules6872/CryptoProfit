@@ -68,7 +68,7 @@
 
     </LinearLayout>
 
-    <android.support.v4.widget.ContentLoadingProgressBar
+    <com.hrules.cryptoprofit.presentation.components.ContentLoadingProgressBar
         android:id="@+id/progress"
         android:layout_width="@dimen/default_progressSize"
         android:layout_height="@dimen/default_progressSize"
