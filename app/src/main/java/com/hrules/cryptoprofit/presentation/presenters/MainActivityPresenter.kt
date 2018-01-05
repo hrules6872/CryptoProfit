@@ -191,7 +191,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     preferences.currencyToConvert = currencyToConvert
     view?.setCurrencyToConvert(currencyToConvert)
     getCryptoPrice(CryptoCurrency.valueOf(preferences.cryptoCurrency), currencyToConvert, System.currentTimeMillis(),
-        preferences.cryptoPriceDate)
+        if (preferences.cryptoPriceDateUseToday) System.currentTimeMillis() else preferences.cryptoPriceDate)
   }
 
   fun operationSellEquals() {
