@@ -20,6 +20,7 @@
   <dimen name="default_marginTriple">24dp</dimen>
   <dimen name="default_marginQuad">32dp</dimen>
 
+  <dimen name="default_paddingHalf">4dp</dimen>
   <dimen name="default_padding">8dp</dimen>
   <dimen name="default_paddingTriple">24dp</dimen>
   <dimen name="default_paddingDouble">16dp</dimen>

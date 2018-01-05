@@ -21,4 +21,9 @@ interface ResId {
   val editCoinPriceAtBuyTime: Int
   val editBuyAmount: Int
   val editSellPrice: Int
+
+  val toolbar: Int
+
+  val actionMemoryStore: Int
+  val actionMemoryRecall: Int
 }

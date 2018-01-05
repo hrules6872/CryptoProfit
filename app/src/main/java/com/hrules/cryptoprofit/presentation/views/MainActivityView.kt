@@ -34,10 +34,10 @@ import com.hrules.cryptoprofit.data.cache.AndroidCryptoCache
 import com.hrules.cryptoprofit.data.network.CryptoCompareNetwork
 import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
 import com.hrules.cryptoprofit.presentation.base.BaseActivity
+import com.hrules.cryptoprofit.presentation.commons.ToolTipHelper
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.extensions.textWatcher
 import com.hrules.cryptoprofit.presentation.extensions.toVisibility
-import com.hrules.cryptoprofit.presentation.extensions.toast
 import com.hrules.cryptoprofit.presentation.presenters.MainActivityPresenter
 import com.hrules.cryptoprofit.presentation.presenters.models.MainActivityModel
 import com.hrules.cryptoprofit.presentation.resources.AndroidResId
@@ -94,6 +94,8 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     action_memoryStore.setOnClickListener { view -> notifyClick(view) }
     action_memoryRecall.setOnClickListener { view -> notifyClick(view) }
     action_clear.setOnClickListener { view -> notifyClick(view) }
+
+    text_exclamation.setOnClickListener { view -> ToolTipHelper.show(view, getString(R.string.text_notEqualsCryptoPrices)) }
 
     action_priceToday.setOnClickListener { view -> notifyClick(view) }
     action_priceDate.setOnClickListener { view -> notifyClick(view) }
@@ -245,11 +247,15 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     findViewById<EditText>(id).requestFocus()
   }
 
+  override fun setExclamationVisibility(state: Boolean) {
+    text_exclamation.visibility = if (state) View.VISIBLE else View.INVISIBLE
+  }
+
   override fun setProgressVisibility(state: Boolean) {
     if (state) progress.show() else progress.hide()
   }
 
-  override fun showToast(message: String, duration: Int) {
-    toast(message = message, duration = duration)
+  override fun showToolTip(id: Int, text: String, @ToolTipHelper.Duration duration: Int) {
+    ToolTipHelper.show(view = findViewById<View>(id), text = text, duration = duration)
   }
 }

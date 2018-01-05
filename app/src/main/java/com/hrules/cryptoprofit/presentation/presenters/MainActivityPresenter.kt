@@ -24,6 +24,7 @@ import com.hrules.cryptoprofit.data.network.base.Network
 import com.hrules.cryptoprofit.data.preferences.base.Preferences
 import com.hrules.cryptoprofit.presentation.base.mvp.BasePresenter
 import com.hrules.cryptoprofit.presentation.base.mvp.BaseView
+import com.hrules.cryptoprofit.presentation.commons.ToolTipHelper
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
 import com.hrules.cryptoprofit.presentation.entitites.Currency
@@ -71,6 +72,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         buyPriceInput = buyPriceInput,
         buyAmountInput = buyAmountInput,
         sellPriceInput = sellPriceInput)
+    view?.setExclamationVisibility(coinPriceInput.compareTo(coinPriceAtBuyTimeInput) != 0)
   }
 
   fun notifyChangeCoinPrice(coinPriceInput: BigDecimal, coinPriceAtBuyTimeInput: BigDecimal, buyPriceInput: BigDecimal,
@@ -82,6 +84,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         buyPriceInput = buyPriceInput,
         buyAmountInput = buyAmountInput,
         sellPriceInput = sellPriceInput)
+    view?.setExclamationVisibility(coinPriceInput.compareTo(coinPriceAtBuyTimeInput) != 0)
   }
 
   fun calculate(coinPriceInput: BigDecimal, coinPriceAtBuyTimeInput: BigDecimal, buyPriceInput: BigDecimal, buyAmountInput: BigDecimal,
@@ -136,7 +139,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
 
   fun memoryStore() {
     preferences.memory = MainActivityModelSerializer.stringify(model)
-    view?.showToast(resString.memoryStore)
+    view?.showToolTip(resId.actionMemoryStore, resString.memoryStore)
   }
 
   fun memoryRecall() {
@@ -149,7 +152,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         buyAmount = modelRecall.buyAmount
         sellPrice = modelRecall.sellPrice
       }
-      view?.showToast(resString.memoryRecall)
+      view?.showToolTip(resId.actionMemoryRecall, resString.memoryRecall)
     } catch (e: Exception) {
     }
     setSourcesAndCalculate()
@@ -238,7 +241,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
           calculate()
         }
       } catch (e: Exception) {
-        view?.showToast(
+        view?.showToolTip(resId.toolbar,
             when (e) {
               is IOException -> resString.errorNoConnection
               else -> resString.errorUnknown
@@ -279,7 +282,8 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         profitFiat: BigDecimal, profitSingleFiat: BigDecimal, sellMultiplier: BigDecimal)
 
     fun setFocus(id: Int)
+    fun setExclamationVisibility(state: Boolean)
     fun setProgressVisibility(state: Boolean)
-    fun showToast(message: String, duration: Int = 0)
+    fun showToolTip(id: Int, text: String, @ToolTipHelper.Duration duration: Int = 0)
   }
 }

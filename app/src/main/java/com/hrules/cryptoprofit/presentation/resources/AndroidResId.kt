@@ -24,4 +24,9 @@ object AndroidResId : ResId {
   override val editCoinPriceAtBuyTime: Int = R.id.edit_coinPriceAtBuyTime
   override val editBuyAmount: Int = R.id.edit_buyAmount
   override val editSellPrice: Int = R.id.edit_sellPrice
+
+  override val toolbar: Int = R.id.toolbar
+
+  override val actionMemoryStore: Int = R.id.action_memoryStore
+  override val actionMemoryRecall: Int = R.id.action_memoryRecall
 }

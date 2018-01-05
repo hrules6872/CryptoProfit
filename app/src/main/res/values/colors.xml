@@ -19,4 +19,6 @@
   <color name="colorPrimary">#212121</color>
   <color name="colorPrimaryDark">#000</color>
   <color name="colorAccent">#5efc82</color>
+
+  <color name="red_exclamation">#f44336</color>
 </resources>
