@@ -237,7 +237,6 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         model.coinPriceAtBuyTime = cryptoAtBuyTime.price(currencyToConvert)
         view?.let {
           it.setCryptoPrice(model.coinPrice, model.coinPriceAtBuyTime)
-          it.setFocus(if (preferences.currencyConverter) resId.editCoinPrice else resId.editBuyAmount)
           calculate()
         }
       } catch (e: Exception) {
