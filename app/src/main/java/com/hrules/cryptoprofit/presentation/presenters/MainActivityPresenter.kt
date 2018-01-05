@@ -152,9 +152,9 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         buyAmount = modelRecall.buyAmount
         sellPrice = modelRecall.sellPrice
       }
-      view?.showToolTip(resId.actionMemoryRecall, resString.memoryRecall)
     } catch (e: Exception) {
     }
+    view?.showToolTip(resId.actionMemoryRecall, resString.memoryRecall)
     setSourcesAndCalculate()
   }
 
