@@ -46,6 +46,9 @@ private const val PERCENTAGE_MINUS = 0.95
 class MainActivityPresenter(private val resId: ResId, private val resString: ResString, private val preferences: Preferences,
     private val cache: Cache<CryptoCacheParams, Crypto>, private val network: Network)
   : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
+
+  private var buyTotalSkip = false
+
   override fun viewReady(first: Boolean) {
     view?.let {
       val cryptoPriceDateMillis = if (preferences.cryptoPriceDateUseToday) System.currentTimeMillis() else preferences.cryptoPriceDate
@@ -77,7 +80,6 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
 
   fun notifyChangeCoinPrice(coinPriceInput: BigDecimal, coinPriceAtBuyTimeInput: BigDecimal, buyPriceInput: BigDecimal,
       buyAmountInput: BigDecimal, sellPriceInput: BigDecimal) {
-    view?.setSources(model.coinPriceAtBuyTime)
     calculate(
         coinPriceInput = coinPriceInput,
         coinPriceAtBuyTimeInput = if (preferences.cryptoPriceDateUseToday) coinPriceInput else coinPriceAtBuyTimeInput,
@@ -87,13 +89,27 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     view?.setExclamationVisibility(coinPriceInput.compareTo(coinPriceAtBuyTimeInput) != 0)
   }
 
+  fun notifyChangeBuyTotal(coinPriceInput: BigDecimal, coinPriceAtBuyTimeInput: BigDecimal, buyPriceInput: BigDecimal,
+      buyTotalInput: BigDecimal, sellPriceInput: BigDecimal) {
+    val buyAmount = if ((buyPriceInput > BigDecimal.ZERO) and (buyTotalInput > BigDecimal.ZERO)) buyTotalInput / buyPriceInput else BigDecimal.ZERO
+    view?.setSources(coinPriceInput, coinPriceAtBuyTimeInput, buyPriceInput, buyAmount, sellPriceInput)
+    skipBuyTotal {
+      calculate(
+          coinPriceInput = coinPriceInput,
+          coinPriceAtBuyTimeInput = coinPriceAtBuyTimeInput,
+          buyPriceInput = buyPriceInput,
+          buyAmountInput = buyAmount,
+          sellPriceInput = sellPriceInput)
+    }
+  }
+
   fun calculate(coinPriceInput: BigDecimal, coinPriceAtBuyTimeInput: BigDecimal, buyPriceInput: BigDecimal, buyAmountInput: BigDecimal,
       sellPriceInput: BigDecimal) {
     with(model) {
       coinPrice = coinPriceInput.toOneIfZero()
       coinPriceAtBuyTime = coinPriceAtBuyTimeInput.toOneIfZero()
       buyPrice = buyPriceInput
-      buyAmount = buyAmountInput.toOneIfZero()
+      buyAmount = buyAmountInput
       sellPrice = sellPriceInput
     }
     calculate()
@@ -114,8 +130,8 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     val profitFiat = sellTotalFiat - buyTotalFiat
     val profitSingleFiat = sellSingleFiat - buySingleFiat
 
-    view?.setResults(buyTotal, buyTotalFiat, buySingleFiat, sellTotal, sellTotalFiat, sellSingleFiat, profit, profitFiat, profitSingleFiat,
-        sellMultiplier)
+    view?.setResults(buyTotal, buyTotalFiat, buySingleFiat, sellTotal, sellTotalFiat, sellSingleFiat, profit, profitFiat,
+        profitSingleFiat, sellMultiplier, buyTotalSkip)
   }
 
   fun currencyConverter(state: Boolean) {
@@ -264,21 +280,25 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     return crypto
   }
 
+  private inline fun skipBuyTotal(code: () -> Unit) {
+    buyTotalSkip = true
+    code()
+    buyTotalSkip = false
+  }
+
   interface Contract : BaseView {
     fun setCryptoPriceDate(cryptoPriceDate: String, cryptoPriceDateMillis: Long)
     fun setCryptoPrice(coinPrice: BigDecimal, coinPriceAtBuyTime: BigDecimal)
     fun setCurrencyConverterState(state: Boolean)
-
     fun setCurrencyToConvert(currencyToConvert: String)
-
-    fun setSources(coinPriceAtBuyTime: BigDecimal)
     fun setSources(coinPrice: BigDecimal, coinPriceAtBuyTime: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal,
         sellPrice: BigDecimal)
 
     fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal,
         sellTotal: BigDecimal,
         sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal,
-        profitFiat: BigDecimal, profitSingleFiat: BigDecimal, sellMultiplier: BigDecimal)
+        profitFiat: BigDecimal, profitSingleFiat: BigDecimal, sellMultiplier: BigDecimal,
+        skipBuyTotal: Boolean = false)
 
     fun setFocus(id: Int)
     fun setExclamationVisibility(state: Boolean)

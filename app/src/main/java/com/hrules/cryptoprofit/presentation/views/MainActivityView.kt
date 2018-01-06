@@ -67,7 +67,7 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
 
     edit_coinPriceAtBuyTime.textWatcher {
       onTextChangedShout {
-        if (!textWatcherSkip) {
+        doIfSkipTextWatcherFalse {
           presenter.notifyChangeCoinPriceAtBuyTime(coinPriceInput = edit_coinPrice.money,
               coinPriceAtBuyTimeInput = edit_coinPriceAtBuyTime.money,
               buyPriceInput = edit_buyPrice.money,
@@ -78,7 +78,7 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     }
     edit_coinPrice.textWatcher {
       onTextChangedShout {
-        if (!textWatcherSkip) {
+        doIfSkipTextWatcherFalse {
           presenter.notifyChangeCoinPrice(coinPriceInput = edit_coinPrice.money,
               coinPriceAtBuyTimeInput = edit_coinPriceAtBuyTime.money,
               buyPriceInput = edit_buyPrice.money,
@@ -89,6 +89,17 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     }
     edit_buyPrice.textWatcher { onTextChangedShout { notifyChange() } }
     edit_buyAmount.textWatcher { onTextChangedShout { notifyChange() } }
+    edit_buyTotal.textWatcher {
+      onTextChangedShout {
+        doIfSkipTextWatcherFalse {
+          presenter.notifyChangeBuyTotal(coinPriceInput = edit_coinPrice.money,
+              coinPriceAtBuyTimeInput = edit_coinPriceAtBuyTime.money,
+              buyPriceInput = edit_buyPrice.money,
+              buyTotalInput = edit_buyTotal.money,
+              sellPriceInput = edit_sellPrice.money)
+        }
+      }
+    }
     edit_sellPrice.textWatcher { onTextChangedShout { notifyChange() } }
 
     action_memoryStore.setOnClickListener { view -> notifyClick(view) }
@@ -123,7 +134,7 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
   }
 
   private fun notifyChange() {
-    if (!textWatcherSkip) {
+    doIfSkipTextWatcherFalse {
       presenter.calculate(
           coinPriceInput = edit_coinPrice.money,
           coinPriceAtBuyTimeInput = edit_coinPriceAtBuyTime.money,
@@ -208,39 +219,35 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     action_currencyToConvert.text = currencyToConvert
   }
 
-  override fun setSources(coinPriceAtBuyTime: BigDecimal) {
-    textWatcherSkip = true
-    edit_coinPriceAtBuyTime.money = coinPriceAtBuyTime
-    textWatcherSkip = false
-  }
-
   override fun setSources(coinPrice: BigDecimal, coinPriceAtBuyTime: BigDecimal, buyPrice: BigDecimal, buyAmount: BigDecimal,
       sellPrice: BigDecimal) {
-    textWatcherSkip = true
-    edit_coinPrice.money = coinPrice
-    edit_coinPriceAtBuyTime.money = coinPriceAtBuyTime
-    edit_buyPrice.money = buyPrice
-    edit_buyAmount.money = buyAmount
-    edit_sellPrice.money = sellPrice
-    textWatcherSkip = false
+    skipTextWatchers {
+      edit_coinPrice.money = coinPrice
+      edit_coinPriceAtBuyTime.money = coinPriceAtBuyTime
+      edit_buyPrice.money = buyPrice
+      edit_buyAmount.money = buyAmount
+      edit_sellPrice.money = sellPrice
+    }
   }
 
   override fun setResults(buyTotal: BigDecimal, buyTotalFiat: BigDecimal, buySingleFiat: BigDecimal,
       sellTotal: BigDecimal,
       sellTotalFiat: BigDecimal, sellSingleFiat: BigDecimal, profit: BigDecimal,
-      profitFiat: BigDecimal, profitSingleFiat: BigDecimal, sellMultiplier: BigDecimal) {
-    text_buyTotal.money = buyTotal
-    text_buyTotalFiat.money = buyTotalFiat
-    text_buySingleFiat.money = buySingleFiat
+      profitFiat: BigDecimal, profitSingleFiat: BigDecimal, sellMultiplier: BigDecimal, skipBuyTotal: Boolean) {
+    skipTextWatchers {
+      if (!skipBuyTotal) edit_buyTotal.money = buyTotal
+      text_buyTotalFiat.money = buyTotalFiat
+      text_buySingleFiat.money = buySingleFiat
 
-    text_sellTotal.money = sellTotal
-    text_sellTotalFiat.money = sellTotalFiat
-    text_sellSingleFiat.money = sellSingleFiat
-    text_sellMultiplier.money = sellMultiplier
+      text_sellTotal.money = sellTotal
+      text_sellTotalFiat.money = sellTotalFiat
+      text_sellSingleFiat.money = sellSingleFiat
+      text_sellMultiplier.money = sellMultiplier
 
-    text_profit.money = profit
-    text_profitFiat.money = profitFiat
-    text_profitSingleFiat.money = profitSingleFiat
+      text_profit.money = profit
+      text_profitFiat.money = profitFiat
+      text_profitSingleFiat.money = profitSingleFiat
+    }
   }
 
   override fun setFocus(id: Int) {
@@ -257,5 +264,17 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
 
   override fun showToolTip(id: Int, text: String, @ToolTipHelper.Duration duration: Int) {
     ToolTipHelper.show(view = findViewById<View>(id), text = text, duration = duration)
+  }
+
+  private inline fun skipTextWatchers(code: () -> Unit) {
+    textWatcherSkip = true
+    code()
+    textWatcherSkip = false
+  }
+
+  private inline fun doIfSkipTextWatcherFalse(code: () -> Unit) {
+    if (!textWatcherSkip) {
+      code()
+    }
   }
 }

@@ -284,15 +284,15 @@
 
       </LinearLayout>
 
-      <com.hrules.cryptoprofit.presentation.components.MoneyTextView
-          android:id="@+id/text_buyTotal"
-          android:layout_width="match_parent"
+      <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
+          android:id="@+id/edit_buyTotal"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/default_margin"
+          android:imeOptions="actionNext"
           android:gravity="end"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:layout_gravity="end"
+          android:nextFocusDown="@id/edit_sellPrice"
       />
-
       <com.hrules.cryptoprofit.presentation.components.MoneyTextView
           android:id="@+id/text_buyTotalFiat"
           android:layout_width="match_parent"
