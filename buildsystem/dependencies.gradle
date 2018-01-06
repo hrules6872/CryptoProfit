@@ -18,7 +18,7 @@ ext {
 
   configuration = [
 
-      androidBuildToolsVersion = '27.0.2',
+      androidBuildToolsVersion = '27.0.3',
       androidBuildMinSDKVersion = '21',
       androidBuildTargetSDKVersion = '26',
       androidBuildCompileSDKVersion = 'android-26',
@@ -46,7 +46,7 @@ ext {
 
       ],
 
-      kotlinCoroutinesVersion = '0.20',
+      kotlinCoroutinesVersion = '0.21',
       okhttpVersion = '3.9.+',
       projectDependencies = [
 
