@@ -138,21 +138,34 @@
             android:orientation="vertical"
         >
 
-          <android.support.design.widget.TextInputLayout
+          <FrameLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
           >
-
-            <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
-                android:id="@+id/edit_coinPriceAtBuyTime"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_coinPriceAtBuyTime"
-                android:imeOptions="actionNext"
-                android:nextFocusDown="@id/edit_coinPrice"
-                app:decimalPlacesMax="2"
+            >
+
+              <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
+                  android:id="@+id/edit_coinPriceAtBuyTime"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:hint="@string/hint_coinPriceAtBuyTime"
+                  android:imeOptions="actionNext"
+                  android:nextFocusDown="@id/edit_coinPrice"
+                  app:decimalPlacesMax="2"
+              />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/info_coinPriceAtBuyTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_info"
             />
-          </android.support.design.widget.TextInputLayout>
+          </FrameLayout>
 
           <LinearLayout
               android:layout_width="wrap_content"
@@ -179,21 +192,34 @@
 
           </LinearLayout>
 
-          <android.support.design.widget.TextInputLayout
+          <FrameLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
           >
-
-            <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
-                android:id="@+id/edit_coinPrice"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_coinPriceCurrent"
-                android:imeOptions="actionNext"
-                android:nextFocusDown="@id/edit_buyPrice"
-                app:decimalPlacesMax="2"
+            >
+
+              <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
+                  android:id="@+id/edit_coinPrice"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:hint="@string/hint_coinPriceCurrent"
+                  android:imeOptions="actionNext"
+                  android:nextFocusDown="@id/edit_buyPrice"
+                  app:decimalPlacesMax="2"
+              />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/info_coinPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_info"
             />
-          </android.support.design.widget.TextInputLayout>
+          </FrameLayout>
 
           <LinearLayout
               android:layout_width="wrap_content"
@@ -288,9 +314,9 @@
           android:id="@+id/edit_buyTotal"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:imeOptions="actionNext"
-          android:gravity="end"
           android:layout_gravity="end"
+          android:gravity="end"
+          android:imeOptions="actionNext"
           android:nextFocusDown="@id/edit_sellPrice"
       />
       <com.hrules.cryptoprofit.presentation.components.MoneyTextView

@@ -46,13 +46,16 @@
   <string name="text_memoryRecall">Memory recall</string>
   <string name="text_selectCurrency">Select currency</string>
   <string name="text_exclamation">!!</string>
-  <string name="text_notEqualsCryptoPrices">Crypto price at buy time\n≠\nCurrent crypto price</string>
 
   <string name="error_unknown">Something went wrong</string>
   <string name="error_noConnection">No network available</string>
+  <string name="error_notEqualsCryptoPrices">Crypto price at buy time\n≠\nCurrent crypto price</string>
+  <string name="error_emptyPrice">No info available: field empty or invalid</string>
 
   <string name="currency_fiat">ғɪᴀᴛ</string>
   <string name="currency_singleFiat">1x ғɪᴀᴛ</string>
 
   <string name="currency_sellMultiplier">x</string>
+
+  <string name="formatted_coinPriceInfo">15%% ⟶ %1$s\n25%% ⟶ %2$s\n33%% ⟶ %3$s\n50%% ⟶ %4$s\n75%% ⟶ %5$s</string>
 </resources>

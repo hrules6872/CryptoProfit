@@ -16,13 +16,40 @@
 
 package com.hrules.cryptoprofit.presentation.resources
 
+import com.hrules.cryptoprofit.App
 import com.hrules.cryptoprofit.R
+import com.hrules.cryptoprofit.presentation.extensions.toMoneyText
 import com.hrules.cryptoprofit.presentation.resources.base.ResString
 import com.hrules.cryptoprofit.presentation.resources.helpers.AndroidResHelper
+import java.math.BigDecimal
+
+private const val DEFAULT_DECIMALS_PLACES_MIN = 0
+private const val DEFAULT_DECIMALS_PLACES_MAX = 2
 
 object AndroidResString : ResString {
   override val memoryStore: String = AndroidResHelper.getString(R.string.text_memoryStore)
   override val memoryRecall: String = AndroidResHelper.getString(R.string.text_memoryRecall)
   override val errorUnknown: String = AndroidResHelper.getString(R.string.error_unknown)
   override val errorNoConnection: String = AndroidResHelper.getString(R.string.error_noConnection)
+  override val errorEmptyPrice: String = AndroidResHelper.getString(R.string.error_emptyPrice)
+
+  override fun coinPriceAtBuyTimeInfo(coinPriceAtBuyTimeInfo15: BigDecimal, coinPriceAtBuyTimeInfo25: BigDecimal,
+      coinPriceAtBuyTimeInfo33: BigDecimal, coinPriceAtBuyTimeInfo50: BigDecimal, coinPriceAtBuyTimeInfo75: BigDecimal): String {
+    return App.instance.resources.getString(R.string.formatted_coinPriceInfo,
+        coinPriceAtBuyTimeInfo15.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceAtBuyTimeInfo25.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceAtBuyTimeInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceAtBuyTimeInfo50.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceAtBuyTimeInfo75.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
+  }
+
+  override fun coinPriceInfo(coinPriceInfo15: BigDecimal, coinPriceInfo25: BigDecimal, coinPriceInfo33: BigDecimal,
+      coinPriceInfo50: BigDecimal, coinPriceInfo75: BigDecimal): String {
+    return App.instance.resources.getString(R.string.formatted_coinPriceInfo,
+        coinPriceInfo15.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceInfo25.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceInfo50.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceInfo75.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
+  }
 }

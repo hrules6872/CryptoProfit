@@ -34,6 +34,7 @@ import com.hrules.cryptoprofit.data.cache.AndroidCryptoCache
 import com.hrules.cryptoprofit.data.network.CryptoCompareNetwork
 import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
 import com.hrules.cryptoprofit.presentation.base.BaseActivity
+import com.hrules.cryptoprofit.presentation.commons.LENGTH_LONG
 import com.hrules.cryptoprofit.presentation.commons.ToolTipHelper
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.extensions.textWatcher
@@ -64,6 +65,9 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     setSupportActionBar(toolbar)
 
     action_currencyConverter.setOnCheckedChangeListener { _, state -> presenter.currencyConverter(state) }
+
+    info_coinPriceAtBuyTime.setOnClickListener { view -> showToolTipInfo(view) }
+    info_coinPrice.setOnClickListener { view -> showToolTipInfo(view) }
 
     edit_coinPriceAtBuyTime.textWatcher {
       onTextChangedShout {
@@ -106,7 +110,7 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
     action_memoryRecall.setOnClickListener { view -> notifyClick(view) }
     action_clear.setOnClickListener { view -> notifyClick(view) }
 
-    text_exclamation.setOnClickListener { view -> ToolTipHelper.show(view, getString(R.string.text_notEqualsCryptoPrices)) }
+    text_exclamation.setOnClickListener { view -> ToolTipHelper.show(view, getString(R.string.error_notEqualsCryptoPrices)) }
 
     action_priceToday.setOnClickListener { view -> notifyClick(view) }
     action_priceDate.setOnClickListener { view -> notifyClick(view) }
@@ -131,6 +135,12 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
       action_visitWebSite -> visitWebsiteClick()
     }
     return true
+  }
+
+  private fun showToolTipInfo(view: View) {
+    view.tag?.let {
+      ToolTipHelper.show(view, view.tag.toString(), LENGTH_LONG)
+    }
   }
 
   private fun notifyChange() {
@@ -248,6 +258,11 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
       text_profitFiat.money = profitFiat
       text_profitSingleFiat.money = profitSingleFiat
     }
+  }
+
+  override fun setCryptoPriceInfo(coinPriceAtBuyTimeInfo: String, coinPriceInfo: String) {
+    info_coinPriceAtBuyTime.tag = coinPriceAtBuyTimeInfo
+    info_coinPrice.tag = coinPriceInfo
   }
 
   override fun setFocus(id: Int) {
