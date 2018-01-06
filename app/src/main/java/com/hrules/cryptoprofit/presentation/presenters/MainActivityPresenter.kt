@@ -124,7 +124,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     val sellTotal = model.buyAmount * model.sellPrice
     val sellTotalFiat = sellTotal * model.coinPrice
     val sellSingleFiat = model.sellPrice * model.coinPrice
-    val sellMultiplier = if ((buyTotal > BigDecimal.ZERO) and (sellTotal > BigDecimal.ZERO)) sellTotal / buyTotal else BigDecimal.ZERO
+    val sellMultiplier = if ((model.buyPrice > BigDecimal.ZERO) and (model.sellPrice > BigDecimal.ZERO)) model.sellPrice / model.buyPrice else BigDecimal.ZERO
 
     val profit = sellTotal - buyTotal
     val profitFiat = sellTotalFiat - buyTotalFiat
@@ -226,13 +226,13 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
   }
 
   fun operationSellPercentagePlus() {
-    model.sellPrice = model.sellPrice.multiply(BigDecimal(PERCENTAGE_PLUS))
+    model.sellPrice = BigDecimal(PERCENTAGE_PLUS).multiply(if (model.sellPrice > BigDecimal.ZERO) model.sellPrice else model.buyPrice)
     view?.setFocus(resId.editSellPrice)
     setSourcesAndCalculate()
   }
 
   fun operationSellPercentageMinus() {
-    model.sellPrice = model.sellPrice.multiply(BigDecimal(PERCENTAGE_MINUS))
+    model.sellPrice = BigDecimal(PERCENTAGE_MINUS).multiply(if (model.sellPrice > BigDecimal.ZERO) model.sellPrice else model.buyPrice)
     view?.setFocus(resId.editSellPrice)
     setSourcesAndCalculate()
   }
