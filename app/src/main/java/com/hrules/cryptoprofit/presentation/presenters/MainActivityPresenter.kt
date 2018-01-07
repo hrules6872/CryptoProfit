@@ -80,7 +80,6 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         buyPriceInput = buyPriceInput,
         buyAmountInput = buyAmountInput,
         sellPriceInput = sellPriceInput)
-    view?.setExclamationVisibility(coinPriceInput.compareTo(coinPriceAtBuyTimeInput) != 0)
   }
 
   fun notifyChangeCoinPrice(coinPriceInput: BigDecimal, coinPriceAtBuyTimeInput: BigDecimal, buyPriceInput: BigDecimal,
@@ -91,7 +90,6 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         buyPriceInput = buyPriceInput,
         buyAmountInput = buyAmountInput,
         sellPriceInput = sellPriceInput)
-    view?.setExclamationVisibility(coinPriceInput.compareTo(coinPriceAtBuyTimeInput) != 0)
   }
 
   fun notifyChangeBuyTotal(coinPriceInput: BigDecimal, coinPriceAtBuyTimeInput: BigDecimal, buyPriceInput: BigDecimal,
@@ -121,10 +119,9 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
   }
 
   private fun calculate() {
-    val coinPriceAtBuyTime = if (preferences.cryptoPriceDateUseToday) model.coinPrice else model.coinPriceAtBuyTime
     val buyTotal = model.buyAmount * model.buyPrice
-    val buyTotalFiat = buyTotal * coinPriceAtBuyTime
-    val buySingleFiat = model.buyPrice * coinPriceAtBuyTime
+    val buyTotalFiat = buyTotal * model.coinPriceAtBuyTime
+    val buySingleFiat = model.buyPrice * model.coinPriceAtBuyTime
 
     val sellTotal = model.buyAmount * model.sellPrice
     val sellTotalFiat = sellTotal * model.coinPrice
@@ -137,6 +134,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
 
     view?.setResults(buyTotal, buyTotalFiat, buySingleFiat, sellTotal, sellTotalFiat, sellSingleFiat, profit, profitFiat,
         profitSingleFiat, sellMultiplier, buyTotalSkip)
+    view?.setExclamationVisibility(model.coinPriceAtBuyTime.compareTo(model.coinPrice) != 0)
 
     val coinPriceAtBuyTimeInfo15 = BigDecimal(PERCENTAGE_15).multiply(model.coinPriceAtBuyTime)
     val coinPriceAtBuyTimeInfo20 = BigDecimal(PERCENTAGE_20).multiply(model.coinPriceAtBuyTime)
