@@ -34,10 +34,31 @@ android {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
 
-  buildTypes {
+  signingConfigs {
     release {
+      Properties appSecretProps = new Properties()
+      appSecretProps.load(new FileInputStream(new File('app.secrets.properties')))
+
+      keyAlias appSecretProps['APP_RELEASE_KEYALIAS']
+      keyPassword appSecretProps['APP_RELEASE_KEYPASSWORD']
+      storeFile file(appSecretProps['APP_RELEASE_STOREFILE'])
+      storePassword appSecretProps['APP_RELEASE_STOREPASSWORD']
+    }
+  }
+
+  buildTypes {
+    debug {
+      resValue 'string', 'app_name', '"CryptoProfit-debug"'
+      debuggable true
       minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      zipAlignEnabled false
+      applicationIdSuffix ".debug"
+    }
+
+    release {
+      resValue 'string', 'app_name', '"CryptoProfit"'
+      minifyEnabled false
+      signingConfig signingConfigs.release
     }
   }
 

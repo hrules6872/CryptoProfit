@@ -29,7 +29,7 @@ const val LENGTH_SHORT = Toast.LENGTH_SHORT
 const val LENGTH_LONG = Toast.LENGTH_LONG
 
 object ToolTipHelper {
-  private val DEFAULT_TOOLTIP_HEIGHT_DP = 48
+  private const val DEFAULT_TOOLTIP_HEIGHT_DP = 48
 
   @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
   @IntDef(LENGTH_SHORT.toLong(), LENGTH_LONG.toLong()) internal annotation class Duration

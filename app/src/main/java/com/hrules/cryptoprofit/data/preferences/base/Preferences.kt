@@ -31,13 +31,13 @@ const val PREFS_CACHE_ETHEREUM = "PREFS_CACHE_ETHEREUM"
 interface Preferences {
   companion object {
     val PREFS_DEFAULT_CRYPTO_PRICE_DATE = System.currentTimeMillis()
-    val PREFS_DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY = true
-    val PREFS_DEFAULT_CURRENCY_CONVERTER = false
+    const val PREFS_DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY = true
+    const val PREFS_DEFAULT_CURRENCY_CONVERTER = false
     val PREFS_DEFAULT_PREFS_CRYPTO_CURRENCY = CryptoCurrency.BTC.name
-    val PREFS_DEFAULT_CURRENCY_TO_CONVERT = "EUR"
-    val PREFS_DEFAULT_MEMORY = ""
+    const val PREFS_DEFAULT_CURRENCY_TO_CONVERT = "EUR"
+    const val PREFS_DEFAULT_MEMORY = ""
 
-    val PREFS_DEFAULT_CACHE = ""
+    const val PREFS_DEFAULT_CACHE = ""
   }
 
   var cryptoPriceDate: Long

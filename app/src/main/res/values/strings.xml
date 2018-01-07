@@ -15,7 +15,6 @@
   -->
 
 <resources>
-  <string name="app_name">CryptoProfit</string>
   <string name="app_webSite">https://github.com/hrules6872/CryptoProfit</string>
 
   <string name="hint_coinPriceCurrent">Current crypto price</string>
