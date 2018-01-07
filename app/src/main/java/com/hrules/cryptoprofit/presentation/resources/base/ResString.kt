@@ -25,9 +25,9 @@ interface ResString {
   val errorNoConnection: String
   val errorEmptyPrice: String
 
-  fun coinPriceAtBuyTimeInfo(coinPriceAtBuyTimeInfo15: BigDecimal, coinPriceAtBuyTimeInfo25: BigDecimal,
-      coinPriceAtBuyTimeInfo33: BigDecimal, coinPriceAtBuyTimeInfo50: BigDecimal, coinPriceAtBuyTimeInfo75: BigDecimal): String
+  fun coinPriceAtBuyTimeInfo(coinPriceAtBuyTimeInfo15: BigDecimal, coinPriceAtBuyTimeInfo20: BigDecimal,
+      coinPriceAtBuyTimeInfo25: BigDecimal, coinPriceAtBuyTimeInfo33: BigDecimal): String
 
-  fun coinPriceInfo(coinPriceInfo15: BigDecimal, coinPriceInfo25: BigDecimal, coinPriceInfo33: BigDecimal, coinPriceInfo50: BigDecimal,
-      coinPriceInfo75: BigDecimal): String
+  fun coinPriceInfo(coinPriceInfo15: BigDecimal, coinPriceInfo20: BigDecimal, coinPriceInfo25: BigDecimal,
+      coinPriceInfo33: BigDecimal): String
 }

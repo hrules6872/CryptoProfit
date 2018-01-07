@@ -44,10 +44,9 @@ private const val PERCENTAGE_PLUS = 1.05
 private const val PERCENTAGE_MINUS = 0.95
 
 private const val PERCENTAGE_15 = 0.15
+private const val PERCENTAGE_20 = 0.20
 private const val PERCENTAGE_25 = 0.25
 private const val PERCENTAGE_33 = 0.33
-private const val PERCENTAGE_50 = 0.5
-private const val PERCENTAGE_75 = 0.75
 
 class MainActivityPresenter(private val resId: ResId, private val resString: ResString, private val preferences: Preferences,
     private val cache: Cache<CryptoCacheParams, Crypto>, private val network: Network)
@@ -140,23 +139,20 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         profitSingleFiat, sellMultiplier, buyTotalSkip)
 
     val coinPriceAtBuyTimeInfo15 = BigDecimal(PERCENTAGE_15).multiply(model.coinPriceAtBuyTime)
+    val coinPriceAtBuyTimeInfo20 = BigDecimal(PERCENTAGE_20).multiply(model.coinPriceAtBuyTime)
     val coinPriceAtBuyTimeInfo25 = BigDecimal(PERCENTAGE_25).multiply(model.coinPriceAtBuyTime)
     val coinPriceAtBuyTimeInfo33 = BigDecimal(PERCENTAGE_33).multiply(model.coinPriceAtBuyTime)
-    val coinPriceAtBuyTimeInfo50 = BigDecimal(PERCENTAGE_50).multiply(model.coinPriceAtBuyTime)
-    val coinPriceAtBuyTimeInfo75 = BigDecimal(PERCENTAGE_75).multiply(model.coinPriceAtBuyTime)
     val coinPriceAtBuyTimeInfo = if (model.coinPriceAtBuyTime != BigDecimal.ONE)
-      resString.coinPriceAtBuyTimeInfo(coinPriceAtBuyTimeInfo15,
-          coinPriceAtBuyTimeInfo25, coinPriceAtBuyTimeInfo33, coinPriceAtBuyTimeInfo50,
-          coinPriceAtBuyTimeInfo75) else resString.errorEmptyPrice
+      resString.coinPriceAtBuyTimeInfo(coinPriceAtBuyTimeInfo15, coinPriceAtBuyTimeInfo20, coinPriceAtBuyTimeInfo25,
+          coinPriceAtBuyTimeInfo33) else resString.errorEmptyPrice
 
     val coinPriceInfo15 = BigDecimal(PERCENTAGE_15).multiply(model.coinPrice)
+    val coinPriceInfo20 = BigDecimal(PERCENTAGE_20).multiply(model.coinPrice)
     val coinPriceInfo25 = BigDecimal(PERCENTAGE_25).multiply(model.coinPrice)
     val coinPriceInfo33 = BigDecimal(PERCENTAGE_33).multiply(model.coinPrice)
-    val coinPriceInfo50 = BigDecimal(PERCENTAGE_50).multiply(model.coinPrice)
-    val coinPriceInfo75 = BigDecimal(PERCENTAGE_75).multiply(model.coinPrice)
     val coinPriceInfo = if (model.coinPrice != BigDecimal.ONE)
-      resString.coinPriceInfo(coinPriceInfo15, coinPriceInfo25,
-          coinPriceInfo33, coinPriceInfo50, coinPriceInfo75) else resString.errorEmptyPrice
+      resString.coinPriceInfo(coinPriceInfo15, coinPriceInfo20,
+          coinPriceInfo25, coinPriceInfo33) else resString.errorEmptyPrice
 
     view?.setCryptoPriceInfo(coinPriceAtBuyTimeInfo, coinPriceInfo)
   }
@@ -293,7 +289,7 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     }
   }
 
-  private suspend fun getCryptoPriceAsync(cryptoCurrency: CryptoCurrency, currencyToConvert: String, timeStamp: Long): Crypto {
+  private fun getCryptoPriceAsync(cryptoCurrency: CryptoCurrency, currencyToConvert: String, timeStamp: Long): Crypto {
     var crypto = cache.get(CryptoCacheParams(cryptoCurrency, Currency.valueOf(currencyToConvert), timeStamp))
     if (!crypto.validate() or crypto.cacheDirty) {
       val response = network.getCryptoPrice(cryptoCurrency, currencyToConvert, timeStamp)

@@ -57,5 +57,5 @@
 
   <string name="currency_sellMultiplier">x</string>
 
-  <string name="formatted_coinPriceInfo">15%% ⟶ %1$s\n25%% ⟶ %2$s\n33%% ⟶ %3$s\n50%% ⟶ %4$s\n75%% ⟶ %5$s</string>
+  <string name="formatted_coinPriceInfo">15%% ⟶ %1$s\n20%% ⟶ %2$s\n25%% ⟶ %3$s\n33%% ⟶ %4$s</string>
 </resources>

@@ -33,23 +33,21 @@ object AndroidResString : ResString {
   override val errorNoConnection: String = AndroidResHelper.getString(R.string.error_noConnection)
   override val errorEmptyPrice: String = AndroidResHelper.getString(R.string.error_emptyPrice)
 
-  override fun coinPriceAtBuyTimeInfo(coinPriceAtBuyTimeInfo15: BigDecimal, coinPriceAtBuyTimeInfo25: BigDecimal,
-      coinPriceAtBuyTimeInfo33: BigDecimal, coinPriceAtBuyTimeInfo50: BigDecimal, coinPriceAtBuyTimeInfo75: BigDecimal): String {
+  override fun coinPriceAtBuyTimeInfo(coinPriceAtBuyTimeInfo15: BigDecimal, coinPriceAtBuyTimeInfo20: BigDecimal,
+      coinPriceAtBuyTimeInfo25: BigDecimal, coinPriceAtBuyTimeInfo33: BigDecimal): String {
     return App.instance.resources.getString(R.string.formatted_coinPriceInfo,
         coinPriceAtBuyTimeInfo15.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceAtBuyTimeInfo20.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
         coinPriceAtBuyTimeInfo25.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceAtBuyTimeInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceAtBuyTimeInfo50.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceAtBuyTimeInfo75.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
+        coinPriceAtBuyTimeInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
   }
 
-  override fun coinPriceInfo(coinPriceInfo15: BigDecimal, coinPriceInfo25: BigDecimal, coinPriceInfo33: BigDecimal,
-      coinPriceInfo50: BigDecimal, coinPriceInfo75: BigDecimal): String {
+  override fun coinPriceInfo(coinPriceInfo15: BigDecimal, coinPriceInfo20: BigDecimal, coinPriceInfo25: BigDecimal,
+      coinPriceInfo33: BigDecimal): String {
     return App.instance.resources.getString(R.string.formatted_coinPriceInfo,
         coinPriceInfo15.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+        coinPriceInfo20.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
         coinPriceInfo25.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceInfo50.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceInfo75.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
+        coinPriceInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
   }
 }
