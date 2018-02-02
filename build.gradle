@@ -15,7 +15,7 @@
  */
 
 buildscript {
-  ext.kotlin_version = '1.2.10'
+  ext.kotlin_version = '1.2.21'
   ext.serialization_version = '0.4'
 
   repositories {
@@ -24,15 +24,11 @@ buildscript {
     maven { url "https://kotlin.bintray.com/kotlinx" }
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.1.0-alpha07'
+    classpath 'com.android.tools.build:gradle:3.2.0-alpha01'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
   }
-}
-
-plugins {
-  id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-1"
 }
 
 allprojects {
@@ -49,5 +45,4 @@ task clean(type: Delete) {
 }
 
 apply from: 'buildsystem/dependencies.gradle'
-apply from: 'buildsystem/detekt.gradle'
 apply plugin: 'com.github.ben-manes.versions'

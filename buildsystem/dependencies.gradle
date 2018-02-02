@@ -46,7 +46,7 @@ ext {
 
       ],
 
-      kotlinCoroutinesVersion = '0.21',
+      kotlinCoroutinesVersion = '0.22.1',
       okhttpVersion = '3.9.+',
       projectDependencies = [
 
