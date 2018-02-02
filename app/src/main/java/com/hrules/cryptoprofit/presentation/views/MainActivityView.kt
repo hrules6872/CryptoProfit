@@ -138,9 +138,7 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
   }
 
   private fun showToolTipInfo(view: View) {
-    view.tag?.let {
-      ToolTipHelper.show(view, view.tag.toString(), LENGTH_LONG)
-    }
+    view.tag?.let { ToolTipHelper.show(view, view.tag.toString(), LENGTH_LONG) }
   }
 
   private fun notifyChange() {

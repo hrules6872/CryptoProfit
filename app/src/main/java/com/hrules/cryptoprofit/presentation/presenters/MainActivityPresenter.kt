@@ -55,11 +55,11 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
   private var buyTotalSkip = false
 
   override fun viewReady(first: Boolean) {
-    view?.let {
-      val cryptoPriceDateMillis = if (preferences.cryptoPriceDateUseToday) System.currentTimeMillis() else preferences.cryptoPriceDate
-      it.setCryptoPriceDate(formatDate(cryptoPriceDateMillis), cryptoPriceDateMillis)
-      it.setCurrencyConverterState(preferences.currencyConverter)
-      it.setCurrencyToConvert(preferences.currencyToConvert)
+    val cryptoPriceDateMillis = if (preferences.cryptoPriceDateUseToday) System.currentTimeMillis() else preferences.cryptoPriceDate
+    view?.run {
+      setCryptoPriceDate(formatDate(cryptoPriceDateMillis), cryptoPriceDateMillis)
+      setCurrencyConverterState(preferences.currencyConverter)
+      setCurrencyToConvert(preferences.currencyToConvert)
     }
 
     if (first && preferences.currencyConverter) {
@@ -132,9 +132,11 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
     val profitFiat = sellTotalFiat - buyTotalFiat
     val profitSingleFiat = sellSingleFiat - buySingleFiat
 
-    view?.setResults(buyTotal, buyTotalFiat, buySingleFiat, sellTotal, sellTotalFiat, sellSingleFiat, profit, profitFiat,
-        profitSingleFiat, sellMultiplier, buyTotalSkip)
-    view?.setExclamationVisibility(model.coinPriceAtBuyTime.compareTo(model.coinPrice) != 0)
+    view?.run {
+      setResults(buyTotal, buyTotalFiat, buySingleFiat, sellTotal, sellTotalFiat, sellSingleFiat, profit, profitFiat,
+          profitSingleFiat, sellMultiplier, buyTotalSkip)
+      setExclamationVisibility(model.coinPriceAtBuyTime.compareTo(model.coinPrice) != 0)
+    }
 
     val coinPriceAtBuyTimeInfo15 = BigDecimal(PERCENTAGE_15).multiply(model.coinPriceAtBuyTime)
     val coinPriceAtBuyTimeInfo20 = BigDecimal(PERCENTAGE_20).multiply(model.coinPriceAtBuyTime)
@@ -157,10 +159,8 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
 
   fun currencyConverter(state: Boolean) {
     preferences.currencyConverter = state
-    view?.let {
-      it.setCurrencyConverterState(state)
-      calculate()
-    }
+    view?.setCurrencyConverterState(state)
+    calculate()
   }
 
   fun makeExample() {
@@ -209,9 +209,9 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
   fun selectDate(dateInMillis: Long) {
     preferences.cryptoPriceDate = dateInMillis
     preferences.cryptoPriceDateUseToday = sameDay(dateInMillis, System.currentTimeMillis())
-    view?.let {
-      it.setCryptoPriceDate(formatDate(dateInMillis), dateInMillis)
-      it.setFocus(resId.editCoinPriceAtBuyTime)
+    view?.run {
+      setCryptoPriceDate(formatDate(dateInMillis), dateInMillis)
+      setFocus(resId.editCoinPriceAtBuyTime)
     }
     getCryptoPrice(CryptoCurrency.valueOf(preferences.cryptoCurrency), preferences.currencyToConvert, System.currentTimeMillis(),
         dateInMillis)
@@ -272,10 +272,8 @@ class MainActivityPresenter(private val resId: ResId, private val resString: Res
         val cryptoAtBuyTime = async { getCryptoPriceAsync(cryptoCurrency, currencyToConvert, timeStampDate) }.await()
         model.coinPrice = crypto.price(currencyToConvert)
         model.coinPriceAtBuyTime = cryptoAtBuyTime.price(currencyToConvert)
-        view?.let {
-          it.setCryptoPrice(model.coinPrice, model.coinPriceAtBuyTime)
-          calculate()
-        }
+        view?.setCryptoPrice(model.coinPrice, model.coinPriceAtBuyTime)
+        calculate()
       } catch (e: Exception) {
         view?.showToolTip(resId.toolbar,
             when (e) {
