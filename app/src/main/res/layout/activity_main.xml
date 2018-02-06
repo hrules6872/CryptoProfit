@@ -17,10 +17,11 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
->
+    >
 
   <android.support.v7.widget.Toolbar
       android:id="@+id/toolbar"
@@ -28,19 +29,19 @@
       android:layout_height="wrap_content"
       android:background="@color/colorPrimary"
       android:minHeight="?attr/actionBarSize"
-  />
+      />
 
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-  >
+      >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
         android:orientation="horizontal"
-    >
+        >
 
       <Button
           android:id="@+id/action_memoryStore"
@@ -48,7 +49,8 @@
           android:layout_height="wrap_content"
           android:minWidth="@dimen/default_buttonMinWidth"
           android:text="@string/action_memoryStore"
-      />
+          tools:ignore="ButtonStyle"
+          />
 
       <Button
           android:id="@+id/action_memoryRecall"
@@ -56,7 +58,8 @@
           android:layout_height="wrap_content"
           android:minWidth="@dimen/default_buttonMinWidth"
           android:text="@string/action_memoryRecall"
-      />
+          tools:ignore="ButtonStyle"
+          />
 
       <Button
           android:id="@+id/action_clear"
@@ -64,7 +67,8 @@
           android:layout_height="wrap_content"
           android:minWidth="@dimen/default_buttonMinWidth"
           android:text="@string/action_clear"
-      />
+          tools:ignore="ButtonStyle"
+          />
 
     </LinearLayout>
 
@@ -72,7 +76,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end|center_vertical"
-        android:layout_margin="@dimen/default_margin">
+        android:layout_margin="@dimen/default_margin"
+        >
 
       <TextView
           android:id="@+id/text_exclamation"
@@ -88,7 +93,7 @@
           android:textColor="@color/red_exclamation"
           android:textStyle="bold"
           android:visibility="invisible"
-      />
+          />
 
       <com.hrules.cryptoprofit.presentation.components.ContentLoadingProgressBar
           android:id="@+id/progress"
@@ -97,7 +102,7 @@
           android:layout_gravity="center"
           android:visibility="gone"
           style="@style/Widget.AppCompat.ProgressBar"
-      />
+          />
     </LinearLayout>
 
   </FrameLayout>
@@ -106,7 +111,7 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
-  >
+      >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -116,13 +121,13 @@
         android:paddingLeft="@dimen/default_paddingDouble"
         android:paddingRight="@dimen/default_paddingDouble"
         android:paddingTop="@dimen/default_paddingTriple"
-    >
+        >
 
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
-      >
+          >
 
         <Switch
             android:id="@+id/action_currencyConverter"
@@ -130,22 +135,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="@string/action_currencyConverter"
-        />
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-        >
+            >
 
           <FrameLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-          >
+              >
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-            >
+                >
 
               <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
                   android:id="@+id/edit_coinPriceAtBuyTime"
@@ -155,7 +161,7 @@
                   android:imeOptions="actionNext"
                   android:nextFocusDown="@id/edit_coinPrice"
                   app:decimalPlacesMax="2"
-              />
+                  />
             </android.support.design.widget.TextInputLayout>
 
             <ImageView
@@ -164,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_info"
-            />
+                />
           </FrameLayout>
 
           <LinearLayout
@@ -173,7 +179,7 @@
               android:layout_gravity="end"
               android:orientation="horizontal"
               style="?android:attr/buttonBarStyle"
-          >
+              >
 
             <Button
                 android:id="@+id/action_priceToday"
@@ -181,25 +187,26 @@
                 android:layout_height="wrap_content"
                 android:text="@string/action_priceToday"
                 style="?android:attr/buttonBarButtonStyle"
-            />
+                />
 
             <Button
                 android:id="@+id/action_priceDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?android:attr/buttonBarButtonStyle"
-            />
+                />
 
           </LinearLayout>
 
           <FrameLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-          >
+              >
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-            >
+                >
 
               <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
                   android:id="@+id/edit_coinPrice"
@@ -209,7 +216,7 @@
                   android:imeOptions="actionNext"
                   android:nextFocusDown="@id/edit_buyPrice"
                   app:decimalPlacesMax="2"
-              />
+                  />
             </android.support.design.widget.TextInputLayout>
 
             <ImageView
@@ -218,7 +225,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_info"
-            />
+                />
           </FrameLayout>
 
           <LinearLayout
@@ -227,7 +234,7 @@
               android:layout_gravity="end"
               android:orientation="horizontal"
               style="?android:attr/buttonBarStyle"
-          >
+              >
 
             <Button
                 android:id="@+id/action_priceBitcoin"
@@ -236,7 +243,7 @@
                 android:drawableStart="@drawable/ic_refresh"
                 android:text="@string/action_priceBitcoin"
                 style="?android:attr/buttonBarButtonStyle"
-            />
+                />
 
             <Button
                 android:id="@+id/action_priceEthereum"
@@ -245,14 +252,14 @@
                 android:drawableStart="@drawable/ic_refresh"
                 android:text="@string/action_priceEthereum"
                 style="?android:attr/buttonBarButtonStyle"
-            />
+                />
 
             <Button
                 android:id="@+id/action_currencyToConvert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?android:attr/buttonBarButtonStyle"
-            />
+                />
 
           </LinearLayout>
         </LinearLayout>
@@ -265,7 +272,7 @@
           android:gravity="start"
           android:text="@string/title_buy"
           android:textAppearance="@style/TextAppearance.AppCompat.Button"
-      />
+          />
 
       <LinearLayout
           android:layout_width="match_parent"
@@ -273,14 +280,14 @@
           android:baselineAligned="false"
           android:orientation="horizontal"
           android:weightSum="2"
-      >
+          >
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:hintAnimationEnabled="false"
-        >
+            >
 
           <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
               android:id="@+id/edit_buyPrice"
@@ -289,14 +296,14 @@
               android:hint="@string/hint_buyPrice"
               android:imeOptions="actionNext"
               android:nextFocusDown="@id/edit_buyAmount"
-          />
+              />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-        >
+            >
 
           <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
               android:id="@+id/edit_buyAmount"
@@ -305,7 +312,7 @@
               android:hint="@string/hint_buyAmount"
               android:imeOptions="actionNext"
               android:nextFocusDown="@id/edit_sellPrice"
-          />
+              />
         </android.support.design.widget.TextInputLayout>
 
       </LinearLayout>
@@ -318,7 +325,8 @@
           android:gravity="end"
           android:imeOptions="actionNext"
           android:nextFocusDown="@id/edit_sellPrice"
-      />
+          />
+
       <com.hrules.cryptoprofit.presentation.components.MoneyTextView
           android:id="@+id/text_buyTotalFiat"
           android:layout_width="match_parent"
@@ -327,7 +335,7 @@
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           app:currencySymbol="@string/currency_fiat"
           app:decimalPlacesMax="2"
-      />
+          />
 
       <com.hrules.cryptoprofit.presentation.components.MoneyTextView
           android:id="@+id/text_buySingleFiat"
@@ -337,7 +345,7 @@
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           app:currencySymbol="@string/currency_singleFiat"
           app:decimalPlacesMax="2"
-      />
+          />
 
       <TextView
           android:layout_width="match_parent"
@@ -346,17 +354,17 @@
           android:gravity="start"
           android:text="@string/title_sell"
           android:textAppearance="@style/TextAppearance.AppCompat.Button"
-      />
+          />
 
       <FrameLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-      >
+          >
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-        >
+            >
 
           <com.hrules.cryptoprofit.presentation.components.MoneyTextInputEditText
               android:id="@+id/edit_sellPrice"
@@ -365,7 +373,7 @@
               android:hint="@string/hint_sellPrice"
               android:imeOptions="actionNext"
               android:nextFocusDown="@id/edit_coinPrice"
-          />
+              />
         </android.support.design.widget.TextInputLayout>
 
         <com.hrules.cryptoprofit.presentation.components.MoneyTextView
@@ -376,19 +384,19 @@
             app:currencySymbol="@string/currency_sellMultiplier"
             app:currencySymbolLeftSide="false"
             app:decimalPlacesMax="2"
-        />
+            />
       </FrameLayout>
 
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
-      >
+          >
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-        >
+            >
 
           <Button
               android:id="@+id/action_operationSellEquals"
@@ -396,7 +404,7 @@
               android:layout_height="wrap_content"
               android:minWidth="@dimen/default_buttonMinWidth"
               android:text="@string/action_operationSellEquals"
-          />
+              />
 
           <Button
               android:id="@+id/action_operationSellClear"
@@ -405,7 +413,7 @@
               android:layout_toEndOf="@id/action_operationSellEquals"
               android:minWidth="@dimen/default_buttonMinWidth"
               android:text="@string/action_operationSellClear"
-          />
+              />
 
           <Button
               android:id="@+id/action_operationSellPercentagePlus"
@@ -414,7 +422,7 @@
               android:layout_below="@id/action_operationSellEquals"
               android:minWidth="@dimen/default_buttonMinWidth"
               android:text="@string/action_operationSellPercentagePlus"
-          />
+              />
 
           <Button
               android:id="@+id/action_operationSellPercentageMinus"
@@ -424,14 +432,14 @@
               android:layout_toEndOf="@id/action_operationSellPercentagePlus"
               android:minWidth="@dimen/default_buttonMinWidth"
               android:text="@string/action_operationSellPercentageMinus"
-          />
+              />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-        >
+            >
 
           <com.hrules.cryptoprofit.presentation.components.MoneyTextView
               android:id="@+id/text_sellTotal"
@@ -440,7 +448,7 @@
               android:layout_marginTop="@dimen/default_margin"
               android:gravity="end"
               android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-          />
+              />
 
           <com.hrules.cryptoprofit.presentation.components.MoneyTextView
               android:id="@+id/text_sellTotalFiat"
@@ -450,7 +458,7 @@
               android:textAppearance="@style/TextAppearance.AppCompat.Medium"
               app:currencySymbol="@string/currency_fiat"
               app:decimalPlacesMax="2"
-          />
+              />
 
           <com.hrules.cryptoprofit.presentation.components.MoneyTextView
               android:id="@+id/text_sellSingleFiat"
@@ -460,7 +468,7 @@
               android:textAppearance="@style/TextAppearance.AppCompat.Medium"
               app:currencySymbol="@string/currency_singleFiat"
               app:decimalPlacesMax="2"
-          />
+              />
         </LinearLayout>
       </LinearLayout>
 
@@ -471,14 +479,14 @@
           android:gravity="start"
           android:text="@string/title_profit"
           android:textAppearance="@style/TextAppearance.AppCompat.Button"
-      />
+          />
 
       <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
           android:layout_marginTop="@dimen/default_marginHalf"
           android:background="@android:color/background_light"
-      />
+          />
 
       <com.hrules.cryptoprofit.presentation.components.MoneyTextView
           android:id="@+id/text_profit"
@@ -488,7 +496,7 @@
           android:gravity="end"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           app:signed="true"
-      />
+          />
 
       <com.hrules.cryptoprofit.presentation.components.MoneyTextView
           android:id="@+id/text_profitFiat"
@@ -499,7 +507,7 @@
           app:currencySymbol="@string/currency_fiat"
           app:decimalPlacesMax="2"
           app:signed="true"
-      />
+          />
 
       <com.hrules.cryptoprofit.presentation.components.MoneyTextView
           android:id="@+id/text_profitSingleFiat"
@@ -510,7 +518,7 @@
           app:currencySymbol="@string/currency_singleFiat"
           app:decimalPlacesMax="2"
           app:signed="true"
-      />
+          />
 
     </LinearLayout>
   </ScrollView>

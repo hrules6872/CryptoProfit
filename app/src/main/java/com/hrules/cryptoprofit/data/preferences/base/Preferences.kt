@@ -18,26 +18,30 @@ package com.hrules.cryptoprofit.data.preferences.base
 
 import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
 
-const val PREFS_CRYPTO_PRICE_DATE = "PREFS_CRYPTO_PRICE_DATE"
-const val PREFS_CRYPTO_PRICE_DATE_USE_TODAY = "PREFS_CRYPTO_PRICE_DATE_USE_TODAY"
-const val PREFS_CURRENCY_CONVERTER = "PREFS_CURRENCY_CONVERTER"
-const val PREFS_CRYPTO_CURRENCY = "PREFS_CRYPTO_CURRENCY"
-const val PREFS_CURRENCY_TO_CONVERT = "PREFS_CURRENCY_TO_CONVERT"
-const val PREFS_MEMORY = "PREFS_MEMORY"
-
-const val PREFS_CACHE_BITCOIN = "PREFS_CACHE_BITCOIN"
-const val PREFS_CACHE_ETHEREUM = "PREFS_CACHE_ETHEREUM"
-
 interface Preferences {
   companion object {
-    val PREFS_DEFAULT_CRYPTO_PRICE_DATE = System.currentTimeMillis()
-    const val PREFS_DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY = true
-    const val PREFS_DEFAULT_CURRENCY_CONVERTER = false
-    val PREFS_DEFAULT_PREFS_CRYPTO_CURRENCY = CryptoCurrency.BTC.name
-    const val PREFS_DEFAULT_CURRENCY_TO_CONVERT = "EUR"
-    const val PREFS_DEFAULT_MEMORY = ""
+    const val CRYPTO_PRICE_DATE = "CRYPTO_PRICE_DATE"
+    const val CRYPTO_PRICE_DATE_USE_TODAY = "CRYPTO_PRICE_DATE_USE_TODAY"
+    const val CURRENCY_CONVERTER = "CURRENCY_CONVERTER"
+    const val CRYPTO_CURRENCY = "CRYPTO_CURRENCY"
+    const val CURRENCY_TO_CONVERT = "CURRENCY_TO_CONVERT"
+    const val MEMORY = "MEMORY"
 
-    const val PREFS_DEFAULT_CACHE = ""
+    const val CACHE_BITCOIN = "CACHE_BITCOIN"
+    const val CACHE_ETHEREUM = "CACHE_ETHEREUM"
+
+    class DEFAULT {
+      companion object {
+        val DEFAULT_CRYPTO_PRICE_DATE = System.currentTimeMillis()
+        const val DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY = true
+        const val DEFAULT_CURRENCY_CONVERTER = false
+        val DEFAULT_CRYPTO_CURRENCY = CryptoCurrency.BTC.name
+        const val DEFAULT_CURRENCY_TO_CONVERT = "EUR"
+        const val DEFAULT_MEMORY = ""
+
+        const val DEFAULT_CACHE = ""
+      }
+    }
   }
 
   var cryptoPriceDate: Long

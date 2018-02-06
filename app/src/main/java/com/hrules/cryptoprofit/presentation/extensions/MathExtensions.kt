@@ -22,14 +22,12 @@ import java.text.NumberFormat
 import java.text.ParseException
 import java.util.*
 
-fun String.toBigDecimalOrZero(locale: Locale = Locale.getDefault()): BigDecimal {
-  return try {
-    val decimalFormat = NumberFormat.getInstance(locale) as DecimalFormat
-    decimalFormat.isParseBigDecimal = true
-    decimalFormat.parseObject(this) as BigDecimal
-  } catch (e: ParseException) {
-    BigDecimal.ZERO
-  }
+fun String.toBigDecimalOrZero(locale: Locale = Locale.getDefault()): BigDecimal = try {
+  val decimalFormat = NumberFormat.getInstance(locale) as DecimalFormat
+  decimalFormat.isParseBigDecimal = true
+  decimalFormat.parseObject(this) as BigDecimal
+} catch (e: ParseException) {
+  BigDecimal.ZERO
 }
 
 fun BigDecimal.toOneIfZero(): BigDecimal = if (this == BigDecimal.ZERO) BigDecimal.ONE else this

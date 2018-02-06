@@ -34,20 +34,17 @@ object AndroidResString : ResString {
   override val errorEmptyPrice: String = AndroidResHelper.getString(R.string.error_emptyPrice)
 
   override fun coinPriceAtBuyTimeInfo(coinPriceAtBuyTimeInfo15: BigDecimal, coinPriceAtBuyTimeInfo20: BigDecimal,
-      coinPriceAtBuyTimeInfo25: BigDecimal, coinPriceAtBuyTimeInfo33: BigDecimal): String {
-    return App.instance.resources.getString(R.string.formatted_coinPriceInfo,
-        coinPriceAtBuyTimeInfo15.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceAtBuyTimeInfo20.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceAtBuyTimeInfo25.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceAtBuyTimeInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
-  }
+      coinPriceAtBuyTimeInfo25: BigDecimal, coinPriceAtBuyTimeInfo33: BigDecimal): String = App.instance.resources.getString(
+      R.string.formatted_coinPriceInfo,
+      coinPriceAtBuyTimeInfo15.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+      coinPriceAtBuyTimeInfo20.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+      coinPriceAtBuyTimeInfo25.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+      coinPriceAtBuyTimeInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
 
   override fun coinPriceInfo(coinPriceInfo15: BigDecimal, coinPriceInfo20: BigDecimal, coinPriceInfo25: BigDecimal,
-      coinPriceInfo33: BigDecimal): String {
-    return App.instance.resources.getString(R.string.formatted_coinPriceInfo,
-        coinPriceInfo15.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceInfo20.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceInfo25.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
-        coinPriceInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
-  }
+      coinPriceInfo33: BigDecimal): String = App.instance.resources.getString(R.string.formatted_coinPriceInfo,
+      coinPriceInfo15.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+      coinPriceInfo20.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+      coinPriceInfo25.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX),
+      coinPriceInfo33.toMoneyText(DEFAULT_DECIMALS_PLACES_MIN, DEFAULT_DECIMALS_PLACES_MAX))
 }

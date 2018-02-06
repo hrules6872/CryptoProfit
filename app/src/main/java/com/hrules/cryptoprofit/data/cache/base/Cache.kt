@@ -22,6 +22,5 @@ import com.hrules.cryptoprofit.presentation.entitites.qualifiers.Cacheable
 interface Cache<in PARAMS : CacheParams, MODEL : Cacheable> {
   fun get(params: PARAMS): MODEL
   fun put(params: PARAMS, model: MODEL): Boolean
-  fun purge(params: PARAMS)
   fun evictAll()
 }

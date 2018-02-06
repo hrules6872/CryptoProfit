@@ -20,7 +20,7 @@ import com.hrules.cryptoprofit.commons.sameDay
 import com.hrules.cryptoprofit.data.cache.base.Cache
 import com.hrules.cryptoprofit.data.cache.params.CryptoCacheParams
 import com.hrules.cryptoprofit.data.preferences.AndroidPreferences
-import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CACHE
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.DEFAULT.Companion.DEFAULT_CACHE
 import com.hrules.cryptoprofit.presentation.entitites.Crypto
 import com.hrules.cryptoprofit.presentation.entitites.CryptoCurrency
 import com.hrules.cryptoprofit.presentation.entitites.DEFAULT_CACHE_CREATED
@@ -46,34 +46,28 @@ class AndroidCryptoCache(private val preferences: AndroidPreferences) : Cache<Cr
     Crypto()
   }
 
-  override fun put(params: CryptoCacheParams, model: Crypto): Boolean {
-    return try {
-      var cryptos: MutableList<Crypto> = mutableListOf()
-      try {
-        if (model.cacheCreated == DEFAULT_CACHE_CREATED) {
-          model.cacheCreated = params.timeStamp
-        }
-        cryptos = CryptoListSerializer.parse(
-            if (params.cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin else preferences.cacheEthereum).toMutableList()
-        cryptos.removeAll { sameDay(it.cacheCreated, model.cacheCreated) }
-      } catch (e: Exception) {
+  override fun put(params: CryptoCacheParams, model: Crypto): Boolean = try {
+    var cryptos: MutableList<Crypto> = mutableListOf()
+    try {
+      if (model.cacheCreated == DEFAULT_CACHE_CREATED) {
+        model.cacheCreated = params.timeStamp
       }
-      cryptos.add(0, model)
-      cryptos.dropLast(CACHE_MAX_ITEMS_SIZE) // purge
-      val cryptosSerialized: String = CryptoListSerializer.stringify(cryptos)
-      if (params.cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin = cryptosSerialized else preferences.cacheEthereum = cryptosSerialized
-      true
+      cryptos = CryptoListSerializer.parse(
+          if (params.cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin else preferences.cacheEthereum).toMutableList()
+      cryptos.removeAll { sameDay(it.cacheCreated, model.cacheCreated) }
     } catch (e: Exception) {
-      false
     }
-  }
-
-  override fun purge(params: CryptoCacheParams) {
-    // not implemented
+    cryptos.add(0, model)
+    cryptos.dropLast(CACHE_MAX_ITEMS_SIZE) // purge
+    val cryptosSerialized: String = CryptoListSerializer.stringify(cryptos)
+    if (params.cryptoCurrency == CryptoCurrency.BTC) preferences.cacheBitcoin = cryptosSerialized else preferences.cacheEthereum = cryptosSerialized
+    true
+  } catch (e: Exception) {
+    false
   }
 
   override fun evictAll() {
-    preferences.cacheBitcoin = PREFS_DEFAULT_CACHE
-    preferences.cacheEthereum = PREFS_DEFAULT_CACHE
+    preferences.cacheBitcoin = DEFAULT_CACHE
+    preferences.cacheEthereum = DEFAULT_CACHE
   }
 }

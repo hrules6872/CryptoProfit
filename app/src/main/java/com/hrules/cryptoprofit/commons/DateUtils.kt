@@ -28,6 +28,6 @@ fun sameDay(timeStamp1: Long, timeStamp2: Long): Boolean {
       Calendar.DAY_OF_YEAR)
 }
 
-fun formatDate(timeStamp: Long, locale: Locale = Locale.getDefault()): String {
-  return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(timeStamp)
-}
+fun formatDate(timeStamp: Long, locale: Locale = Locale.getDefault()): String = DateFormat.getDateInstance(DateFormat.SHORT, locale).format(
+    timeStamp)
+

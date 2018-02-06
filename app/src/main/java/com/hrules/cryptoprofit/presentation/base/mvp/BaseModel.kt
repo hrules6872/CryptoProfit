@@ -18,7 +18,5 @@ package com.hrules.cryptoprofit.presentation.base.mvp
 
 open class BaseModel<TYPE> {
   open fun load(from: TYPE?) {}
-  open fun save(): TYPE? {
-    return null
-  }
+  open fun save(): TYPE? = null
 }

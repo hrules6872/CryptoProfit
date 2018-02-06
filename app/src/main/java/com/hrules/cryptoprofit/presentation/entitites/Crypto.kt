@@ -16,6 +16,7 @@
 
 package com.hrules.cryptoprofit.presentation.entitites
 
+import com.hrules.cryptoprofit.presentation.entitites.Crypto.Companion.defaultPrice
 import com.hrules.cryptoprofit.presentation.entitites.qualifiers.Cacheable
 import com.hrules.cryptoprofit.presentation.entitites.qualifiers.Validatable
 import kotlinx.serialization.Optional
@@ -61,8 +62,10 @@ data class Crypto(
     @Optional @SerialName("TWD") private val priceTwd: BigDecimal? = defaultPrice,
     @Optional @SerialName("ZAR") private val priceZar: BigDecimal? = defaultPrice
 ) : Validatable, Cacheable {
-  @Optional override var cacheCreated: Long = DEFAULT_CACHE_CREATED
-  @Optional override var cacheDirty: Boolean = DEFAULT_CACHE_DIRTY
+  @Optional
+  override var cacheCreated: Long = DEFAULT_CACHE_CREATED
+  @Optional
+  override var cacheDirty: Boolean = DEFAULT_CACHE_DIRTY
 
   override fun validate(): Boolean = Currency.values().any { this.price(it.toString()) != defaultPrice }
 
@@ -72,38 +75,38 @@ data class Crypto(
   }
 
   fun price(currency: String): BigDecimal = when (currency) {
-    Currency.USD.name -> priceUsd ?: defaultPrice
-    Currency.AUD.name -> priceAud ?: defaultPrice
-    Currency.BRL.name -> priceBrl ?: defaultPrice
-    Currency.CAD.name -> priceCad ?: defaultPrice
-    Currency.CHF.name -> priceChf ?: defaultPrice
-    Currency.CLP.name -> priceClp ?: defaultPrice
-    Currency.CNY.name -> priceCny ?: defaultPrice
-    Currency.CZK.name -> priceCzk ?: defaultPrice
-    Currency.DKK.name -> priceDkk ?: defaultPrice
-    Currency.EUR.name -> priceEur ?: defaultPrice
-    Currency.GBP.name -> priceGbp ?: defaultPrice
-    Currency.HKD.name -> priceHkd ?: defaultPrice
-    Currency.HUF.name -> priceHuf ?: defaultPrice
-    Currency.IDR.name -> priceIdr ?: defaultPrice
-    Currency.ILS.name -> priceIls ?: defaultPrice
-    Currency.INR.name -> priceInr ?: defaultPrice
-    Currency.JPY.name -> priceJpy ?: defaultPrice
-    Currency.KRW.name -> priceKrw ?: defaultPrice
-    Currency.MXN.name -> priceMxn ?: defaultPrice
-    Currency.MYR.name -> priceMyr ?: defaultPrice
-    Currency.NOK.name -> priceNok ?: defaultPrice
-    Currency.NZD.name -> priceNzd ?: defaultPrice
-    Currency.PHP.name -> pricePhp ?: defaultPrice
-    Currency.PKR.name -> pricePkr ?: defaultPrice
-    Currency.PLN.name -> pricePln ?: defaultPrice
-    Currency.RUB.name -> priceRub ?: defaultPrice
-    Currency.SEK.name -> priceSek ?: defaultPrice
-    Currency.SGD.name -> priceSgd ?: defaultPrice
-    Currency.THB.name -> priceThb ?: defaultPrice
-    Currency.TRY.name -> priceTry ?: defaultPrice
-    Currency.TWD.name -> priceTwd ?: defaultPrice
-    Currency.ZAR.name -> priceZar ?: defaultPrice
+    Currency.USD.name -> priceUsd.getSafe()
+    Currency.AUD.name -> priceAud.getSafe()
+    Currency.BRL.name -> priceBrl.getSafe()
+    Currency.CAD.name -> priceCad.getSafe()
+    Currency.CHF.name -> priceChf.getSafe()
+    Currency.CLP.name -> priceClp.getSafe()
+    Currency.CNY.name -> priceCny.getSafe()
+    Currency.CZK.name -> priceCzk.getSafe()
+    Currency.DKK.name -> priceDkk.getSafe()
+    Currency.EUR.name -> priceEur.getSafe()
+    Currency.GBP.name -> priceGbp.getSafe()
+    Currency.HKD.name -> priceHkd.getSafe()
+    Currency.HUF.name -> priceHuf.getSafe()
+    Currency.IDR.name -> priceIdr.getSafe()
+    Currency.ILS.name -> priceIls.getSafe()
+    Currency.INR.name -> priceInr.getSafe()
+    Currency.JPY.name -> priceJpy.getSafe()
+    Currency.KRW.name -> priceKrw.getSafe()
+    Currency.MXN.name -> priceMxn.getSafe()
+    Currency.MYR.name -> priceMyr.getSafe()
+    Currency.NOK.name -> priceNok.getSafe()
+    Currency.NZD.name -> priceNzd.getSafe()
+    Currency.PHP.name -> pricePhp.getSafe()
+    Currency.PKR.name -> pricePkr.getSafe()
+    Currency.PLN.name -> pricePln.getSafe()
+    Currency.RUB.name -> priceRub.getSafe()
+    Currency.SEK.name -> priceSek.getSafe()
+    Currency.SGD.name -> priceSgd.getSafe()
+    Currency.THB.name -> priceThb.getSafe()
+    Currency.TRY.name -> priceTry.getSafe()
+    Currency.TWD.name -> priceTwd.getSafe()
+    Currency.ZAR.name -> priceZar.getSafe()
     else -> defaultPrice
   }
 }
@@ -115,3 +118,5 @@ enum class Currency {
 enum class CryptoCurrency {
   BTC, ETH;
 }
+
+private fun BigDecimal?.getSafe() = this ?: defaultPrice

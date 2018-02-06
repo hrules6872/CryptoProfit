@@ -44,7 +44,5 @@ data class MainActivityModel(
     }
   }
 
-  override fun save(): String? {
-    return MainActivityModelSerializer.stringify(this)
-  }
+  override fun save(): String? = MainActivityModelSerializer.stringify(this)
 }

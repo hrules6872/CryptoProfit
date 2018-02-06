@@ -48,9 +48,13 @@ private const val PERCENTAGE_20 = 0.20
 private const val PERCENTAGE_25 = 0.25
 private const val PERCENTAGE_33 = 0.33
 
-class MainActivityPresenter(private val resId: ResId, private val resString: ResString, private val preferences: Preferences,
-    private val cache: Cache<CryptoCacheParams, Crypto>, private val network: Network)
-  : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
+class MainActivityPresenter(
+    private val resId: ResId,
+    private val resString: ResString,
+    private val preferences: Preferences,
+    private val cache: Cache<CryptoCacheParams, Crypto>,
+    private val network: Network
+) : BasePresenter<MainActivityModel, MainActivityPresenter.Contract>() {
 
   private var buyTotalSkip = false
 

@@ -36,7 +36,5 @@ object BigDecimalCustomSerializer : KSerializer<BigDecimal> {
     output.writeStringValue(obj.toPlainString())
   }
 
-  override fun load(input: KInput): BigDecimal {
-    return input.readStringValue().toBigDecimalOrZero(locale)
-  }
+  override fun load(input: KInput): BigDecimal = input.readStringValue().toBigDecimalOrZero(locale)
 }

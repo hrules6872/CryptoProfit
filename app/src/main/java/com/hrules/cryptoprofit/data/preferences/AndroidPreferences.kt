@@ -17,52 +17,60 @@
 package com.hrules.cryptoprofit.data.preferences
 
 import android.content.SharedPreferences
-import com.hrules.cryptoprofit.data.preferences.base.*
-import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CACHE
-import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CRYPTO_PRICE_DATE
-import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY
-import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CURRENCY_CONVERTER
-import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_CURRENCY_TO_CONVERT
-import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_MEMORY
-import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.PREFS_DEFAULT_PREFS_CRYPTO_CURRENCY
+import com.hrules.cryptoprofit.data.preferences.base.Preferences
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.CACHE_BITCOIN
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.CACHE_ETHEREUM
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.CRYPTO_CURRENCY
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.CRYPTO_PRICE_DATE
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.CRYPTO_PRICE_DATE_USE_TODAY
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.CURRENCY_CONVERTER
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.CURRENCY_TO_CONVERT
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.DEFAULT.Companion.DEFAULT_CACHE
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.DEFAULT.Companion.DEFAULT_CRYPTO_CURRENCY
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.DEFAULT.Companion.DEFAULT_CRYPTO_PRICE_DATE
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.DEFAULT.Companion.DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.DEFAULT.Companion.DEFAULT_CURRENCY_CONVERTER
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.DEFAULT.Companion.DEFAULT_CURRENCY_TO_CONVERT
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.DEFAULT.Companion.DEFAULT_MEMORY
+import com.hrules.cryptoprofit.data.preferences.base.Preferences.Companion.MEMORY
 
 class AndroidPreferences(private val preferences: SharedPreferences) : Preferences {
   override var cryptoPriceDate: Long
-    get() = preferences.getLong(PREFS_CRYPTO_PRICE_DATE,
-        PREFS_DEFAULT_CRYPTO_PRICE_DATE)
-    set(value) = preferences.edit().putLong(PREFS_CRYPTO_PRICE_DATE, value).apply()
+    get() = preferences.getLong(CRYPTO_PRICE_DATE,
+        DEFAULT_CRYPTO_PRICE_DATE)
+    set(value) = preferences.edit().putLong(CRYPTO_PRICE_DATE, value).apply()
 
   override var cryptoPriceDateUseToday: Boolean
-    get() = preferences.getBoolean(PREFS_CRYPTO_PRICE_DATE_USE_TODAY,
-        PREFS_DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY)
-    set(value) = preferences.edit().putBoolean(PREFS_CRYPTO_PRICE_DATE_USE_TODAY, value).apply()
+    get() = preferences.getBoolean(CRYPTO_PRICE_DATE_USE_TODAY,
+        DEFAULT_CRYPTO_PRICE_DATE_USE_TODAY)
+    set(value) = preferences.edit().putBoolean(CRYPTO_PRICE_DATE_USE_TODAY, value).apply()
 
   override var currencyConverter: Boolean
-    get() = preferences.getBoolean(PREFS_CURRENCY_CONVERTER,
-        PREFS_DEFAULT_CURRENCY_CONVERTER)
-    set(value) = preferences.edit().putBoolean(PREFS_CURRENCY_CONVERTER, value).apply()
+    get() = preferences.getBoolean(CURRENCY_CONVERTER,
+        DEFAULT_CURRENCY_CONVERTER)
+    set(value) = preferences.edit().putBoolean(CURRENCY_CONVERTER, value).apply()
 
   override var cryptoCurrency: String
-    get() = preferences.getString(PREFS_CRYPTO_CURRENCY, PREFS_DEFAULT_PREFS_CRYPTO_CURRENCY)
-    set(value) = preferences.edit().putString(PREFS_CRYPTO_CURRENCY, value).apply()
+    get() = preferences.getString(CRYPTO_CURRENCY, DEFAULT_CRYPTO_CURRENCY)
+    set(value) = preferences.edit().putString(CRYPTO_CURRENCY, value).apply()
 
   override var currencyToConvert: String
-    get() = preferences.getString(PREFS_CURRENCY_TO_CONVERT,
-        PREFS_DEFAULT_CURRENCY_TO_CONVERT)
-    set(value) = preferences.edit().putString(PREFS_CURRENCY_TO_CONVERT, value).apply()
+    get() = preferences.getString(CURRENCY_TO_CONVERT,
+        DEFAULT_CURRENCY_TO_CONVERT)
+    set(value) = preferences.edit().putString(CURRENCY_TO_CONVERT, value).apply()
 
   override var memory: String
-    get() = preferences.getString(PREFS_MEMORY,
-        PREFS_DEFAULT_MEMORY)
-    set(value) = preferences.edit().putString(PREFS_MEMORY, value).apply()
+    get() = preferences.getString(MEMORY,
+        DEFAULT_MEMORY)
+    set(value) = preferences.edit().putString(MEMORY, value).apply()
 
   override var cacheBitcoin: String
-    get() = preferences.getString(PREFS_CACHE_BITCOIN,
-        PREFS_DEFAULT_CACHE)
-    set(value) = preferences.edit().putString(PREFS_CACHE_BITCOIN, value).apply()
+    get() = preferences.getString(CACHE_BITCOIN,
+        DEFAULT_CACHE)
+    set(value) = preferences.edit().putString(CACHE_BITCOIN, value).apply()
 
   override var cacheEthereum: String
-    get() = preferences.getString(PREFS_CACHE_ETHEREUM,
-        PREFS_DEFAULT_CACHE)
-    set(value) = preferences.edit().putString(PREFS_CACHE_ETHEREUM, value).apply()
+    get() = preferences.getString(CACHE_ETHEREUM,
+        DEFAULT_CACHE)
+    set(value) = preferences.edit().putString(CACHE_ETHEREUM, value).apply()
 }

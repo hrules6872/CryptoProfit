@@ -16,9 +16,7 @@
 
 package com.hrules.cryptoprofit.presentation.entitites.serializers.base
 
-
 interface Serializer<TYPE> {
   fun stringify(input: TYPE): String
-
   fun parse(input: String): TYPE
 }

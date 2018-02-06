@@ -286,8 +286,6 @@ class MainActivityView : BaseActivity<MainActivityModel, MainActivityPresenter.C
   }
 
   private inline fun doIfSkipTextWatcherFalse(code: () -> Unit) {
-    if (!textWatcherSkip) {
-      code()
-    }
+    if (!textWatcherSkip) code()
   }
 }
